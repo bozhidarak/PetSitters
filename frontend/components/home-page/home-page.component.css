@@ -7,24 +7,22 @@ html,body{
     font-family: 'Popins', sans-serif; /* Shrift*/
 }
 
-.vsc-initialized{
-    margin:0;
-}
-
 .background{
     width: 100%;
-    min-height: 100vh;
+    min-height: 98vh;
     background-image: url(../../src/assets/background-squares3.png);
     background-position: center;
-    background-size: cover;
+    background-size: cover; 
 }
 .content{
     /* max-width: 600px; */
-    margin: 2%;
-    margin-top: 9%;
+    padding: 9%;
+    padding-top: 9%;
+    font-size: 20px;
+
 }
 .content h2{
-    /* font-size: 70px; */
+    font-size: 30px;
     color: #222;
 }
 .btn{
@@ -35,16 +33,36 @@ html,body{
     background-color: #EF5877;
     font-size: 17px;
     border-radius: 30px;
-    margin-left: 10%;
-    
+    margin-left: 3%;
+}
+.btn.anim{
+    animation-delay: 1s;
 }
 .content p{
     margin:10px 0 30px;
     color: #333;
+    animation-delay: 0.5s;
 }
 .woman-dog{
     position: absolute;
     bottom: 0;
-    width: 750px;
+    width: 65%;
     margin-left:38%;
+}
+
+.woman-dog.anim{
+    animation-delay: 1.5s;
+}
+
+.anim{
+    opacity: 0;
+    transform: translateY(30px);
+    animation: moveup 0.5s linear forwards;
+}
+
+@keyframes moveup {
+    100%{
+        opacity: 1;
+        transform: translateY(0px);
+    }
 }
