@@ -1,0 +1,46 @@
+/* mat-toolbar{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+} */
+
+nav{
+    padding: 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 600;
+}
+
+nav ul li{
+    display: inline-block;
+    list-style: none;
+    margin: 10px 20px;
+}
+
+nav ul li a{
+    text-decoration: none;
+    color: #333;
+}
+
+.login-btn{
+    text-decoration: none;
+    color: #333;
+    margin-right: 20px;
+}
+
+.signup-btn{
+    display: inline-block;
+    text-decoration: none;
+    padding: 14px 40px;
+    color:  #fff;
+    background-color: #EF5877;
+    font-size: 14px;
+    border-radius: 30px;
+    margin-right: 35px;
+    
+}
+.logo{
+    width: 100px;
+}

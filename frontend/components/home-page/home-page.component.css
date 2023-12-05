@@ -1,0 +1,50 @@
+html,body{
+    width: 100%;
+    height: 100%;
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Popins', sans-serif; /* Shrift*/
+}
+
+.vsc-initialized{
+    margin:0;
+}
+
+.background{
+    width: 100%;
+    min-height: 100vh;
+    background-image: url(../../src/assets/background-squares3.png);
+    background-position: center;
+    background-size: cover;
+}
+.content{
+    /* max-width: 600px; */
+    margin: 2%;
+    margin-top: 9%;
+}
+.content h2{
+    /* font-size: 70px; */
+    color: #222;
+}
+.btn{
+    display: inline-block;
+    text-decoration: none;
+    padding: 15px 60px;
+    color:  #fff;
+    background-color: #EF5877;
+    font-size: 17px;
+    border-radius: 30px;
+    margin-left: 10%;
+    
+}
+.content p{
+    margin:10px 0 30px;
+    color: #333;
+}
+.woman-dog{
+    position: absolute;
+    bottom: 0;
+    width: 750px;
+    margin-left:38%;
+}
