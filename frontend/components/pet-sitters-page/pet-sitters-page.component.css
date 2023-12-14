@@ -7,7 +7,7 @@ html,body{
     font-family: 'Popins', sans-serif; /* Shrift*/
 }
 .banner{
-    margin: 100px auto;
+    margin: 70px auto;
     width: 80%;
     height: 50vh;
     background-image: url(../../src/assets/banner-dogs2.png);
@@ -28,4 +28,10 @@ button{
     border-radius: 30px;
     margin-left: 60%;
    font-weight: bold;
+}
+
+.pet-list{
+    margin-left:30%;
+    margin-bottom: 10%;
+
 }
