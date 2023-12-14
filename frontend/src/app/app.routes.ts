@@ -4,7 +4,7 @@ import { PetSittersPageComponent } from '../../components/pet-sitters-page/pet-s
 
 export const routes: Routes = [
     {
-        path:'', pathMatch: 'full', redirectTo:'home-page',
+       path:'', pathMatch: 'full', redirectTo:'home-page',
     },
     {path:'home-page', component:HomePageComponent},
     {path:'pet-sitters', component:PetSittersPageComponent}

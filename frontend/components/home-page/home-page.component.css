@@ -1,4 +1,4 @@
-html,body{
+body{
     width: 100%;
     height: 100%;
     margin:0;
@@ -9,17 +9,16 @@ html,body{
 
 .background{
     width: 100%;
-    min-height: 98vh;
+    min-height: 100vh;
     background-image: url(../../src/assets/background-squares3.png);
     background-position: center;
     background-size: cover; 
 }
 .content{
-    /* max-width: 600px; */
-    padding: 9%;
-    padding-top: 9%;
+    max-width: 40%;
+    /* padding-top: 9%; */
     font-size: 20px;
-
+    margin-left: 2vw;    
 }
 .content h2{
     font-size: 30px;
@@ -46,7 +45,7 @@ html,body{
 .woman-dog{
     position: absolute;
     bottom: 0;
-    width: 65%;
+    width: 60%;
     margin-left:38%;
 }
 

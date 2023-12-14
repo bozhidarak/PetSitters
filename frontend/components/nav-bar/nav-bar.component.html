@@ -6,17 +6,17 @@
 
 </mat-toolbar> -->
 
-<nav>
-    <a href="/"  routerLinkActive="active">
+<mat-toolbar>
+    <a href="/home-page"  routerLinkActive="active">
     <img src="assets/logo2.png" class="logo">
     </a>
-    <ul>
-        <li><a href="/pet-sitters">Гледачи</a></li>
-        <li><a href="#">Стопани</a></li>
-        <li><a href="#">Как работи?</a></li>
-    </ul>
+        <button (click)="NavigateToSitters()" mat-button
+        >Гледачи</button>
+        <button mat-button >Стопани</button>
+        <button mat-button>Как работи?</button>
+    
     <div>
-        <a href="#" class="login-btn">Вход</a>
-        <a href="#" class="signup-btn">Създай профил</a>
+        <button mat-button class="login-btn">Вход</button>
+        <button mat-raised-button class="signup-btn" color="primary">Създай профил</button>
     </div>
-</nav>
+</mat-toolbar>

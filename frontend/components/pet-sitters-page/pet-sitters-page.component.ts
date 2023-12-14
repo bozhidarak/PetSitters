@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
 
 @Component({
-  selector: 'pet-sitters-page',
+  selector: 'pet-sitters',
   standalone: true,
   imports: [CommonModule, NavBarComponent],
   templateUrl: './pet-sitters-page.component.html',
