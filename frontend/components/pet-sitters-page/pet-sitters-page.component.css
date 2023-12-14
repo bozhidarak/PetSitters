@@ -31,7 +31,9 @@ button{
 }
 
 .pet-list{
-    margin-left:30%;
-    margin-bottom: 10%;
-
+    margin: 5%;
 }
+
+mat-grid-tile {
+    background: lightblue;
+  }
