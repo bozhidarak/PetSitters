@@ -22,14 +22,10 @@ h2{
     color: #fff;
     font-size: 35px;
 }
-a{
-    display: inline-block;
-    text-decoration: none;
+button{
     padding: 15px 60px;
-    color:  #fff;
-    background-color: #EF5877;
     font-size: 20px;
     border-radius: 30px;
     margin-left: 60%;
-    text-align: right;
+   font-weight: bold;
 }

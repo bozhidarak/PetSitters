@@ -24,15 +24,12 @@ body{
     font-size: 30px;
     color: #222;
 }
-.btn{
-    display: inline-block;
-    text-decoration: none;
+button{
     padding: 15px 60px;
-    color:  #fff;
-    background-color: #EF5877;
     font-size: 17px;
     border-radius: 30px;
     margin-left: 3%;
+    font-weight: bold;
 }
 .btn.anim{
     animation-delay: 1s;

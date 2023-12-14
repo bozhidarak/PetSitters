@@ -47,8 +47,9 @@ button{
     font-weight: bold;
 }
 
-.signup-btn{
-    background-color: #EF5877;
+button{
+    /* background-color: #EF5877; */
+    border-radius: 20px;
 }
 
 
