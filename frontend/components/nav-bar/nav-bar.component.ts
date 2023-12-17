@@ -22,4 +22,8 @@ export class NavBarComponent {
   NavigateToSitters(){
     this.router.navigate(['pet-sitters'])
   }
+
+  NavigateToOwners(){
+    this.router.navigate(['owners-page'])
+  }
 }

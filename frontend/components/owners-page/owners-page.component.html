@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Pet Sitters</title>
+        <title>Pet Owners</title>
     </head>
     <body>
             <nav-bar></nav-bar>
@@ -11,31 +11,23 @@
                <button mat-raised-button href="#" color="accent">Създай профил</button>
             </div>
             <div class="pet-list">
-                <mat-grid-list cols="4" rowHeight="4:5">
+                <mat-grid-list cols="4" rowHeight="2:3">
                   <mat-grid-tile colspan="1" rowspan="2"></mat-grid-tile>
                     <!-- @for (tile of tiles; track tile) { -->
                       <mat-grid-tile
                         colspan="1"
-                        rowspan="1"><sitter-card></sitter-card></mat-grid-tile>
+                        rowspan="1"><pet-card></pet-card></mat-grid-tile>
                         <mat-grid-tile
                         colspan="1"
-                        rowspan="1"><sitter-card></sitter-card></mat-grid-tile>
+                        rowspan="1"><pet-card></pet-card></mat-grid-tile>
                         <mat-grid-tile
                         colspan="1"
-                        rowspan="1"><sitter-card></sitter-card></mat-grid-tile>
+                        rowspan="1"><pet-card></pet-card></mat-grid-tile>
                         <mat-grid-tile
                         colspan="1"
-                        rowspan="1"><sitter-card></sitter-card></mat-grid-tile>
+                        rowspan="1"><pet-card></pet-card></mat-grid-tile>
                     <!-- } -->
                   </mat-grid-list>
-
-                  <!-- <pet-card></pet-card> -->
-                <!-- <mat-grid-list cols="2" rowHeight="2:1">
-                    <mat-grid-tile>1</mat-grid-tile>
-                    <mat-grid-tile>2</mat-grid-tile>
-                    <mat-grid-tile>3</mat-grid-tile>
-                    <mat-grid-tile>4</mat-grid-tile>
-                  </mat-grid-list> -->
             </div>
     </body>
 </html>

@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
-import { MatButtonModule } from '@angular/material/button';
 import { PetCardComponent } from '../pet-card/pet-card.component';
-import {MatGridListModule} from '@angular/material/grid-list';
-import { SitterCardComponent } from '../sitter-card/sitter-card.component';
+import {MatGridListModule } from '@angular/material/grid-list';
+import { MatButtonModule } from '@angular/material/button';
 
 export interface Tile {
   color: string;
@@ -12,13 +11,14 @@ export interface Tile {
 }
 
 @Component({
-  selector: 'pet-sitters',
+  selector: 'owners-page',
   standalone: true,
-  imports: [CommonModule, NavBarComponent, MatButtonModule, SitterCardComponent, MatGridListModule],
-  templateUrl: './pet-sitters-page.component.html',
-  styleUrl: './pet-sitters-page.component.css'
+  imports: [CommonModule,NavBarComponent, PetCardComponent,MatGridListModule,MatButtonModule],
+  templateUrl: './owners-page.component.html',
+  styleUrl: './owners-page.component.css'
 })
-export class PetSittersPageComponent {
+
+export class OwnersPageComponent {
   tiles: Tile[] = [
     {text: 'Two', color: 'lightgreen'},
     {text: 'Three',color: 'lightpink'},
