@@ -26,4 +26,12 @@ export class NavBarComponent {
   NavigateToOwners(){
     this.router.navigate(['owners-page'])
   }
+
+  NavigateToRegistration(){
+    this.router.navigate(['registration'])
+  }
+
+  NavigateToLogin(){
+    this.router.navigate(['login'])
+  }
 }

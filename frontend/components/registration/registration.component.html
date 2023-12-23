@@ -1,0 +1,33 @@
+<html>
+<form>
+  <h2>Създай профил</h2>
+    <mat-form-field>
+      <mat-label>Име:</mat-label>
+      <input matInput placeholder="Иван Иванов" [formControl]="text" required>
+    </mat-form-field>
+  
+    <mat-form-field>
+        <mat-label>Имейл:</mat-label>
+        <input matInput placeholder="pat@example.com" [formControl]="email" required>
+      </mat-form-field>
+  
+    <mat-form-field>
+        <mat-label>Парола:</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" required [formControl]="password">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Повтори парола:</mat-label>
+      <input matInput [type]="hide ? 'password' : 'text'" required [formControl]="password">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+  </mat-form-field>
+  
+    <button mat-raised-button color="primary">Регистрация</button>
+    <button mat-raised-button color="primary">GOOGLE</button>
+  </form>
+  </html>

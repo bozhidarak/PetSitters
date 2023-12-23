@@ -15,7 +15,7 @@
         <button mat-button>Как работи?</button>
     
     <div>
-        <button mat-button class="login-btn">Вход</button>
-        <button mat-raised-button class="signup-btn" color="accent">Създай профил</button>
+        <button mat-button class="login-btn" (click)="NavigateToLogin()">Вход</button>
+        <button mat-raised-button class="signup-btn" color="accent" (click)="NavigateToRegistration()">Създай профил</button>
     </div>
 </mat-toolbar>
