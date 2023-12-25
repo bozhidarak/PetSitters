@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { PetCardComponent } from '../pet-card/pet-card.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { SitterCardComponent } from '../sitter-card/sitter-card.component';
+import { FiltersComponent } from '../filters/filters.component';
 
 export interface Tile {
   color: string;
@@ -14,7 +15,7 @@ export interface Tile {
 @Component({
   selector: 'pet-sitters',
   standalone: true,
-  imports: [CommonModule, NavBarComponent, MatButtonModule, SitterCardComponent, MatGridListModule],
+  imports: [CommonModule, NavBarComponent, MatButtonModule, SitterCardComponent, MatGridListModule, FiltersComponent],
   templateUrl: './pet-sitters-page.component.html',
   styleUrl: './pet-sitters-page.component.css'
 })

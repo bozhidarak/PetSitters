@@ -33,9 +33,20 @@ button{
 
 .pet-list{
     margin: 5%;
+    display: flex;
 }
 
-/* mat-grid-tile {
-    background: lightblue;
-    
-  } */
+filters, mat-grid-list {
+    flex: 1;
+  }
+
+mat-grid-list{
+    max-width: 80%;
+}
+
+filters{
+    max-width: 20%;
+}
+
+
+

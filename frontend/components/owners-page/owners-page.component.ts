@@ -4,6 +4,7 @@ import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { PetCardComponent } from '../pet-card/pet-card.component';
 import {MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
+import { FiltersComponent } from '../filters/filters.component';
 
 export interface Tile {
   color: string;
@@ -13,7 +14,7 @@ export interface Tile {
 @Component({
   selector: 'owners-page',
   standalone: true,
-  imports: [CommonModule,NavBarComponent, PetCardComponent,MatGridListModule,MatButtonModule],
+  imports: [CommonModule,NavBarComponent, PetCardComponent,MatGridListModule,MatButtonModule,FiltersComponent],
   templateUrl: './owners-page.component.html',
   styleUrl: './owners-page.component.css'
 })
