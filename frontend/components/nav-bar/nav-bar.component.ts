@@ -34,4 +34,8 @@ export class NavBarComponent {
   NavigateToLogin(){
     this.router.navigate(['login'])
   }
+
+  NavigateToHowPage(){
+    this.router.navigate(['how-page'])
+  }
 }
