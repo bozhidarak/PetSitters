@@ -5,24 +5,35 @@ import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {MatTableModule} from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 
+
+export interface SitterInfo{
+  adress: string;
+  price: number;
+  typeOfPets: string;//????
+  description: string;
+}
+
+const ELEMENT_DATA: SitterInfo[] =[
+  {adress: 'Bulevardul Unirii 1', 
+  price: 20, 
+  typeOfPets: 'dogs',
+   description: 'I love dogs',}
+]
 
 
 export interface PeriodicElement {
   name: string;
   position: number;
-  weight: number;
-  symbol: string;
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-];
+// const ELEMENT_DATA: PeriodicElement[] = [
+//   {position: 1, name: 'Hydrogen',},
+//   {position: 2, name: 'Helium', },
+//   {position: 3, name: 'Lithium',},
+//   {position: 4, name: 'Beryllium',},
+//   {position: 5, name: 'Boron', },
+// ];
 
 @Component({
   selector: 'sitter-details',
@@ -33,10 +44,11 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrl: './sitter-details.component.css'
 })
 export class SitterDetailsComponent {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+
+  displayedColumns: string[] = ['description', 'value'];
   dataSource = ELEMENT_DATA;
   
-  slides: any[] = new Array(2).fill({id: -1, src: '', title: '', subtitle: ''});
+  slides: any[] = new Array(3).fill({id: -1, src: '', title: '', subtitle: ''});
 
   constructor() { }
 
@@ -46,6 +58,9 @@ export class SitterDetailsComponent {
     };
     this.slides[1] = {
       src: './assets/profile-pic2.jpg',
+    };
+    this.slides[2] = {
+      src: './assets/woman-holding-dog.jpg',
     };
   }
 }

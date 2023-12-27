@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "petsitters-a5a98": {
+      "hosting": {
+        "frontend": [
+          "petsitters-a5a98"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "petsitters-a5a98"
+  }
+}

@@ -1,20 +1,32 @@
+.approved,.name,.price{
+    font-family: 'Popins', sans-serif;
+}
+
 .sitter-info {
+  padding: 1rem 0 1rem 0;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin: 2rem 0 1rem 0;
+  margin: 2rem 5rem 1rem 5rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 20px;
 }
 
-.img{
+.carousel{
     margin-right: 2rem;
+}
+
+img{
+    border-radius: 20px;
+    width: 40vw;
 }
 
 button{
     padding: 20px 40px;
     font-size: 15px;
     border-radius: 30px;
-    margin-left: 20%;
+    /* margin-left: 20%; */
     margin-top: 1rem;
     margin-bottom: 1rem;
    font-weight: bold;
@@ -29,8 +41,58 @@ button{
     justify-content: space-between;
 }
 
-p{
+.auth{
     padding-left: 30px;
     padding-right: 30px;
+}
+
+.prev{
+    position: absolute;
+    top: 50%;
+    left: 95%;
+    transition: transform 0.3s ease-in-out;
+
+}
+
+
+.next{
+    position: absolute;
+    top:50%;
+    transition: transform 0.3s ease-in-out;
+}
+
+.prev:hover, .next:hover{
+    transform: scale(1.5);
+}
+
+.name{
+    padding-top: 15%;
+    font-size: 30px;
+    font-weight: 700
+}
+
+.price{
+    font-size: 20px;
+    font-weight: 500;
+    font-style:oblique;
+    padding-top: 2%;
+    padding-bottom: 6%;
+}
+
+td{
+    max-width: 300px;
+    padding: 0.5rem;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(48, 45, 45, 0.196);
+}
+
+.currency{
+    margin:0;
+    font-size: small;
+}
+
+span{
+    font-size: medium;
 }
 
