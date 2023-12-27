@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pet Sitters</title>
+    </head>
+    <body>
+            <nav-bar></nav-bar>
+            <div class="sitter-info">
+            <div class="img">
+                <c-carousel [animate]="false" [dark]="true" [interval]="99999999999">
+                    <c-carousel-inner>
+                      <c-carousel-item *ngFor="let slide of slides">
+                        <img
+                          [src]="slide.src"
+                          alt="{{ slide.title }}"
+                          class="d-block w-100"
+                          loading="lazy" />
+                      </c-carousel-item>
+                      <c-carousel-control caption="Previous" direction="prev">
+                        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home"></mat-icon>                    </c-carousel-control>
+                      <c-carousel-control caption="Next" direction="next"></c-carousel-control>
+                    </c-carousel-inner>
+                    <div class="approved"><p>100% Проверена самоличност</p><p>100% Доверие</p></div>
+                  </c-carousel>
+            </div>
+            <div class="info">
+                <div class="name">Петя Николова</div>
+                <div class="price">Цена: 10лв/час</div>
+                <button mat-raised-button href="#" color="accent">Свържете се</button>
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                    <!--- Note that these columns can be defined in any order.
+                          The actual rendered columns are set as a property on the row definition" -->
+                  
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="position">
+                      <th mat-header-cell *matHeaderCellDef> No. </th>
+                      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                    </ng-container>
+                  
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="name">
+                      <th mat-header-cell *matHeaderCellDef> Name </th>
+                      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+                  
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="weight">
+                      <th mat-header-cell *matHeaderCellDef> Weight </th>
+                      <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                    </ng-container>
+                  
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="symbol">
+                      <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                      <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                    </ng-container>
+                  
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>
+             </div>     
+                  
+        <!--div carousel
+                yellow Verified below
+            div  gledach
+                ime
+                cena
+                 swurjete se button
+                table-->
+        </div>
+    </body>
+</html>

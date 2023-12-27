@@ -6,6 +6,7 @@ import { PetCardComponent } from '../pet-card/pet-card.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { SitterCardComponent } from '../sitter-card/sitter-card.component';
 import { FiltersComponent } from '../filters/filters.component';
+import { Router } from '@angular/router';
 
 export interface Tile {
   color: string;
@@ -28,4 +29,12 @@ export class PetSittersPageComponent {
     {text: 'Four',color: '#DDBDF1'},
     {text: 'Three', color: 'lightpink'},
   ];
+
+  constructor(private router:Router){
+
+  }
+
+  navigateToDetails(){
+    this.router.navigate(['sitter-details'])
+  }
 }

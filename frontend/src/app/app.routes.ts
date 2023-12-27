@@ -5,6 +5,7 @@ import { OwnersPageComponent } from '../../components/owners-page/owners-page.co
 import { RegistrationComponent } from '../../components/registration/registration.component';
 import { LoginComponent } from '../../components/login/login.component';
 import { HowPageComponent } from '../../components/how-page/how-page.component';
+import { SitterDetailsComponent } from '../../components/sitter-details/sitter-details.component';
 
 export const routes: Routes = [
     {
@@ -15,7 +16,8 @@ export const routes: Routes = [
     {path:'owners-page', component:OwnersPageComponent},
     {path:'registration', component:RegistrationComponent},
     {path:'login', component:LoginComponent},
-    {path: 'how-page', component:HowPageComponent}
+    {path: 'how-page', component:HowPageComponent},
+    {path: 'sitter-details', component:SitterDetailsComponent},
 
 
 ];
