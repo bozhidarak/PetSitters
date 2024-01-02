@@ -9,11 +9,14 @@ import { getAnalytics, provideAnalytics, ScreenTrackingService, UserTrackingServ
 import { initializeAppCheck, ReCaptchaEnterpriseProvider, provideAppCheck } from '@angular/fire/app-check';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
+import { AngularFireModule } from '@angular/fire/compat';
 
 export const appConfig: ApplicationConfig = {
+  
   providers: [provideRouter(routes),
   provideAnimations(),
    importProvidersFrom(provideFirebaseApp(() => initializeApp(environment.firebase))),
+   importProvidersFrom(AngularFireModule.initializeApp(environment.firebase)),
    importProvidersFrom(provideAuth(() => getAuth())),
    importProvidersFrom(provideAnalytics(() => getAnalytics())), ScreenTrackingService, UserTrackingService,
    importProvidersFrom(provideFirestore(() => getFirestore()))]

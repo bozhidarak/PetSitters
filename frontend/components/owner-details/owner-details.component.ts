@@ -1,42 +1,38 @@
 import { Component } from '@angular/core';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
-import { CarouselModule } from '@coreui/angular';
 import { RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import {MatTableModule} from '@angular/material/table';
+import { MatCommonModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
+import { CarouselModule } from '@coreui/angular';
 import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 
-
-export interface SitterInfo{
+export interface OwnerInfo{
   adress: string;
   price: number;
   typeOfPets: string;//????
   description: string;
 }
 
-const ELEMENT_DATA: SitterInfo[] =[
-  {adress: 'Bulevardul Unirii 1', 
-  price: 20, 
-  typeOfPets: 'dogs',
-   description: 'I love dogs',}
-]
-
 @Component({
-  selector: 'sitter-details',
+  selector: 'owner-details',
   standalone: true,
   imports: [NavBarComponent,RouterLink, CommonModule,
-     MatButtonModule, CarouselModule, MatIconModule],
-  templateUrl: './sitter-details.component.html',
-  styleUrl: './sitter-details.component.css'
+    MatButtonModule, CarouselModule, MatIconModule],
+  templateUrl: './owner-details.component.html',
+  styleUrl: './owner-details.component.css'
 })
-export class SitterDetailsComponent {
+export class OwnerDetailsComponent {
 
   displayedColumns: string[] = ['description', 'value'];
-  dataSource = ELEMENT_DATA;
   
   slides: any[] = new Array(3).fill({id: -1, src: '', title: '', subtitle: ''});
-
+  owners: OwnerInfo[] = [
+    {adress: 'Bulevardul Unirii 1', 
+    price: 20, 
+    typeOfPets: 'dogs',
+    description: 'I love dogs',}
+  ]
   constructor() { }
 
   ngOnInit(): void {

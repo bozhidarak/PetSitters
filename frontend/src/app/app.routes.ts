@@ -6,6 +6,7 @@ import { RegistrationComponent } from '../../components/registration/registratio
 import { LoginComponent } from '../../components/login/login.component';
 import { HowPageComponent } from '../../components/how-page/how-page.component';
 import { SitterDetailsComponent } from '../../components/sitter-details/sitter-details.component';
+import { OwnerDetailsComponent } from '../../components/owner-details/owner-details.component';
 
 export const routes: Routes = [
     {
@@ -18,6 +19,7 @@ export const routes: Routes = [
     {path:'login', component:LoginComponent},
     {path: 'how-page', component:HowPageComponent},
     {path: 'sitter-details', component:SitterDetailsComponent},
+    {path: 'owner-details', component:OwnerDetailsComponent},
 
 
 ];

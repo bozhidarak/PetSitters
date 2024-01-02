@@ -8,6 +8,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { getFirestore, collection, addDoc } from '@firebase/firestore';
+import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { UserService } from '../../src/services/user-service';
+import { getDoc } from '@angular/fire/firestore';
+import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+
 
 @Component({
   selector: 'registration',
@@ -16,11 +22,13 @@ import { getFirestore, collection, addDoc } from '@firebase/firestore';
      MatInputModule, FormsModule, ReactiveFormsModule, MatIconModule],
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.css',
+  providers: [UserService, AngularFireAuth, GoogleAuthProvider]
 })
 export class RegistrationComponent {
 
   hide = true;
-  
+
+  constructor(private router:Router, private auth: AngularFireAuth, private userService: UserService, private provider: GoogleAuthProvider){}
   registerForm = new FormGroup({
     
     name: new FormControl('',[Validators.required]),
@@ -42,17 +50,36 @@ export class RegistrationComponent {
     const db = getFirestore();
     const usersCollection = collection(db, 'users');
     try {
-      await addDoc(usersCollection, {
-        firstName: this.registerForm.get('name')!.value,
-        password: this.registerForm.get('password')!.value,
-        email: this.registerForm.get('email')!.value,
-      });
-      console.log('User added!');
+      const credential = await this.auth.createUserWithEmailAndPassword(this.registerForm.get('email')!.value!, this.registerForm.get('password')!.value!);
+      console.log('User registered with UID: ', credential.user?.uid);
+      this.userService.setUser(credential.user);
     } catch (error) {
-      console.error('Error adding user: ', error);
+      console.error('Error registering user: ', error);
     }
-
-    // Here you would typically handle the registration logic,
-    // such as sending the data to a backend server.
+    this.router.navigate(['pet-sitters']);
   }
+
+async singInWithGoogle(){
+
+ return this.auth.signInWithPopup(new GoogleAuthProvider).then((result) => {
+  this.router.navigate(['home-page']);
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    //const credential = GoogleAuthProvider.credentialFromResult(result)
+    //const token = credential!.accessToken;
+    // The signed-in user info.
+    const user = result.user;
+    // IdP data available using getAdditionalUserInfo(result)
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.customData.email;
+    // The AuthCredential type that was used.
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    // ...
+  });
+}
+
 }
