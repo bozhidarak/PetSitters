@@ -5,7 +5,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { UserService } from '../../src/services/user-service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 
@@ -15,7 +14,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
   imports: [CommonModule, MatFormFieldModule, MatButtonModule, MatInputModule, FormsModule, ReactiveFormsModule, MatIconModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
-  providers: [UserService, AngularFireAuth]
+  providers: [AngularFireAuth]
 })
 export class LoginComponent {
   
@@ -24,8 +23,7 @@ export class LoginComponent {
   password = new FormControl('', [Validators.required]);
 
   constructor(
-    private auth: AngularFireAuth,
-    private userService: UserService) {}
+    private auth: AngularFireAuth) {}
 
 async login() {
 

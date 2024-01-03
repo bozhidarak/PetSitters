@@ -7,6 +7,7 @@ import { LoginComponent } from '../../components/login/login.component';
 import { HowPageComponent } from '../../components/how-page/how-page.component';
 import { SitterDetailsComponent } from '../../components/sitter-details/sitter-details.component';
 import { OwnerDetailsComponent } from '../../components/owner-details/owner-details.component';
+import { EditProfileComponent } from '../../components/edit-profile/edit-profile.component';
 
 export const routes: Routes = [
     {
@@ -20,6 +21,7 @@ export const routes: Routes = [
     {path: 'how-page', component:HowPageComponent},
     {path: 'sitter-details', component:SitterDetailsComponent},
     {path: 'owner-details', component:OwnerDetailsComponent},
+    {path: 'edit-profile', component:EditProfileComponent}
 
 
 ];

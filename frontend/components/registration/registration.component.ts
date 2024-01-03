@@ -10,7 +10,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { getFirestore, collection, addDoc } from '@firebase/firestore';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { UserService } from '../../src/services/user-service';
 import { getDoc } from '@angular/fire/firestore';
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 
@@ -22,13 +21,11 @@ import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
      MatInputModule, FormsModule, ReactiveFormsModule, MatIconModule],
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.css',
-  providers: [UserService, AngularFireAuth, GoogleAuthProvider]
+  providers: [ AngularFireAuth, GoogleAuthProvider]
 })
 export class RegistrationComponent {
 
   hide = true;
-
-  constructor(private router:Router, private auth: AngularFireAuth, private userService: UserService, private provider: GoogleAuthProvider){}
   registerForm = new FormGroup({
     
     name: new FormControl('',[Validators.required]),
@@ -36,6 +33,8 @@ export class RegistrationComponent {
     password: new FormControl('', [Validators.required]),
     confirmPassword: new FormControl('', [Validators.required])
   })
+
+  constructor(private router:Router, private auth: AngularFireAuth, private provider: GoogleAuthProvider){}
 
   passwordsMatch() {
     const password = this.registerForm.get('password')?.value;
@@ -52,7 +51,6 @@ export class RegistrationComponent {
     try {
       const credential = await this.auth.createUserWithEmailAndPassword(this.registerForm.get('email')!.value!, this.registerForm.get('password')!.value!);
       console.log('User registered with UID: ', credential.user?.uid);
-      this.userService.setUser(credential.user);
     } catch (error) {
       console.error('Error registering user: ', error);
     }
