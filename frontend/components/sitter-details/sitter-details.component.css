@@ -50,7 +50,7 @@ button{
     position: absolute;
     top: 50%;
     left: 95%;
-    transition: transform 0.3s ease-in-out;
+    /* transition: transform 0.3s ease-in-out; */
 
 }
 
@@ -58,7 +58,7 @@ button{
 .next{
     position: absolute;
     top:50%;
-    transition: transform 0.3s ease-in-out;
+    /* transition: transform 0.3s ease-in-out; */
 }
 
 .prev:hover, .next:hover{

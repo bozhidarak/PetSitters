@@ -9,15 +9,12 @@ import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule } from '@angular/material/checkbox';
-import { collection, doc, getFirestore, setDoc } from '@angular/fire/firestore';
+import { collection, doc, getDoc, getFirestore, setDoc } from '@angular/fire/firestore';
 import { addDoc } from '@firebase/firestore';
-import { getAuth } from '@angular/fire/auth';
+import { getAuth, signOut } from '@angular/fire/auth';
 import { getStorage, uploadBytesResumable, ref, getDownloadURL } from '@firebase/storage';
+import { Owner, Sitter, User, UserType } from '../../src/models/user-model';
 
-export enum UserType {
-  PetOwner = 1,
-  PetSitter = 2
-}
 
 @Component({
   selector: 'edit-profile',
@@ -32,8 +29,11 @@ export class EditProfileComponent {
   hide = true;
   pictureFiles: File[] = [];
   pictureBlobs: string[] = [];
+  existingPictures: string[] = [];
   profilePic: File | null= null;
   profilePicBlob: string = '';
+  currentUserEmail: string = '';
+  currentUser: Owner | Sitter | undefined;
   
   
   editProfileForm = new FormGroup({
@@ -51,15 +51,64 @@ export class EditProfileComponent {
     endDate:new FormControl('', [Validators.required]),
     age: new FormControl(0, [Validators.required]),
     price: new FormControl(0, [Validators.required]),
-    userType: new FormControl(UserType.PetOwner, [Validators.required])
+    userType: new FormControl(UserType.PetOwner, [Validators.required]),
+    createAd: new FormControl(false, [Validators.required])
   })
   
-  constructor(private router:Router, private auth: AngularFireAuth){}
+  constructor(private router:Router){
+    const auth = getAuth();
+    const db = getFirestore();
+    const usersCollection = collection(db, 'users');
+    const userId = auth.currentUser?.uid;
+    this.currentUserEmail = auth.currentUser?.email!;
+    if (userId) {
+      getDoc(doc(usersCollection, userId)).then((doc) => {
+        if (doc.exists()) {
+          if(doc.data()?.['userType'] == UserType.PetOwner) {
+            this.currentUser = doc.data() as Owner;
+          }
+          else {
+            this.currentUser = doc.data() as Sitter;
+          }
+          this.setFormValues(this.currentUser);
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      }).catch((error) => {
+        console.log("Error getting document:", error);
+      });
+    } else {
+      // Handle the case where there is no current user
+    }
+  }
   
+  setFormValues(user: Owner | Sitter) {
+    this.editProfileForm.patchValue({
+      name: user.name,
+      location: user.location,
+      description: user.description,
+      cats: user.cats,
+      dogs: user.dogs,
+      birds: user.birds,
+      small: user.small,
+      large: user.large,
+      createAd: user.createAd,
+      userType: user.userType,
+      numberOfPets: user.userType == UserType.PetOwner ? user.numberOfPets : null,
+      startDate: 'startDate' in user && user.userType == UserType.PetOwner ? user.startDate : null,
+      endDate: 'endDate' in user && user.userType == UserType.PetOwner ? user.endDate : null,
+      age: 'age' in user && user.userType == UserType.PetSitter ? user.age : null,
+      price: 'price' in user && user.userType == UserType.PetSitter ? user.price : null
+    });
+  }
+
   removePicture(index: number) {
     this.pictureFiles.splice(index, 1);
     this.pictureBlobs.splice(index, 1);
   }
+
+  removeExistingPicture(index: number) {}
 
   removeProfilePic() {
     this.profilePic = new File([], '');
@@ -67,18 +116,15 @@ export class EditProfileComponent {
   }
   
   onFileSelect(event: any) {
-    this.pictureFiles = [];
-    this.pictureBlobs = [];
     
-    
+    // this.pictureFiles = Array.from(event.target.files);
+    // this.pictureBlobs = this.pictureFiles.map(file => URL.createObjectURL(file));
+    // console.log(this.pictureBlobs);
+
     for (let i = 0; i < event.target.files.length; i++) {
       this.pictureFiles.push(event.target.files[i]);
+      this.pictureBlobs.push(URL.createObjectURL(event.target.files[i]));
     }
-    
-    // Convert the files to blobs
-    this.pictureFiles.forEach(file => {
-      this.pictureBlobs.push(URL.createObjectURL(file));
-    });
   }
 
   onProfilePicSelect($event: Event) {
@@ -119,13 +165,16 @@ export class EditProfileComponent {
     return downloadURLs;
   }
   
-  onSubmit() {
+  onSubmit() { //TODO: create AD
     const auth = getAuth();
     const db = getFirestore();
     const usersCollection = collection(db, 'users');
+
+    this.router.navigate(['home-page']);
     //add all form fields to an object
-    const user:any = {
+    const user: any = {
       name: this.editProfileForm.get('name')!.value!,
+      email: this.currentUserEmail,
       location: this.editProfileForm.get('location')!.value!,
       description: this.editProfileForm.get('description')!.value!,
       cats: this.editProfileForm.get('cats')!.value!,
@@ -134,6 +183,8 @@ export class EditProfileComponent {
       small: this.editProfileForm.get('small')!.value!,
       large: this.editProfileForm.get('large')!.value!,
       userType: this.editProfileForm.get('userType')!.value!,
+      createAd: this.editProfileForm.get('createAd')!.value!,
+      
     }
 
     
@@ -163,6 +214,16 @@ export class EditProfileComponent {
       });
     });
   }
+ 
+signOutUser() {
+  const auth = getAuth();
+  signOut(auth).then(() => {
+    console.log('User signed out');
+  }).catch((error) => {
+    console.error('Error signing out', error);
+  });
+  this.router.navigate(['home-page']);
+}
 
 }
 

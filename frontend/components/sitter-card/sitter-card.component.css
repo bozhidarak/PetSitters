@@ -3,10 +3,6 @@
     padding: 0;
   }
   
-  .example-header-image {
-    background-image: url(../../src/assets/profile-pic2.jpg);
-    background-size: cover;
-  }
   div{
     margin:3%;
   }
@@ -18,4 +14,10 @@
   
   .small-text{
     font-size: 1vw;
+  }
+
+  .picture {
+    height: 16vw;
+    width: 19vw;
+    object-fit: cover;
   }

@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatCommonModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { CarouselModule } from '@coreui/angular';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
+import { Owner } from '../../src/models/user-model';
+import { getFirestore, collection, where, getDocs , query} from '@angular/fire/firestore';
 
 export interface OwnerInfo{
   adress: string;
@@ -24,26 +26,24 @@ export interface OwnerInfo{
 })
 export class OwnerDetailsComponent {
 
-  displayedColumns: string[] = ['description', 'value'];
-  
-  slides: any[] = new Array(3).fill({id: -1, src: '', title: '', subtitle: ''});
-  owners: OwnerInfo[] = [
-    {adress: 'Bulevardul Unirii 1', 
-    price: 20, 
-    typeOfPets: 'dogs',
-    description: 'I love dogs',}
-  ]
-  constructor() { }
+  owner: Owner | undefined;
+  ownerEmail: String | null = null;
+
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.slides[0] = {
-      src: './assets/profile-pic.jpg',
-    };
-    this.slides[1] = {
-      src: './assets/profile-pic2.jpg',
-    };
-    this.slides[2] = {
-      src: './assets/woman-holding-dog.jpg',
-    };
+
+   this.ownerEmail = this.route.snapshot.paramMap.get('ownerEmail');
+    console.log(this.ownerEmail);
+    this.getOwner();
+  }
+
+  async getOwner(){
+    const db = getFirestore();
+    const usersRef = collection(db, "users");
+    const q = query(usersRef, where("email", "==", this.ownerEmail));
+    const querySnapshot = await getDocs(q);
+    this.owner = querySnapshot.docs[0].data() as Owner;
+    
   }
 }

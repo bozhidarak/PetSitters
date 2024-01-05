@@ -5,9 +5,9 @@
     </head>
     <body>
             <nav-bar></nav-bar>
-            <div class="banner">
+            <div *ngIf="!loggedIn" class="banner">
                 <h2>Присъединете се към семейството!</h2>
-               <button mat-raised-button href="#" color="accent">Създай профил</button>
+               <button mat-raised-button href="#" color="accent" (click)="navigateToRegister()">Създай профил</button>
             </div>
         <!-- grid s info -->
         <mat-grid-list cols="2" rowHeight="1:1">

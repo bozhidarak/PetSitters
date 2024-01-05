@@ -19,8 +19,8 @@ export const routes: Routes = [
     {path:'registration', component:RegistrationComponent},
     {path:'login', component:LoginComponent},
     {path: 'how-page', component:HowPageComponent},
-    {path: 'sitter-details', component:SitterDetailsComponent},
-    {path: 'owner-details', component:OwnerDetailsComponent},
+    {path: 'sitter-details/:sitterEmail', component:SitterDetailsComponent},
+    {path: 'owner-details/:ownerEmail', component:OwnerDetailsComponent},
     {path: 'edit-profile', component:EditProfileComponent}
 
 

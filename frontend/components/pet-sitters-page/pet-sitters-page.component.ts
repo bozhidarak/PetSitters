@@ -7,11 +7,10 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { SitterCardComponent } from '../sitter-card/sitter-card.component';
 import { FiltersComponent } from '../filters/filters.component';
 import { Router } from '@angular/router';
+import { collection, getDocs, getFirestore, query, where } from '@angular/fire/firestore';
+import { Sitter } from '../../src/models/user-model';
+import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
 
-export interface Tile {
-  color: string;
-  text: string;
-}
 
 @Component({
   selector: 'pet-sitters',
@@ -20,21 +19,41 @@ export interface Tile {
   templateUrl: './pet-sitters-page.component.html',
   styleUrl: './pet-sitters-page.component.css'
 })
+
 export class PetSittersPageComponent {
-  tiles: Tile[] = [
-    {text: 'Two', color: 'lightgreen'},
-    {text: 'Three',color: 'lightpink'},
-    {text: 'Four', color: '#DDBDF1'},
-    {text: 'Three', color: 'lightpink'},
-    {text: 'Four',color: '#DDBDF1'},
-    {text: 'Three', color: 'lightpink'},
-  ];
+
+  sitters: Sitter[] = [];
+  loggedIn: boolean = false;
 
   constructor(private router:Router){
-
+    this.getSitters();
+    const auth = getAuth();
+   
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.loggedIn = true;
+      } else {
+        // User is signed out
+        this.loggedIn = false;
+      }
+    });
   }
 
-  navigateToDetails(){
-    this.router.navigate(['sitter-details'])
+  async getSitters(){
+    const db = getFirestore();
+    const usersRef = collection(db, "users");
+    const q = query(usersRef, where("userType", "==", 1), where("createAd", "==", true));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      this.sitters.push(doc.data() as Sitter);
+    });
+  }
+
+  navigateToDetails(sitter: Sitter){
+    this.router.navigate(['sitter-details', sitter.email])
+  }
+
+  navigateToRegister(){
+    this.router.navigate(['registration']);
   }
 }

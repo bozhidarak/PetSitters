@@ -6,6 +6,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { GoogleAuthProvider } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -22,8 +24,7 @@ export class LoginComponent {
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required]);
 
-  constructor(
-    private auth: AngularFireAuth) {}
+  constructor(private router: Router, private auth: AngularFireAuth) {}
 
 async login() {
 
@@ -43,5 +44,30 @@ async login() {
       console.error('Error logging in: ', error);
     }
   }
+
+  
+async singInWithGoogle(){
+
+  return this.auth.signInWithPopup(new GoogleAuthProvider).then((result) => {
+   this.router.navigate(['home-page']);
+     // This gives you a Google Access Token. You can use it to access the Google API.
+     //const credential = GoogleAuthProvider.credentialFromResult(result)
+     //const token = credential!.accessToken;
+     // The signed-in user info.
+     const user = result.user;
+     // IdP data available using getAdditionalUserInfo(result)
+     // ...
+   }).catch((error) => {
+     // Handle Errors here.
+     const errorCode = error.code;
+     const errorMessage = error.message;
+     // The email of the user's account used.
+     const email = error.customData.email;
+     // The AuthCredential type that was used.
+     const credential = GoogleAuthProvider.credentialFromError(error);
+     // ...
+   });
+ }
+ 
 
 }

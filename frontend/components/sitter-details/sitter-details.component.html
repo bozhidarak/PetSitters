@@ -10,10 +10,9 @@
             <div class="carousel">
                 <c-carousel [animate]="false" [dark]="true" [interval]="99999999999">
                     <c-carousel-inner>
-                      <c-carousel-item *ngFor="let slide of slides">
+                      <c-carousel-item *ngFor="let picture of sitter!.pictures">
                         <img
-                          [src]="slide.src"
-                          alt="{{ slide.title }}"
+                          [src]="picture"
                           class="d-block w-100"
                            />
                       </c-carousel-item>
@@ -26,25 +25,27 @@
                   </c-carousel>
             </div>
             <div class="info">
-                <div class="name">Петя Николова</div>
-                <div class="price">Цена: 10<span>лв/час</span></div>
+                <div class="name">{{sitter?.name}}</div>
+                <div class="price">Цена: {{sitter?.price}}<span>лв/час</span></div>
                 <button mat-raised-button href="#" color="accent">Свържете се</button>
                 <table>
                     <tr>
                         <td>Адрес:</td>
-                        <td>ул. "Георги С. Раковски" 108</td>
+                        <td>{{sitter?.location}}</td>
                     </tr>
                     <tr>
                         <td>Грижа се за: </td>
-                        <td>Кучета, Котки</td>
+                        <td><span *ngIf="sitter?.dogs">Куче, </span><span *ngIf="sitter?.cats">Котка, </span><span *ngIf="sitter?.birds">Птица</span></td>
+
                     </tr>
                     <tr>
                         <td>Големина: </td>
-                        <td>Малки, Средни</td>
+                        <td><span *ngIf="sitter?.small">Малки, </span><span *ngIf="sitter?.large">Големи</span></td>
+                        
                     </tr>
                     <tr>
                         <td>Възраст: </td>
-                        <td>30г.</td>
+                        <td>{{sitter?.age}}</td>
                     </tr>
                     <tr>
                         <td>Дата на публикуване: </td>
@@ -52,7 +53,7 @@
                     </tr>
                     <tr>
                         <td>За мен:</td>
-                        <td>Грижила съм се за животни през целия ми живот, много ги обичам, надеждна и отговорна съм и нямам търпение да се запозная с малките ви приятели.</td>
+                        <td>{{sitter?.description}}</td>
                 </table>
             </div>     
         </div>

@@ -7,7 +7,8 @@
         <button mat-button (click)="NavigateToHowPage()">Как работи?</button>
     
     <div>
-        <button mat-button class="login-btn" (click)="NavigateToLogin()">Вход</button>
-        <button mat-raised-button class="signup-btn" color="accent" (click)="NavigateToRegistration()">Създай профил</button>
+        <button *ngIf="!loggedIn" mat-button class="login-btn" (click)="NavigateToLogin()">Вход</button>
+        <button *ngIf="!loggedIn" mat-raised-button class="signup-btn" color="accent" (click)="NavigateToRegistration()">Създай профил</button>
+        <button *ngIf="loggedIn" mat-raised-button class="edit-profile-btn" color="accent" (click)="NavigateToEditProfile()"><img class="profile-pic" [src]="picture"> {{userName}}</button>
     </div>
 </mat-toolbar>

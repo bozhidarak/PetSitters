@@ -35,3 +35,11 @@ h2{
     color: #222;
     font-family: 'Popins', sans-serif; /* Shrift*/
 }
+
+.logo{
+    max-width: 1vw;
+}
+
+.google-btn{
+    border-width: 2px;
+}

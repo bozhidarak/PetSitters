@@ -2,11 +2,6 @@
 <form [formGroup]="registerForm">
   <h2>Създай профил</h2>
     <mat-form-field>
-      <mat-label>Име:</mat-label>
-      <input matInput placeholder="Иван Иванов" formControlName="name" required>
-    </mat-form-field>
-  
-    <mat-form-field>
         <mat-label>Имейл:</mat-label>
         <input matInput placeholder="pat@example.com" formControlName="email" required>
       </mat-form-field>
@@ -28,6 +23,6 @@
   </mat-form-field>
   
     <button mat-raised-button color="primary" (click)="register()" [disabled]="!registerForm.valid || !passwordsMatch()">Регистрация</button>
-    <button mat-raised-button color="primary" (click)="singInWithGoogle()">GOOGLE</button>
+    <button mat-stroked-button class="google-btn" color="primary" (click)="singInWithGoogle()"><img class="logo" src="/assets/googleLogo.png"> GOOGLE</button>
   </form>
   </html>

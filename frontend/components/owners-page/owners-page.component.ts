@@ -6,6 +6,9 @@ import {MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
 import { FiltersComponent } from '../filters/filters.component';
 import { Router } from '@angular/router';
+import { Owner, Sitter, User } from '../../src/models/user-model';
+import { getFirestore, collection, where, getDocs,query } from '@angular/fire/firestore';
+import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
 
 export interface Tile {
   color: string;
@@ -21,18 +24,39 @@ export interface Tile {
 })
 
 export class OwnersPageComponent {
-  tiles: Tile[] = [
-    {text: 'Two', color: 'lightgreen'},
-    {text: 'Three',color: 'lightpink'},
-    {text: 'Four', color: '#DDBDF1'},
-    {text: 'Three', color: 'lightpink'},
-    {text: 'Four',color: '#DDBDF1'},
-    {text: 'Three', color: 'lightpink'},
-  ];
+  owners: Owner[] = [];
+  loggedIn: boolean = true;
 
-  constructor(private router:Router){}
+  constructor(private router:Router){
+    this.getOwners();
+    const auth = getAuth();
+    
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.loggedIn = true;
+      } else {
+        // User is signed out
+        this.loggedIn = false;
+      }
+    });
+
+  }
+
+  async getOwners(){
+    const db = getFirestore();
+    const usersRef = collection(db, "users");
+    const q = query(usersRef, where("userType", "==", 2), where("createAd", "==", true));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {      
+      this.owners.push(doc.data() as Owner);
+    });
+  }
   
-  navigateToDetails(){
-    this.router.navigate(['owner-details'])
+  navigateToDetails(owner: Owner){
+    this.router.navigate(['owner-details', owner.email]);
+  }
+
+  navigateToRegister(){
+    this.router.navigate(['registration']);
   }
 }

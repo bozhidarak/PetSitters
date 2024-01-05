@@ -2,19 +2,21 @@
 <html>
 <form [formGroup]="editProfileForm">
   <h2>Редактиране на профил</h2>
-  <p>За да имате активна обява е необходимо всички полета да са попълнени.</p>
   <mat-radio-group aria-label="Select an option" formControlName="userType">
     <span>Ти си:</span>
-    <mat-radio-button value="1" >Гледач</mat-radio-button>
-    <mat-radio-button value="2">Стопанин</mat-radio-button>
+    <mat-radio-button [value]="1" >Гледач</mat-radio-button>
+    <mat-radio-button [value]="2">Стопанин</mat-radio-button>
 </mat-radio-group>
 <div class="owner-sitter">
     <h3>За теб: </h3>
-    <h3>Имейл: ibanabv.bg</h3>
+    <mat-form-field>
+        <mat-label>Имейл:</mat-label>
+        <input matInput [value]="currentUserEmail" disabled>
+    </mat-form-field>
     <div class="about-self">
         <mat-form-field>
             <mat-label>Име:</mat-label>
-            <input matInput placeholder="Иван Иванов" formControlName="name" required>
+            <input matInput placeholder="Иван Иванов" [value]="" formControlName="name" required>
         </mat-form-field>
         
         <mat-form-field>
@@ -36,7 +38,7 @@
     </button>
     <div  class="profile-picture">
         <div class="selectedPictureContainer">
-            <button type="button" mat-icon-button (click)="removeProfilePic()">
+            <button type="button" mat-icon-button (click)="removeProfilePic()" *ngIf="profilePicBlob">
                 <mat-icon>delete</mat-icon>
             </button>
             <img class="selectedPicture" [src]="profilePicBlob" >
@@ -45,7 +47,7 @@
 </div>
     <div>
         <div class="aboutPets">
-                <!-- ng if owner -->
+            <!-- ng if owner -->
             <h3 *ngIf="editProfileForm.get('userType')?.value == 2">За любимците: </h3>
             <!-- ng if sitter -->
             <h3 *ngIf="editProfileForm.get('userType')?.value == 1">Любимци, които бихте гледали: </h3>
@@ -103,13 +105,23 @@
             <button type="button" mat-icon-button (click)="removePicture(i)">
                 <mat-icon>delete</mat-icon>
             </button>
-            <img class="selectedPicture" [src]="picture" >
+            <img class="selectedPicture" [src]="picture" alt ="picture" >
         </div>
+        <div *ngFor="let picture of currentUser?.pictures; let i = index">
+            <button type="button" mat-icon-button (click)="removeExistingPicture(i)">
+                <mat-icon>delete</mat-icon>
+            </button>
+            <img class="selectedPicture" [src]="picture">
+        </div>
+    </div>
+    <div class="createAd">
+        <mat-checkbox formControlName="createAd">Искам да се създаде обява с тази информация</mat-checkbox>
+        <p>(Всички полета трябва да бъдат попълнени) </p>
     </div>
 </div>
 <div>
     <button mat-raised-button color="primary" (click)="onSubmit()">Запази</button>
-    <button mat-raised-button color="primary" >Изход??</button>
+    <button mat-raised-button color="primary" (click)="signOutUser()" >Изход??</button>
 </div>  
 </form>
   </html>
