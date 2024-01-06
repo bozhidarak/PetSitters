@@ -13,13 +13,25 @@ button{
 }
 
 button{
-    /* background-color: #EF5877; */
     border-radius: 20px;
 }
 
 .profile-pic{
-    max-width: 1rem;
+    max-width: 1.75rem;
+    border-radius: 50px;
+    margin-right: 1rem;
 }
+
+
+.profile-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem; 
+}
+
+
+
 
 
 

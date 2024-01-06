@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -9,10 +9,10 @@ import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule } from '@angular/material/checkbox';
-import { collection, doc, getDoc, getFirestore, setDoc } from '@angular/fire/firestore';
+import { arrayRemove, collection, doc, getDoc, getFirestore, setDoc, updateDoc } from '@angular/fire/firestore';
 import { addDoc } from '@firebase/firestore';
-import { getAuth, signOut } from '@angular/fire/auth';
-import { getStorage, uploadBytesResumable, ref, getDownloadURL } from '@firebase/storage';
+import { getAuth, onAuthStateChanged, signOut } from '@angular/fire/auth';
+import { getStorage, uploadBytesResumable, ref, getDownloadURL, deleteObject } from '@firebase/storage';
 import { Owner, Sitter, User, UserType } from '../../src/models/user-model';
 
 
@@ -31,9 +31,10 @@ export class EditProfileComponent {
   pictureBlobs: string[] = [];
   existingPictures: string[] = [];
   profilePic: File | null= null;
-  profilePicBlob: string = '';
+  profilePicBlob: string | null = null;
   currentUserEmail: string = '';
   currentUser: Owner | Sitter | undefined;
+  createAdFlag: boolean = false;
   
   
   editProfileForm = new FormGroup({
@@ -55,22 +56,26 @@ export class EditProfileComponent {
     createAd: new FormControl(false, [Validators.required])
   })
   
-  constructor(private router:Router){
+  constructor(private router:Router){ }
+
+  ngOnInit() {
     const auth = getAuth();
     const db = getFirestore();
     const usersCollection = collection(db, 'users');
-    const userId = auth.currentUser?.uid;
-    this.currentUserEmail = auth.currentUser?.email!;
-    if (userId) {
-      getDoc(doc(usersCollection, userId)).then((doc) => {
-        if (doc.exists()) {
-          if(doc.data()?.['userType'] == UserType.PetOwner) {
-            this.currentUser = doc.data() as Owner;
-          }
-          else {
-            this.currentUser = doc.data() as Sitter;
-          }
-          this.setFormValues(this.currentUser);
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const userId = auth.currentUser?.uid;
+        console.log(userId);
+        this.currentUserEmail = auth.currentUser?.email!;
+        if (userId) {
+          getDoc(doc(usersCollection, userId)).then((doc) => {
+          if (doc.exists()) {
+            if(doc.data()?.['userType'] == UserType.PetOwner) {
+              this.currentUser = doc.data() as Owner;
+            } else {
+              this.currentUser = doc.data() as Sitter;
+            }
+            this.setFormValues(this.currentUser)
         } else {
           // doc.data() will be undefined in this case
           console.log("No such document!");
@@ -81,8 +86,11 @@ export class EditProfileComponent {
     } else {
       // Handle the case where there is no current user
     }
+  } else {
+    
+}});
   }
-  
+
   setFormValues(user: Owner | Sitter) {
     this.editProfileForm.patchValue({
       name: user.name,
@@ -108,7 +116,23 @@ export class EditProfileComponent {
     this.pictureBlobs.splice(index, 1);
   }
 
-  removeExistingPicture(index: number) {}
+  async removeExistingPicture(index: number) {
+    const selectedPicture = this.currentUser?.pictures[index];
+
+    const db = getFirestore();
+    const auth = getAuth();
+    const uid = auth.currentUser?.uid;
+    
+    const storage = getStorage();
+    const storageRef = ref(storage, `users/${uid}/${selectedPicture}`);
+  
+    // Delete the file from Firebase Storage
+    await deleteObject(storageRef);
+  
+    // Update the user's pictures array in Firestore
+    const userRef = doc(db!, 'users', uid!);
+    await updateDoc(userRef, { pictures: arrayRemove(selectedPicture) });
+  }
 
   removeProfilePic() {
     this.profilePic = new File([], '');
@@ -136,11 +160,15 @@ export class EditProfileComponent {
     const storage = getStorage();
     const auth = getAuth();
     const userId = auth.currentUser?.uid;
-    const filePath = `users/${userId}/profilePic/${this.profilePic?.name}`;
-    const fileRef = ref(storage, filePath);
-    const uploadTaskSnapshot = await uploadBytesResumable(fileRef, this.profilePic!);
-    const downloadURL = await getDownloadURL(uploadTaskSnapshot.ref);
-    return downloadURL;
+    if(this.profilePic != null){
+      const filePath = `users/${userId}/profilePic/${this.profilePic?.name}`;
+      const fileRef = ref(storage, filePath);
+      const uploadTaskSnapshot = await uploadBytesResumable(fileRef, this.profilePic!);
+      const downloadURL = await getDownloadURL(uploadTaskSnapshot.ref);
+      return downloadURL;
+    }
+
+    return null;
   }
 
   async uploadPictures() {
@@ -187,7 +215,6 @@ export class EditProfileComponent {
       
     }
 
-    
     //add the rest of the fields to the object
     if(user.userType == UserType.PetOwner){
       user.numberOfPets = this.editProfileForm.get('numberOfPets')!.value!;
@@ -201,10 +228,15 @@ export class EditProfileComponent {
     
     //add pictures to the object
     this.uploadProfilePic().then(profilePicUrl => {
-      user.profilePic = profilePicUrl;
+      if(profilePicUrl != null){
+        user.profilePic = profilePicUrl;
+      }
+      else{
+        user.profilePic = this.currentUser?.profilePic;
+      }
       this.uploadPictures().then(downloadURLs => {
-        user.pictures = downloadURLs;
-      
+        user.pictures = this.currentUser?.pictures?.concat(downloadURLs);
+        
         const userId = auth.currentUser?.uid;
         if (userId) {
           setDoc(doc(usersCollection, userId), user);
@@ -222,6 +254,10 @@ signOutUser() {
   }).catch((error) => {
     console.error('Error signing out', error);
   });
+  this.router.navigate(['home-page']);
+}
+
+navigateToHome(){
   this.router.navigate(['home-page']);
 }
 
