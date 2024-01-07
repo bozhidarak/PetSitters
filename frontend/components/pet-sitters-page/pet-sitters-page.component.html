@@ -12,20 +12,11 @@
             </div>
             <div class="pet-list">
               <filters></filters>
-                <mat-grid-list cols="3" rowHeight="4:5">
-                  <!-- <mat-grid-tile colspan="1" rowspan="2" class="filters"><filters></filters></mat-grid-tile> -->
+                <mat-grid-list cols="3" rowHeight="2:3">
                       <mat-grid-tile *ngFor="let sitter of sitters"
                         colspan="1"
                         rowspan="1" (click)="navigateToDetails(sitter)"><sitter-card [sitter]="sitter"></sitter-card></mat-grid-tile>
                   </mat-grid-list>
-
-                  <!-- <pet-card></pet-card> -->
-                <!-- <mat-grid-list cols="2" rowHeight="2:1">
-                    <mat-grid-tile>1</mat-grid-tile>
-                    <mat-grid-tile>2</mat-grid-tile>
-                    <mat-grid-tile>3</mat-grid-tile>
-                    <mat-grid-tile>4</mat-grid-tile>
-                  </mat-grid-list> -->
             </div>
     </body>
 </html>

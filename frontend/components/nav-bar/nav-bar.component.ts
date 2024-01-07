@@ -43,7 +43,6 @@ export class NavBarComponent {
       const querySnapshot = await getDocs(q);
      this.userName = querySnapshot.docs[0].data()['name'];
       this.picture = querySnapshot.docs[0].data()['profilePic']; // profilepic
-      console.log(this.picture);
       //console.log(querySnapshot.docs[0].data());
       
     }

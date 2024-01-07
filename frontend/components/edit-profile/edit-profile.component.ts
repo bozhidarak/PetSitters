@@ -30,12 +30,12 @@ export class EditProfileComponent {
   pictureFiles: File[] = [];
   pictureBlobs: string[] = [];
   existingPictures: string[] = [];
-  profilePic: File | null= null;
+  profilePic: File | null = null;
   profilePicBlob: string | null = null;
   currentUserEmail: string = '';
   currentUser: Owner | Sitter | undefined;
   createAdFlag: boolean = false;
-  
+  isSubmitting: boolean = false;
   
   editProfileForm = new FormGroup({
     
@@ -124,7 +124,8 @@ export class EditProfileComponent {
     const uid = auth.currentUser?.uid;
     
     const storage = getStorage();
-    const storageRef = ref(storage, `users/${uid}/${selectedPicture}`);
+    const storageRef = ref(storage, selectedPicture);
+    console.log(selectedPicture);
   
     // Delete the file from Firebase Storage
     await deleteObject(storageRef);
@@ -132,6 +133,8 @@ export class EditProfileComponent {
     // Update the user's pictures array in Firestore
     const userRef = doc(db!, 'users', uid!);
     await updateDoc(userRef, { pictures: arrayRemove(selectedPicture) });
+
+    this.currentUser?.pictures.splice(index, 1);
   }
 
   removeProfilePic() {
@@ -194,11 +197,11 @@ export class EditProfileComponent {
   }
   
   onSubmit() { //TODO: create AD
+    this.isSubmitting = true;
     const auth = getAuth();
     const db = getFirestore();
     const usersCollection = collection(db, 'users');
 
-    this.router.navigate(['home-page']);
     //add all form fields to an object
     const user: any = {
       name: this.editProfileForm.get('name')!.value!,
@@ -231,15 +234,25 @@ export class EditProfileComponent {
       if(profilePicUrl != null){
         user.profilePic = profilePicUrl;
       }
-      else{
+      else if(this.currentUser?.profilePic != null){
         user.profilePic = this.currentUser?.profilePic;
+      } else {
+        user.profilePic = '';
       }
       this.uploadPictures().then(downloadURLs => {
-        user.pictures = this.currentUser?.pictures?.concat(downloadURLs);
-        
+        if(this.currentUser?.pictures != null){
+          user.pictures = this.currentUser?.pictures?.concat(downloadURLs);
+        } else if(downloadURLs != null){
+          user.pictures = downloadURLs;
+        } else{
+          user.pictures = [];
+        }
         const userId = auth.currentUser?.uid;
         if (userId) {
+          console.log(user);
           setDoc(doc(usersCollection, userId), user);
+          this.isSubmitting = false;
+          this.router.navigate(['home-page']);
         } else {
           // Handle the case where there is no current user
         }

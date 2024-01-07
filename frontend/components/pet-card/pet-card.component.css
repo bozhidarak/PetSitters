@@ -3,10 +3,6 @@
     padding: 0;
   }
   
-  .example-header-image {
-    background-image: url(../../src/assets/profile-pic1.jpg);
-    background-size: cover;
-  }
   div{
     margin:3%;
   }
@@ -16,10 +12,13 @@
     padding-right: 2%;
   }
 
-  .dates{
+.dates{
     font-size: small;
-  }
+}
   
-  
-  /* img{max-width: 200px;} */
+.picture {
+    height: 40vh;
+    width: 100%;
+    object-fit: cover;
+}
   

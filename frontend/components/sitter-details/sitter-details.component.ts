@@ -37,7 +37,9 @@ export class SitterDetailsComponent {
   sitterEmail: String | null = null;
   sitter: Sitter | undefined;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute) { 
+    
+  }
 
   ngOnInit(): void {
     this.sitterEmail = this.route.snapshot.paramMap.get('sitterEmail');

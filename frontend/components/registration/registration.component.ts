@@ -51,7 +51,7 @@ export class RegistrationComponent {
     } catch (error) {
       console.error('Error registering user: ', error);
     }
-    this.router.navigate(['pet-sitters']);
+    this.router.navigate(['edit-profile']);
   }
 
 async singInWithGoogle(){

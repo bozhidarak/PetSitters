@@ -111,7 +111,7 @@
     </div>
 </div>
 <div class="buttons">
-    <button mat-raised-button color="primary" (click)="onSubmit()">Запази</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="isSubmitting">Запази</button>
     <button mat-stroked-button class="stroked" color="primary" (click)="navigateToHome()">Анулирай промени</button>
     <button mat-stroked-button class="stroked" color="primary" (click)="signOutUser()" >Изход</button>
 </div>  

@@ -13,7 +13,6 @@
             <div class="pet-list">
               <filters></filters>
                 <mat-grid-list cols="3" rowHeight="2:3">
-                  <!-- <mat-grid-tile colspan="1" rowspan="2"><filters></filters></mat-grid-tile> -->
                       <mat-grid-tile *ngFor="let owner of owners"
                         colspan="1"
                         rowspan="1" (click)="navigateToDetails(owner)"><pet-card [owner]="owner"></pet-card></mat-grid-tile>
