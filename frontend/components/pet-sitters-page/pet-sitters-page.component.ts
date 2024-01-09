@@ -10,12 +10,13 @@ import { Router } from '@angular/router';
 import { collection, getDocs, getFirestore, query, where } from '@angular/fire/firestore';
 import { Sitter } from '../../src/models/user-model';
 import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 @Component({
   selector: 'pet-sitters',
   standalone: true,
-  imports: [CommonModule, NavBarComponent, MatButtonModule, SitterCardComponent, MatGridListModule, FiltersComponent],
+  imports: [CommonModule, NavBarComponent, MatButtonModule, SitterCardComponent, MatGridListModule, FiltersComponent, MatCheckboxModule],
   templateUrl: './pet-sitters-page.component.html',
   styleUrl: './pet-sitters-page.component.css'
 })
@@ -50,7 +51,11 @@ export class PetSittersPageComponent {
   }
 
   navigateToDetails(sitter: Sitter){
-    this.router.navigate(['sitter-details', sitter.email])
+    //seperate email to before and after @
+    const email = sitter.email.split('@');
+    //sepereate second part of email to before and after .
+    const provider = email[1].split('.');
+    this.router.navigate(['sitter-details', email[0], provider[0], provider[1]])
   }
 
   navigateToRegister(){

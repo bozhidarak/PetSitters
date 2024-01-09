@@ -26,7 +26,6 @@ button{
     padding: 20px 40px;
     font-size: 15px;
     border-radius: 30px;
-    /* margin-left: 20%; */
     margin-top: 1rem;
     margin-bottom: 1rem;
    font-weight: bold;
@@ -34,7 +33,6 @@ button{
 
 .approved{
     margin-top:0.5rem;
-    /* padding: 10px; */
     background-color: #F9D45E;
     border-radius: 10px;
     display: flex;

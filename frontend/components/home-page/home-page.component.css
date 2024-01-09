@@ -4,7 +4,7 @@ body{
     margin:0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Popins', sans-serif; /* Shrift*/
+    font-family: 'Popins', sans-serif; 
 }
 
 .background{
@@ -16,7 +16,6 @@ body{
 }
 .content{
     max-width: 40%;
-    /* padding-top: 9%; */
     font-size: 20px;
     margin-left: 2vw;    
 }

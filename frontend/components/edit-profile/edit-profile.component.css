@@ -74,6 +74,8 @@ span{
 	justify-content: flex-end;
 	align-items: center;
 	align-content: center;
+    margin-left: 1rem;
+
 }
 
 .selectedPictures{
@@ -83,6 +85,17 @@ span{
     justify-content: center;
     align-items: center;
     align-content: center;
+
+}
+
+.existing-pictures{
+    display: flex;
+	flex-direction: column-reverse;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	align-items: center;
+	align-content: center;
+    margin-left: 1rem;
 }
 
 input:disabled {

@@ -78,7 +78,7 @@
         <!-- ng if sitter -->
         <div class="sitter" *ngIf="editProfileForm.get('userType')?.value == 1">
             <mat-form-field>
-                <mat-label>Цена на час:</mat-label>
+                <mat-label>Цена на час (лв.):</mat-label>
                 <input matInput type="number" placeholder="10" formControlName="price" required>
             </mat-form-field>
         </div>
@@ -98,7 +98,7 @@
             </button>
             <img class="selectedPicture" [src]="picture" alt ="picture" >
         </div>
-        <div *ngFor="let picture of currentUser?.pictures; let i = index">
+        <div class="existing-pictures" *ngFor="let picture of currentUser?.pictures; let i = index">
             <button type="button" mat-icon-button (click)="removeExistingPicture(i)">
                 <mat-icon>delete</mat-icon>
             </button>

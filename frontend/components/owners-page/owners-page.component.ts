@@ -53,7 +53,11 @@ export class OwnersPageComponent {
   }
   
   navigateToDetails(owner: Owner){
-    this.router.navigate(['owner-details', owner.email]);
+    //seperate email to before and after @
+    const email = owner.email.split('@');
+    //sepereate second part of email to before and after .
+    const provider = email[1].split('.');
+    this.router.navigate(['owner-details', email[0], provider[0], provider[1]]);
   }
 
   navigateToRegister(){

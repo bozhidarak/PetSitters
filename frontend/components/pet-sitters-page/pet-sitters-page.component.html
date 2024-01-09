@@ -8,7 +8,7 @@
             <nav-bar></nav-bar>
             <div *ngIf="!loggedIn" class="banner">
                 <h2>Присъединете се към семейството!</h2>
-               <button mat-raised-button href="#" color="accent" (click)="loggedIn && navigateToRegister()">Създай профил</button>
+               <button mat-raised-button href="#" color="accent" (click)="navigateToRegister()">Създай профил</button>
             </div>
             <div class="pet-list">
               <filters></filters>

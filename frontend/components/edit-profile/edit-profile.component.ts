@@ -53,7 +53,7 @@ export class EditProfileComponent {
     age: new FormControl(0, [Validators.required]),
     price: new FormControl(0, [Validators.required]),
     userType: new FormControl(UserType.PetOwner, [Validators.required]),
-    createAd: new FormControl(false, [Validators.required])
+    createAd: new FormControl(false)
   })
   
   constructor(private router:Router){ }
@@ -65,7 +65,6 @@ export class EditProfileComponent {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const userId = auth.currentUser?.uid;
-        console.log(userId);
         this.currentUserEmail = auth.currentUser?.email!;
         if (userId) {
           getDoc(doc(usersCollection, userId)).then((doc) => {
@@ -125,8 +124,7 @@ export class EditProfileComponent {
     
     const storage = getStorage();
     const storageRef = ref(storage, selectedPicture);
-    console.log(selectedPicture);
-  
+    
     // Delete the file from Firebase Storage
     await deleteObject(storageRef);
   
@@ -143,11 +141,7 @@ export class EditProfileComponent {
   }
   
   onFileSelect(event: any) {
-    
-    // this.pictureFiles = Array.from(event.target.files);
-    // this.pictureBlobs = this.pictureFiles.map(file => URL.createObjectURL(file));
-    // console.log(this.pictureBlobs);
-
+   
     for (let i = 0; i < event.target.files.length; i++) {
       this.pictureFiles.push(event.target.files[i]);
       this.pictureBlobs.push(URL.createObjectURL(event.target.files[i]));

@@ -1,6 +1,6 @@
         <nav-bar></nav-bar>
         <div class="sitter-info">
-            <div class="carousel">
+            <div *ngIf="owner != undefined" class="carousel">
                 <c-carousel [animate]="false" [dark]="true" [interval]="9999999" [transition]="'crossfade'">
                     <c-carousel-inner>
                       <c-carousel-item *ngFor="let picture of owner!.pictures">
@@ -46,12 +46,4 @@
                         <td>{{owner?.description}}</td>
                 </table>
             </div>     
-                  
-        <!--div carousel
-                yellow Verified below
-            div  gledach
-                ime
-                cena
-                 swurjete se button
-                table-->
         </div>

@@ -33,7 +33,7 @@ export class OwnerDetailsComponent {
 
   ngOnInit(): void {
 
-   this.ownerEmail = this.route.snapshot.paramMap.get('ownerEmail');
+    this.ownerEmail = this.route.snapshot.paramMap.get('ownerEmail') + '@' + this.route.snapshot.paramMap.get('ownerEmailProvider') + '.' + this.route.snapshot.paramMap.get('ownerEmailDomain');
     console.log(this.ownerEmail);
     this.getOwner();
   }

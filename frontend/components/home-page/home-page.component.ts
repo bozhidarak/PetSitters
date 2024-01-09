@@ -15,7 +15,7 @@ export class HomePageComponent {
 
   constructor(private router:Router){}
 
-editprofile(){
-  this.router.navigate(['edit-profile']);
+register(){
+  this.router.navigate(['registration']);
 }
 }

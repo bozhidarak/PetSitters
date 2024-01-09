@@ -5,19 +5,33 @@
     </head>
     <body>
             <nav-bar></nav-bar>
-            <div *ngIf="!loggedIn" class="banner">
-                <h2>Присъединете се към семейството!</h2>
-               <button mat-raised-button href="#" color="accent" (click)="navigateToRegister()">Създай профил</button>
-            </div>
-        <!-- grid s info -->
+    <div class="list">
         <mat-grid-list cols="2" rowHeight="1:1">
             <mat-grid-tile
             colspan="1"
-             rowspan="1"></mat-grid-tile>
+             rowspan="1"><b>1.</b> Създай своят профил.</mat-grid-tile>
              <mat-grid-tile
             colspan="1"
-             rowspan="1"></mat-grid-tile>
-
+             rowspan="1"> <img src="assets/how1.jpg"></mat-grid-tile>
+             <mat-grid-tile
+            colspan="1"
+             rowspan="1"><img src="assets/woman-holding-dog.jpg" alt=""></mat-grid-tile>
+             <mat-grid-tile
+            colspan="1"
+             rowspan="1"> <span><b>2.</b> След регистрация, във формата за редактиране на профил, избери дали си <b> гледач </b> или <b> стопанин</b> и попълни нужната информация.</span></mat-grid-tile>
+             <mat-grid-tile
+             colspan="1"
+             rowspan="1"><span><b>3.</b> Маркирай полето за създаване на обява, ако желаеш другите потребители да виждат твоята информация и да се свързват с теб.</span></mat-grid-tile>
+             <mat-grid-tile
+            colspan="1"
+             rowspan="1"><img src="assets/how2.jpg" alt=""></mat-grid-tile>
+             <mat-grid-tile
+            colspan="1"
+             rowspan="1"><img src="assets/how3.png" alt=""></mat-grid-tile>
+             <mat-grid-tile
+            colspan="1"
+             rowspan="1"><span><b>4.</b> Разгледай "Стопани" и "Гледачи". Mожеш да отвориш всяка обява, за да видиш повече информация.</span></mat-grid-tile>
         </mat-grid-list>
+    </div>
     </body>
 </html>

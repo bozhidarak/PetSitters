@@ -28,8 +28,4 @@ export class HowPageComponent {
     });
   }
 
-navigateToRegister(){
-  this.router.navigate(['registration']);
-}
-
 }

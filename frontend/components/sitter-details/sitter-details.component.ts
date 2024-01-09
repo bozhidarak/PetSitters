@@ -9,21 +9,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { Owner, Sitter } from '../../src/models/user-model';
 import { getFirestore, collection, where, getDocs, query } from '@angular/fire/firestore';
 
-
-export interface SitterInfo{
-  adress: string;
-  price: number;
-  typeOfPets: string;//????
-  description: string;
-}
-
-const ELEMENT_DATA: SitterInfo[] =[
-  {adress: 'Bulevardul Unirii 1', 
-  price: 20, 
-  typeOfPets: 'dogs',
-   description: 'I love dogs',}
-]
-
 @Component({
   selector: 'sitter-details',
   standalone: true,
@@ -38,12 +23,11 @@ export class SitterDetailsComponent {
   sitter: Sitter | undefined;
 
   constructor(private route: ActivatedRoute) { 
-    
+    this.sitterEmail = this.route.snapshot.paramMap.get('sitterEmail') + '@' + this.route.snapshot.paramMap.get('sitterEmailProvider') + '.' + this.route.snapshot.paramMap.get('sitterEmailDomain');
+    this.getSitter();
   }
 
   ngOnInit(): void {
-    this.sitterEmail = this.route.snapshot.paramMap.get('sitterEmail');
-    this.getSitter();
   }
 
   async getSitter(){
