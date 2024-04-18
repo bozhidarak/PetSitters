@@ -7,7 +7,7 @@ import {MatTableModule} from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Owner, Sitter } from '../../src/models/user-model';
-import { getFirestore, collection, where, getDocs, query } from '@angular/fire/firestore';
+// import { getFirestore, collection, where, getDocs, query } from '@angular/fire/firestore';
 
 @Component({
   selector: 'sitter-details',
@@ -31,11 +31,11 @@ export class SitterDetailsComponent {
   }
 
   async getSitter(){
-    const db = getFirestore();
-    const usersRef = collection(db, "users");
-    const q = query(usersRef, where("email", "==", this.sitterEmail));
-    const querySnapshot = await getDocs(q);
-    this.sitter = querySnapshot.docs[0].data() as Sitter;
-    console.log(this.sitter.pictures);
+    // const db = getFirestore();
+    // const usersRef = collection(db, "users");
+    // const q = query(usersRef, where("email", "==", this.sitterEmail));
+    // const querySnapshot = await getDocs(q);
+    // this.sitter = querySnapshot.docs[0].data() as Sitter;
+    // console.log(this.sitter.pictures);
   }
 }

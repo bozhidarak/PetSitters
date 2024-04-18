@@ -7,11 +7,11 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { getFirestore, collection, addDoc } from '@firebase/firestore';
+// import { getFirestore, collection, addDoc } from '@firebase/firestore';
 import { Router } from '@angular/router';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { getDoc } from '@angular/fire/firestore';
-import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+// import { AngularFireAuth } from '@angular/fire/compat/auth';
+// import { getDoc } from '@angular/fire/firestore';
+// import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 
 
 @Component({
@@ -21,7 +21,7 @@ import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
      MatInputModule, FormsModule, ReactiveFormsModule, MatIconModule],
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.css',
-  providers: [ AngularFireAuth, GoogleAuthProvider]
+  // providers: [ AngularFireAuth, GoogleAuthProvider]
 })
 export class RegistrationComponent {
 
@@ -33,7 +33,7 @@ export class RegistrationComponent {
     confirmPassword: new FormControl('', [Validators.required])
   })
 
-  constructor(private router:Router, private auth: AngularFireAuth){}
+  constructor(private router:Router, /*private auth: AngularFireAuth*/){}
 
   passwordsMatch() {
     const password = this.registerForm.get('password')?.value;
@@ -42,32 +42,32 @@ export class RegistrationComponent {
   }
 
   async register() {
-    if (!this.registerForm.valid || !this.passwordsMatch())
-      return;
+//     if (!this.registerForm.valid || !this.passwordsMatch())
+//       return;
 
-    try {
-      const credential = await this.auth.createUserWithEmailAndPassword(this.registerForm.get('email')!.value!, this.registerForm.get('password')!.value!);
-      console.log('User registered with UID: ', credential.user?.uid);
-    } catch (error) {
-      console.error('Error registering user: ', error);
-    }
-    this.router.navigate(['edit-profile']);
-  }
+//     try {
+//       const credential = await this.auth.createUserWithEmailAndPassword(this.registerForm.get('email')!.value!, this.registerForm.get('password')!.value!);
+//       console.log('User registered with UID: ', credential.user?.uid);
+//     } catch (error) {
+//       console.error('Error registering user: ', error);
+//     }
+//     this.router.navigate(['edit-profile']);
+   }
 
-async singInWithGoogle(){
+ async singInWithGoogle(){
 
- return this.auth.signInWithPopup(new GoogleAuthProvider).then((result) => {
-  this.router.navigate(['edit-profile']);
-    const user = result.user;
-  }).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.customData.email;
-    // The AuthCredential type that was used.
-    const credential = GoogleAuthProvider.credentialFromError(error);
-  });
+//  return this.auth.signInWithPopup(new GoogleAuthProvider).then((result) => {
+//   this.router.navigate(['edit-profile']);
+//     const user = result.user;
+//   }).catch((error) => {
+//     // Handle Errors here.
+//     const errorCode = error.code;
+//     const errorMessage = error.message;
+//     // The email of the user's account used.
+//     const email = error.customData.email;
+//     // The AuthCredential type that was used.
+//     const credential = GoogleAuthProvider.credentialFromError(error);
+//   });
 }
 
 }

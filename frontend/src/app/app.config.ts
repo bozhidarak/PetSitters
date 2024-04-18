@@ -15,9 +15,10 @@ export const appConfig: ApplicationConfig = {
   
   providers: [provideRouter(routes),
   provideAnimations(),
-   importProvidersFrom(provideFirebaseApp(() => initializeApp(environment.firebase))),
-   importProvidersFrom(AngularFireModule.initializeApp(environment.firebase)),
-   importProvidersFrom(provideAuth(() => getAuth())),
-   importProvidersFrom(provideAnalytics(() => getAnalytics())), ScreenTrackingService, UserTrackingService,
-   importProvidersFrom(provideFirestore(() => getFirestore()))]
+  //  importProvidersFrom(provideFirebaseApp(() => initializeApp(environment.firebase))),
+  //  importProvidersFrom(AngularFireModule.initializeApp(environment.firebase)),
+  //  importProvidersFrom(provideAuth(() => getAuth())),
+  //  importProvidersFrom(provideAnalytics(() => getAnalytics())), ScreenTrackingService, UserTrackingService,
+  //  importProvidersFrom(provideFirestore(() => getFirestore()))
+]
 };

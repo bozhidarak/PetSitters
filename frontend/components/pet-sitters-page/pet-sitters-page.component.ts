@@ -7,9 +7,9 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { SitterCardComponent } from '../sitter-card/sitter-card.component';
 import { FiltersComponent } from '../filters/filters.component';
 import { Router } from '@angular/router';
-import { collection, getDocs, getFirestore, query, where } from '@angular/fire/firestore';
+// import { collection, getDocs, getFirestore, query, where } from '@angular/fire/firestore';
 import { Sitter } from '../../src/models/user-model';
-import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
+// import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
@@ -27,28 +27,28 @@ export class PetSittersPageComponent {
   loggedIn: boolean = false;
 
   constructor(private router:Router){
-    this.getSitters();
-    const auth = getAuth();
+    // this.getSitters();
+    // const auth = getAuth();
    
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        this.loggedIn = true;
-      } else {
-        // User is signed out
-        this.loggedIn = false;
-      }
-    });
+    // onAuthStateChanged(auth, (user) => {
+    //   if (user) {
+    //     this.loggedIn = true;
+    //   } else {
+    //     // User is signed out
+    //     this.loggedIn = false;
+    //   }
+    // });
   }
 
-  async getSitters(){
-    const db = getFirestore();
-    const usersRef = collection(db, "users");
-    const q = query(usersRef, where("userType", "==", 1), where("createAd", "==", true));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      this.sitters.push(doc.data() as Sitter);
-    });
-  }
+  // async getSitters(){
+  //   const db = getFirestore();
+  //   const usersRef = collection(db, "users");
+  //   const q = query(usersRef, where("userType", "==", 1), where("createAd", "==", true));
+  //   const querySnapshot = await getDocs(q);
+  //   querySnapshot.forEach((doc) => {
+  //     this.sitters.push(doc.data() as Sitter);
+  //   });
+  // }
 
   navigateToDetails(sitter: Sitter){
     //seperate email to before and after @

@@ -5,8 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { GoogleAuthProvider } from '@angular/fire/auth';
+// import { AngularFireAuth } from '@angular/fire/compat/auth';
+// import { GoogleAuthProvider } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 
 
@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
   imports: [CommonModule, MatFormFieldModule, MatButtonModule, MatInputModule, FormsModule, ReactiveFormsModule, MatIconModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
-  providers: [AngularFireAuth]
+  // providers: [AngularFireAuth]
 })
 export class LoginComponent {
   
@@ -24,7 +24,7 @@ export class LoginComponent {
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required]);
 
-  constructor(private router: Router, private auth: AngularFireAuth) {}
+  constructor(private router: Router, /*private auth: AngularFireAuth*/) {}
 
 async login() {
 
@@ -46,18 +46,18 @@ async login() {
   
 async singInWithGoogle(){
 
-  return this.auth.signInWithPopup(new GoogleAuthProvider).then((result) => {
-   this.router.navigate(['home-page']);
-    const user = result.user;
-   }).catch((error) => {
-     // Handle Errors here.
-     const errorCode = error.code;
-     const errorMessage = error.message;
-     // The email of the user's account used.
-     const email = error.customData.email;
-     // The AuthCredential type that was used.
-     const credential = GoogleAuthProvider.credentialFromError(error);
-   });
+//   return this.auth.signInWithPopup(new GoogleAuthProvider).then((result) => {
+//    this.router.navigate(['home-page']);
+//     const user = result.user;
+//    }).catch((error) => {
+//      // Handle Errors here.
+//      const errorCode = error.code;
+//      const errorMessage = error.message;
+//      // The email of the user's account used.
+//      const email = error.customData.email;
+//      // The AuthCredential type that was used.
+//      const credential = GoogleAuthProvider.credentialFromError(error);
+//    });
  }
  
 
