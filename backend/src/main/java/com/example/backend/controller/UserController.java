@@ -26,4 +26,10 @@ public class UserController {
         return ResponseEntity.ok(userService.editUser(userDTO));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long id){ // ? - wildcard
+        userService.deleteUser(id);
+        return ResponseEntity.ok().body("User deleted");
+    }
+
 }

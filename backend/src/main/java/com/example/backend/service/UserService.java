@@ -28,6 +28,10 @@ public class UserService {
         UserEntity userEntity = userMapper.toEntity(userDTO);
         return userMapper.toDTO(userRepository.save(userEntity));
     }
+
+    public void deleteUser(Long id){
+        userRepository.deleteById(id);
+    }
 }
 
 
