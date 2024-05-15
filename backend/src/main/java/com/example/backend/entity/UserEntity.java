@@ -23,7 +23,8 @@ public class UserEntity {
     private String profilePic;
     private String name;
 
-    public UserEntity(String username, String password, String email, String location, Date birthDate, Boolean gender, String profilePic, String name) {
+    public UserEntity(Long id, String username, String password, String email, String location, Date birthDate, Boolean gender, String profilePic, String name) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;

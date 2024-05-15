@@ -2,17 +2,11 @@ package com.example.backend.mapper;
 
 import com.example.backend.dto.UserDTO;
 import com.example.backend.entity.UserEntity;
+import org.mapstruct.Mapper;
 
-public class UserMapper {
+@Mapper(componentModel = "spring")
+public interface UserMapper {
 
-public static UserDTO toDTO(UserEntity userEntity){
-    return new UserDTO(userEntity.getId(),
-            userEntity.getUsername(),
-            userEntity.getEmail(),
-            userEntity.getLocation(),
-            userEntity.getBirthDate(),
-            userEntity.getGender(),
-            userEntity.getProfilePic(),
-            userEntity.getName());
-    }
+UserDTO toDTO(UserEntity userEntity);
+UserEntity toEntity(UserDTO userDTO);
 }
