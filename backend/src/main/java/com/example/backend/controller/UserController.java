@@ -22,8 +22,8 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<UserDTO> editUser(@PathVariable Long id, @RequestBody UserDTO userDTO){
-        UserDTO newUserDTO = userService.editUser(id, userDTO);
-        return ResponseEntity.ok(userDTO);
+        userDTO.setId(id);
+        return ResponseEntity.ok(userService.editUser(userDTO));
     }
 
 }
