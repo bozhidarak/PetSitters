@@ -1,9 +1,6 @@
 package com.example.backend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
@@ -22,6 +19,9 @@ public class UserEntity {
     private Boolean gender;
     private String profilePic;
     private String name;
+
+    @OneToOne(mappedBy = "user")
+    private PetSitterOfferEntity offer;
 
     public UserEntity(Long id, String username, String password, String email, String location, Date birthDate, Boolean gender, String profilePic, String name) {
         this.id = id;
