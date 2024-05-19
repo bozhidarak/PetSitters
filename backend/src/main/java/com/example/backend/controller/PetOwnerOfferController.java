@@ -37,7 +37,7 @@ public class PetOwnerOfferController {
     }
     @PostMapping
     public ResponseEntity<PetOwnerOfferDTO> createOffer(@RequestBody PetOwnerOfferDTO newOfferDto) {
-        PetOwnerOfferDTO savedOffer = petOwnerOfferService.addOffer(newOfferDto);
+        PetOwnerOfferDTO savedOffer = petOwnerOfferService.createOffer(newOfferDto);
         return new ResponseEntity<>(savedOffer, HttpStatus.CREATED);
     }
 
@@ -61,6 +61,6 @@ public class PetOwnerOfferController {
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteOfferById(@PathVariable Long id) {
         petOwnerOfferService.deleteOfferById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

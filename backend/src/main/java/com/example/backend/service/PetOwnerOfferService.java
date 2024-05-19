@@ -43,13 +43,13 @@ public class PetOwnerOfferService {
         }
         return petOwnerOfferMapper.mapToDto(offer);
     }
-    public PetOwnerOfferDTO addOffer(PetOwnerOfferDTO newOfferDto) {
+    public PetOwnerOfferDTO createOffer(PetOwnerOfferDTO newOfferDto) {
         PetOwnerOffer newOffer = handleOfferCreation(newOfferDto);
         return petOwnerOfferMapper.mapToDto(petOwnerOfferRepository.save(newOffer));
     }
 
-    public PetOwnerOfferDTO updateOffer(Long id, PetOwnerOfferDTO offerDto) {
-        PetOwnerOffer offer = petOwnerOfferRepository.findById(offerDto.getId()).orElse(null);
+    public PetOwnerOfferDTO updateOffer(Long offerId, PetOwnerOfferDTO offerDto) {
+        PetOwnerOffer offer = petOwnerOfferRepository.findById(offerId).orElse(null);
         if(offer == null) {
             offer = handleOfferCreation(offerDto);
         }
@@ -77,7 +77,6 @@ public class PetOwnerOfferService {
         }
 
         newOffer.setUser(offerUser);
-//        offerUser.getPetOwnerOffers().add(newOffer);
         return newOffer;
     }
 }
