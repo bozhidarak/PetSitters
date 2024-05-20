@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.security.InvalidParameterException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PetOwnerOfferService {
@@ -44,30 +43,28 @@ public class PetOwnerOfferService {
         return petOwnerOfferMapper.mapToDto(offer);
     }
     public PetOwnerOfferDTO createOffer(PetOwnerOfferDTO newOfferDto) {
-        PetOwnerOffer newOffer = handleOfferCreation(newOfferDto);
+        PetOwnerOffer newOffer = linkOfferToUser(newOfferDto);
         return petOwnerOfferMapper.mapToDto(petOwnerOfferRepository.save(newOffer));
     }
 
     public PetOwnerOfferDTO updateOffer(Long offerId, PetOwnerOfferDTO offerDto) {
-        PetOwnerOffer offer = petOwnerOfferRepository.findById(offerId).orElse(null);
-        if(offer == null) {
-            offer = handleOfferCreation(offerDto);
+        PetOwnerOffer currentOffer = petOwnerOfferRepository.findById(offerId).orElse(null);
+        if(currentOffer == null) {
+            return createOffer(offerDto);
         }
-        else {
-            if(!offer.getUser().getId().equals(offerDto.getUserId())){
-                throw new InvalidParameterException("Cannot change the id of offer's user");
-            }
-            offer = petOwnerOfferMapper.mapToEntity(offerDto);
+        if(!currentOffer.getUser().getId().equals(offerDto.getUserId())){
+            throw new InvalidParameterException("Cannot change the id of offer's user");
         }
-        PetOwnerOffer savedOffer = petOwnerOfferRepository.save(offer);
-        return petOwnerOfferMapper.mapToDto(savedOffer);
+        ;
+        PetOwnerOffer updatedOffer = petOwnerOfferRepository.save(petOwnerOfferMapper.mapToEntity(offerDto));
+        return petOwnerOfferMapper.mapToDto(updatedOffer);
     }
 
     public void deleteOfferById(Long id) {
         petOwnerOfferRepository.deleteById(id);
     }
 
-    private PetOwnerOffer handleOfferCreation(PetOwnerOfferDTO newOfferDto) {
+    private PetOwnerOffer linkOfferToUser(PetOwnerOfferDTO newOfferDto) {
         PetOwnerOffer newOffer = petOwnerOfferMapper.mapToEntity(newOfferDto);
 
         Long userId = newOfferDto.getUserId();
@@ -75,7 +72,6 @@ public class PetOwnerOfferService {
         if(offerUser == null) {
             throw new ResourceNotFoundException("No user with id: " + userId);
         }
-
         newOffer.setUser(offerUser);
         return newOffer;
     }
