@@ -5,6 +5,7 @@ import com.example.backend.entity.UserEntity;
 import com.example.backend.mapper.UserMapper;
 import com.example.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,16 +21,23 @@ public class UserService {
     }
 
     public UserDTO getByID(Long id){
-        UserEntity userEntity = userRepository.findById(id).orElseThrow();
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(
+                ()-> new ResourceNotFoundException("No user with id: " + id));
         return userMapper.toDTO(userEntity);
     }
 
     public UserDTO editUser(UserDTO userDTO){
+        if(!userRepository.existsById(userDTO.getId())){
+            throw new ResourceNotFoundException("No user with id: " + userDTO.getId());
+        }
         UserEntity userEntity = userMapper.toEntity(userDTO);
         return userMapper.toDTO(userRepository.save(userEntity));
     }
 
     public void deleteUser(Long id){
+        if(!userRepository.existsById(id)){
+            throw new ResourceNotFoundException("No user with id: " + id);
+        }
         userRepository.deleteById(id);
     }
 }
