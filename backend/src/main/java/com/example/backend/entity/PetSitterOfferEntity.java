@@ -7,6 +7,7 @@ import java.util.Date;
 
 @Entity
 @Data
+@Table(name="pet_sitter_offer")
 public class PetSitterOfferEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

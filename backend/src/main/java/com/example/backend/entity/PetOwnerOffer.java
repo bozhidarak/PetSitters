@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 @Data
 @Entity
+@Table(name="pet_owner_offer")
 public class PetOwnerOffer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

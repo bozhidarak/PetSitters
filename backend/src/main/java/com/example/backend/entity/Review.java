@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 @Entity
+@Table(name="review")
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
