@@ -6,7 +6,6 @@ import com.example.backend.entity.UserEntity;
 import com.example.backend.mapper.ReviewMapper;
 import com.example.backend.repository.ReviewRepository;
 import com.example.backend.repository.UserRepository;
-import com.sun.jdi.request.InvalidRequestStateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -37,7 +36,7 @@ public class ReviewService {
     }
 
     public List<ReviewDTO> getAllReviewsForUser(Long userId) {
-        return reviewRepository.findByUserId(userId)
+        return reviewRepository.findByReviewedUserId(userId)
                 .stream()
                 .map(reviewMapper::mapToDto)
                 .toList();
