@@ -480,12 +480,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/reviews/1234",
+							"raw": "{{baseUrl}}/reviews/user/1234",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"reviews",
+								"user",
 								"1234"
 							]
 						}
