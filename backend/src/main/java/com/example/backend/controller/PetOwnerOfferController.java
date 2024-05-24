@@ -2,6 +2,7 @@ package com.example.backend.controller;
 
 import com.example.backend.dto.PetOwnerOfferDTO;
 import com.example.backend.service.PetOwnerOfferService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -36,14 +37,14 @@ public class PetOwnerOfferController {
         }
     }
     @PostMapping
-    public ResponseEntity<PetOwnerOfferDTO> createOffer(@RequestBody PetOwnerOfferDTO newOfferDto) {
+    public ResponseEntity<PetOwnerOfferDTO> createOffer(@Valid @RequestBody PetOwnerOfferDTO newOfferDto) {
         PetOwnerOfferDTO savedOffer = petOwnerOfferService.createOffer(newOfferDto);
         return new ResponseEntity<>(savedOffer, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<PetOwnerOfferDTO> updateOffer(@PathVariable Long id,
-                                                        @RequestBody PetOwnerOfferDTO offerDto) {
+                                                        @Valid @RequestBody PetOwnerOfferDTO offerDto) {
         try {
             PetOwnerOfferDTO offerDTO = petOwnerOfferService.updateOffer(id, offerDto);
             return new ResponseEntity<>(offerDTO, HttpStatus.OK);

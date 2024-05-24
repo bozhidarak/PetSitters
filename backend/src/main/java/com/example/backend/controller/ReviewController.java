@@ -2,6 +2,7 @@ package com.example.backend.controller;
 
 import com.example.backend.dto.ReviewDTO;
 import com.example.backend.service.ReviewService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -45,7 +46,7 @@ public class ReviewController {
     }
 
     @PostMapping
-    public ResponseEntity<ReviewDTO> createReview(@RequestBody ReviewDTO newReviewDTO) {
+    public ResponseEntity<ReviewDTO> createReview(@Valid @RequestBody ReviewDTO newReviewDTO) {
         try {
             ReviewDTO savedReviewDto = reviewService.createReview(newReviewDTO);
             return new ResponseEntity<>(savedReviewDto, HttpStatus.CREATED);
@@ -58,7 +59,7 @@ public class ReviewController {
 
     @PutMapping("/{id}")
     public ResponseEntity<ReviewDTO> updateReview(
-            @PathVariable Long id, @RequestBody ReviewDTO reviewDTO) {
+            @PathVariable Long id, @Valid @RequestBody ReviewDTO reviewDTO) {
         try {
             ReviewDTO updatedReviewDto = reviewService.updateReview(id, reviewDTO);
             return new ResponseEntity<>(updatedReviewDto, HttpStatus.OK);
