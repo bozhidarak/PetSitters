@@ -1,4 +1,4 @@
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
                        id SERIAL PRIMARY KEY,
                        username VARCHAR(50) NOT NULL,
                        password VARCHAR(255) NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE users (
                        name VARCHAR(100)
 );
 
-CREATE TABLE pet_sitter_offer (
+CREATE TABLE IF NOT EXISTS pet_sitter_offer (
                                   offer_id SERIAL PRIMARY KEY,
                                   description TEXT,
                                   price_per_day DOUBLE PRECISION,
