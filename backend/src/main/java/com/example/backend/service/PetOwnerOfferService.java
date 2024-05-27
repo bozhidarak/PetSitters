@@ -9,6 +9,7 @@ import com.example.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.InvalidParameterException;
 import java.util.List;
@@ -17,16 +18,20 @@ import java.util.List;
 public class PetOwnerOfferService {
     private final PetOwnerOfferRepository petOwnerOfferRepository;
     private final UserRepository userRepository;
+    private final PictureService pictureService;
     private final PetOwnerOfferMapper petOwnerOfferMapper;
 
     @Autowired
     public PetOwnerOfferService(PetOwnerOfferRepository petOwnerOfferRepository,
                                 PetOwnerOfferMapper petOwnerOfferMapper,
+                                PictureService pictureService,
                                 UserRepository userRepository)
     {
         this.petOwnerOfferRepository = petOwnerOfferRepository;
-        this.petOwnerOfferMapper = petOwnerOfferMapper;
         this.userRepository = userRepository;
+        this.pictureService = pictureService;
+        this.petOwnerOfferMapper = petOwnerOfferMapper;
+
     }
 
     public List<PetOwnerOfferDTO> getAllOffers() {
@@ -42,6 +47,15 @@ public class PetOwnerOfferService {
         }
         return petOwnerOfferMapper.mapToDto(offer);
     }
+    public PetOwnerOfferDTO createOffer(PetOwnerOfferDTO newOfferDto, List<MultipartFile> pictures) {
+        PetOwnerOffer newOffer = linkOfferToUser(newOfferDto);
+        PetOwnerOffer savedOffer = petOwnerOfferRepository.save(newOffer);
+        for (MultipartFile picture : pictures) {
+            pictureService.addPictureToOwnerOffer(picture, savedOffer);
+        }
+        return petOwnerOfferMapper.mapToDto(savedOffer);
+    }
+
     public PetOwnerOfferDTO createOffer(PetOwnerOfferDTO newOfferDto) {
         PetOwnerOffer newOffer = linkOfferToUser(newOfferDto);
         return petOwnerOfferMapper.mapToDto(petOwnerOfferRepository.save(newOffer));

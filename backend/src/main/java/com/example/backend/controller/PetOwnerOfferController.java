@@ -8,6 +8,7 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.InvalidParameterException;
 import java.util.List;
@@ -37,8 +38,9 @@ public class PetOwnerOfferController {
         }
     }
     @PostMapping
-    public ResponseEntity<PetOwnerOfferDTO> createOffer(@Valid @RequestBody PetOwnerOfferDTO newOfferDto) {
-        PetOwnerOfferDTO savedOffer = petOwnerOfferService.createOffer(newOfferDto);
+    public ResponseEntity<PetOwnerOfferDTO> createOffer(@RequestPart List<MultipartFile> pictures,
+                                                        @RequestPart @Valid PetOwnerOfferDTO newOfferDto) {
+        PetOwnerOfferDTO savedOffer = petOwnerOfferService.createOffer(newOfferDto, pictures);
         return new ResponseEntity<>(savedOffer, HttpStatus.CREATED);
     }
 
