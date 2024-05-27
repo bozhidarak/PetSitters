@@ -86,6 +86,18 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>8.5.13</version>
+                <configuration>
+                    <url>jdbc:postgresql://localhost:5432/petSitters</url>
+                    <user>postgres</user>
+                    <password>1234</password>
+                    <!-- Optionally specify locations if your scripts are not in the default location -->
+                    <!-- <locations>filesystem:src/main/resources/db/migration</locations> -->
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
