@@ -41,7 +41,3 @@ public class UserService {
         userRepository.deleteById(id);
     }
 }
-
-
-//controller > service > mapper > repository
-//      model                       dto

@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.Date;
 @Data
 @Entity
-@Table(name="users")
+@Table(name="users") //fix to user?
 public class User {
 
     @Id
