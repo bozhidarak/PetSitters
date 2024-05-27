@@ -12,7 +12,7 @@ public class UserDTO {
     private String email;
     private String location;
     private Date birthDate;
-    private Boolean gender; // ili Boolean
+    private boolean gender;
     private String profilePic;
     private String name;
 
