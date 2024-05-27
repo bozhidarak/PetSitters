@@ -2,7 +2,7 @@ package com.example.backend.service;
 
 import com.example.backend.dto.ReviewDTO;
 import com.example.backend.entity.Review;
-import com.example.backend.entity.UserEntity;
+import com.example.backend.entity.User;
 import com.example.backend.mapper.ReviewMapper;
 import com.example.backend.repository.ReviewRepository;
 import com.example.backend.repository.UserRepository;
@@ -71,15 +71,15 @@ public class ReviewService {
     }
 
     private void linkReviewToUsers(Review review, Long reviewedUserId, Long authorId) {
-        UserEntity reviewedUser = findUser(reviewedUserId);
+        User reviewedUser = findUser(reviewedUserId);
         review.setReviewedUser(reviewedUser);
 
-        UserEntity reviewAuthor = findUser(authorId);
+        User reviewAuthor = findUser(authorId);
         review.setAuthor(reviewAuthor);
     }
 
-    private UserEntity findUser(Long userId) {
-        UserEntity user = userRepository.findById(userId).orElse(null);
+    private User findUser(Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
         if(user == null) {
             throw new ResourceNotFoundException("No user with id: " + userId);
         }

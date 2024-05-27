@@ -19,7 +19,7 @@ public class PetOwnerOffer {
     private LocalDate endDate;
     @ManyToOne
     @JoinColumn(name="user_id")
-    private UserEntity user;
+    private User user;
     @OneToMany(mappedBy = "petOwnerOffer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Picture> pictures;
 

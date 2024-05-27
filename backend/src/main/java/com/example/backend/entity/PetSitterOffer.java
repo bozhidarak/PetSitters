@@ -8,7 +8,7 @@ import java.util.Date;
 @Entity
 @Data
 @Table(name="pet_sitter_offer")
-public class PetSitterOfferEntity {
+public class PetSitterOffer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long offerId;
@@ -19,12 +19,12 @@ public class PetSitterOfferEntity {
 
 @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private UserEntity user; //1to1 relationship;
+    private User user; //1to1 relationship;
 
     // 1 to many with Picture
     //1 to many with Pet
 
-    public PetSitterOfferEntity() {
+    public PetSitterOffer() {
     }
 
 }

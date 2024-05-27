@@ -14,9 +14,9 @@ public class Review {
     private String description;
     @ManyToOne
     @JoinColumn(name="reviewed_user_id")
-    private UserEntity reviewedUser;
+    private User reviewedUser;
     @ManyToOne
     @JoinColumn(name="author_id")
-    private UserEntity author;
+    private User author;
     public Review(){}
 }

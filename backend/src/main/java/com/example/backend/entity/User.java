@@ -7,7 +7,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name="users")
-public class UserEntity {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,9 +22,9 @@ public class UserEntity {
     private String name;
 
     @OneToOne(mappedBy = "user")
-    private PetSitterOfferEntity offer;
+    private PetSitterOffer offer;
 
-    public UserEntity(Long id, String username, String password, String email, String location, Date birthDate, Boolean gender, String profilePic, String name) {
+    public User(Long id, String username, String password, String email, String location, Date birthDate, Boolean gender, String profilePic, String name) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -36,6 +36,6 @@ public class UserEntity {
         this.name = name;
     }
 
-    public UserEntity() {
+    public User() {
     }
 }

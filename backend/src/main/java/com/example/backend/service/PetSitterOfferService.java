@@ -1,7 +1,7 @@
 package com.example.backend.service;
 
 import com.example.backend.dto.PetSitterOfferDTO;
-import com.example.backend.entity.PetSitterOfferEntity;
+import com.example.backend.entity.PetSitterOffer;
 import com.example.backend.mapper.PetSitterOfferMapper;
 import com.example.backend.repository.PetSitterOfferRepository;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -19,7 +19,7 @@ public class PetSitterOfferService {
     }
 
     public PetSitterOfferDTO getOfferById(Long id){
-        PetSitterOfferEntity offerEntity = offerRepository.findById(id).orElseThrow(
+        PetSitterOffer offerEntity = offerRepository.findById(id).orElseThrow(
                 ()-> new ResourceNotFoundException("No pet sitter offer with id: " + id));
         return offerMapper.toDTO(offerEntity);
     }

@@ -1,7 +1,7 @@
 package com.example.backend.mapper;
 
 import com.example.backend.dto.PetSitterOfferDTO;
-import com.example.backend.entity.PetSitterOfferEntity;
+import com.example.backend.entity.PetSitterOffer;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -9,9 +9,9 @@ import org.mapstruct.Mapping;
 public interface PetSitterOfferMapper {
 
     @Mapping(target = "user", ignore = true)
-    PetSitterOfferEntity toEntity(PetSitterOfferDTO offerDTO);
+    PetSitterOffer toEntity(PetSitterOfferDTO offerDTO);
 
     @Mapping(source = "user.id", target = "userId")
-    PetSitterOfferDTO toDTO(PetSitterOfferEntity offerEntity);
+    PetSitterOfferDTO toDTO(PetSitterOffer offerEntity);
 
 }

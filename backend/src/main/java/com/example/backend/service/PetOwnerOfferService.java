@@ -2,7 +2,7 @@ package com.example.backend.service;
 
 import com.example.backend.dto.PetOwnerOfferDTO;
 import com.example.backend.entity.PetOwnerOffer;
-import com.example.backend.entity.UserEntity;
+import com.example.backend.entity.User;
 import com.example.backend.mapper.PetOwnerOfferMapper;
 import com.example.backend.repository.PetOwnerOfferRepository;
 import com.example.backend.repository.UserRepository;
@@ -82,7 +82,7 @@ public class PetOwnerOfferService {
         PetOwnerOffer newOffer = petOwnerOfferMapper.mapToEntity(newOfferDto);
 
         Long userId = newOfferDto.getUserId();
-        UserEntity offerUser = userRepository.findById(userId).orElse(null);
+        User offerUser = userRepository.findById(userId).orElse(null);
         if(offerUser == null) {
             throw new ResourceNotFoundException("No user with id: " + userId);
         }

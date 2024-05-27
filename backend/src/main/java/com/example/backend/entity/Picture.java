@@ -12,7 +12,7 @@ public class Picture {
     private String filepath;
     @ManyToOne
     @JoinColumn(name = "sitter_offer_id")
-    private PetSitterOfferEntity petSitterOffer;
+    private PetSitterOffer petSitterOffer;
     @ManyToOne
     @JoinColumn(name = "owner_offer_id")
     private PetOwnerOffer petOwnerOffer;
