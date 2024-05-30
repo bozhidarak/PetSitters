@@ -2,6 +2,7 @@ package com.example.backend.service;
 
 import com.example.backend.dto.PetOwnerOfferDTO;
 import com.example.backend.entity.PetOwnerOffer;
+import com.example.backend.entity.Picture;
 import com.example.backend.entity.User;
 import com.example.backend.mapper.PetOwnerOfferMapper;
 import com.example.backend.repository.PetOwnerOfferRepository;
@@ -75,6 +76,13 @@ public class PetOwnerOfferService {
     }
 
     public void deleteOfferById(Long id) {
+        PetOwnerOffer offerToDelete = petOwnerOfferRepository.findById(id).orElse(null);
+        if(offerToDelete != null) {
+            List<Picture> offerPictures = offerToDelete.getPictures();
+            for (Picture picture : offerPictures) {
+                pictureService.deleteFile(picture.getFilepath());
+            }
+        }
         petOwnerOfferRepository.deleteById(id);
     }
 
