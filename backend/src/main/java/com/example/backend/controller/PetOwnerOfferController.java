@@ -4,6 +4,7 @@ import com.example.backend.dto.PetOwnerOfferDTO;
 import com.example.backend.service.PetOwnerOfferService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,11 @@ public class PetOwnerOfferController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PetOwnerOfferDTO>> getAllOffers(){
+    public ResponseEntity<List<PetOwnerOfferDTO>> getAllOffers(@RequestParam(required = false) Integer page,
+                                                               @RequestParam(required = false) Integer limit){
+        if(page != null && limit != null) {
+            return new ResponseEntity<>(petOwnerOfferService.getAllOffers(PageRequest.of(page,limit)), HttpStatus.OK);
+        }
         return new ResponseEntity<>(petOwnerOfferService.getAllOffers(), HttpStatus.OK );
     }
     @GetMapping("/{id}")

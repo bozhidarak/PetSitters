@@ -8,6 +8,7 @@ import com.example.backend.mapper.PetOwnerOfferMapper;
 import com.example.backend.repository.PetOwnerOfferRepository;
 import com.example.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,6 +38,12 @@ public class PetOwnerOfferService {
 
     public List<PetOwnerOfferDTO> getAllOffers() {
         return petOwnerOfferRepository.findAll()
+                .stream()
+                .map(petOwnerOfferMapper::mapToDto)
+                .toList();
+    }
+    public List<PetOwnerOfferDTO> getAllOffers(PageRequest pageRequest) {
+        return petOwnerOfferRepository.findAll(pageRequest)
                 .stream()
                 .map(petOwnerOfferMapper::mapToDto)
                 .toList();
