@@ -42,7 +42,9 @@ public class PictureService {
         pictureForUpload.delete();
         return String.format("https://%s.s3.amazonaws.com/%s", bucketName, filename);
     }
-    public void deleteFile(String fileName) {
+    public void deleteFile(String filepath) {
+        String[] filepathParts = filepath.split("/");
+        String fileName = filepathParts[filepathParts.length - 1];
         s3Client.deleteObject(bucketName, fileName);
     }
 
