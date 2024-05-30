@@ -38,9 +38,11 @@ public class PetOwnerOfferController {
         }
     }
     @PostMapping
-    public ResponseEntity<PetOwnerOfferDTO> createOffer(@RequestPart List<MultipartFile> pictures,
+    public ResponseEntity<PetOwnerOfferDTO> createOffer(@RequestPart(required = false) List<MultipartFile> pictures,
                                                         @RequestPart @Valid PetOwnerOfferDTO newOfferDto) {
-        PetOwnerOfferDTO savedOffer = petOwnerOfferService.createOffer(newOfferDto, pictures);
+        PetOwnerOfferDTO savedOffer = pictures != null
+                ? petOwnerOfferService.createOffer(newOfferDto, pictures)
+                : petOwnerOfferService.createOffer(newOfferDto);
         return new ResponseEntity<>(savedOffer, HttpStatus.CREATED);
     }
 
