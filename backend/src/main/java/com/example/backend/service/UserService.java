@@ -4,6 +4,7 @@ import com.example.backend.dto.UserDTO;
 import com.example.backend.entity.User;
 import com.example.backend.mapper.UserMapper;
 import com.example.backend.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
+    @Transactional //?
     public UserDTO getByID(Long id){
         User user = userRepository.findById(id).orElseThrow(
                 ()-> new ResourceNotFoundException("No user with id: " + id));

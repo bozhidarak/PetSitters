@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -16,13 +17,13 @@ public class PetSitterOffer {
     private Double pricePerDay;
     private Date availableFrom;
     private Date availableUntil;
-
-@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_id")
-    private User user; //1to1 relationship;
-
-    // 1 to many with Picture
-    //1 to many with Pet
+    private User user;
+    @OneToMany(mappedBy = "petSitterOffer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Picture> pictures;
+    @OneToMany(mappedBy = "petSitterOffer", cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Pet> pets;
 
     public PetSitterOffer() {
     }

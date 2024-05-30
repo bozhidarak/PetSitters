@@ -22,6 +22,8 @@ public class PetOwnerOffer {
     private User user;
     @OneToMany(mappedBy = "petOwnerOffer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Picture> pictures;
+    @OneToMany(mappedBy = "petOwnerOffer", cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Pet> pets;
 
     public PetOwnerOffer(){}
 }

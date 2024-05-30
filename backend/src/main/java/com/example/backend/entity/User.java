@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
+
 @Data
 @Entity
 @Table(name="users") //fix to user?
@@ -20,21 +22,12 @@ public class User {
     private Boolean gender;
     private String profilePic;
     private String name;
-
-    @OneToOne(mappedBy = "user")
-    private PetSitterOffer offer;
-
-    public User(Long id, String username, String password, String email, String location, Date birthDate, Boolean gender, String profilePic, String name) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.location = location;
-        this.birthDate = birthDate;
-        this.gender = gender;
-        this.profilePic = profilePic;
-        this.name = name;
-    }
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private PetSitterOffer petSitterOffer;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<PetOwnerOffer> petOwnerOffers;
+    @OneToMany(mappedBy = "reviewedUser", cascade = CascadeType.ALL)
+    private List<Review> reviewsForUser;
 
     public User() {
     }

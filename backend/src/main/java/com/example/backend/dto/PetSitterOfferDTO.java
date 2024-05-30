@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class PetSitterOfferDTO {
@@ -20,15 +21,10 @@ public class PetSitterOfferDTO {
     @NotNull(message = "The id of the user that the offer belongs to shouldn't be null")
     private Long userId; //1to1 relationship;
 
+    private List<PetDTO> pets;
+    private List<String> picturePaths;
+
     public PetSitterOfferDTO() {
     }
 
-    public PetSitterOfferDTO(Long offerId, String description, Double pricePerDay, Date availableFrom, Date availableUntil, Long userId) {
-        this.offerId = offerId;
-        this.description = description;
-        this.pricePerDay = pricePerDay;
-        this.availableFrom = availableFrom;
-        this.availableUntil = availableUntil;
-        this.userId = userId;
-    }
 }

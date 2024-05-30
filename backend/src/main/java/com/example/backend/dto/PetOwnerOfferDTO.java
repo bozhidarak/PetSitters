@@ -21,4 +21,5 @@ public class PetOwnerOfferDTO {
     @NotNull(message = "User ID of PetOwnerOffer is required")
     private Long userId;
     private List<String> picturePaths;
+    private List<PetDTO> pets;
 }

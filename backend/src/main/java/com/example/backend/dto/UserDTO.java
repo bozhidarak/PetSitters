@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class UserDTO {
@@ -24,7 +25,11 @@ public class UserDTO {
     @NotBlank(message = "The name of the user shouldn't be blank")
     private String name;
 
-    public UserDTO(Long id, String username,String password, String email, String location, Date birthDate, Boolean gender, String profilePic, String name) {
+    private PetSitterOfferDTO petSitterOffer;
+    private List<PetOwnerOfferDTO> petOwnerOffers;
+    private List<ReviewDTO> reviewsForUser;
+
+    public UserDTO(Long id, String username, String password, String email, String location, Date birthDate, boolean gender, String profilePic, String name, PetSitterOfferDTO petSitterOffer, List<PetOwnerOfferDTO> petOwnerOffers, List<ReviewDTO> reviewsForUser) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -34,5 +39,8 @@ public class UserDTO {
         this.gender = gender;
         this.profilePic = profilePic;
         this.name = name;
+        this.petSitterOffer = petSitterOffer;
+        this.petOwnerOffers = petOwnerOffers;
+        this.reviewsForUser = reviewsForUser;
     }
 }

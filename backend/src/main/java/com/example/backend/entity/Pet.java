@@ -11,9 +11,13 @@ public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Enumerated(EnumType.STRING)
     private PetType petType;
     private Integer numberOfPets;
-
-    // 1-to-many for owner offer
-    // 1-to-many for sitter offer
+    @ManyToOne
+    @JoinColumn(name = "sitter_offer_id")
+    private PetSitterOffer petSitterOffer;
+    @ManyToOne
+    @JoinColumn(name = "owner_offer_id")
+    private PetOwnerOffer petOwnerOffer;
 }

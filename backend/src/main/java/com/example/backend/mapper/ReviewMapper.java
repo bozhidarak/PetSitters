@@ -1,10 +1,11 @@
 package com.example.backend.mapper;
 
-import com.example.backend.dto.PetOwnerOfferDTO;
 import com.example.backend.dto.ReviewDTO;
 import com.example.backend.entity.Review;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ReviewMapper {
@@ -12,4 +13,5 @@ public interface ReviewMapper {
     @Mapping(source = "author.id", target="authorId")
     ReviewDTO mapToDto(Review review);
     Review mapToEntity(ReviewDTO reviewDTO);
+    List<ReviewDTO> mapToDto(List<Review> reviews);
 }
