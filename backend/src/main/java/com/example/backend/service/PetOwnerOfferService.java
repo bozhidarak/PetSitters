@@ -69,7 +69,6 @@ public class PetOwnerOfferService {
         if(!currentOffer.getUser().getId().equals(offerDto.getUserId())){
             throw new InvalidParameterException("Cannot change the id of offer's user");
         }
-        ;
         PetOwnerOffer updatedOffer = petOwnerOfferRepository.save(petOwnerOfferMapper.mapToEntity(offerDto));
         return petOwnerOfferMapper.mapToDto(updatedOffer);
     }
