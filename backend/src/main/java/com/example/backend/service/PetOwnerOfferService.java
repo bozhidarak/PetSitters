@@ -72,9 +72,10 @@ public class PetOwnerOfferService {
     public PetOwnerOfferDTO updateOffer(Long offerId, PetOwnerOfferDTO offerDto) {
         PetOwnerOffer currentOffer = petOwnerOfferRepository.findById(offerId).orElse(null);
         if(currentOffer == null) {
-            return createOffer(offerDto);
+            throw new ResourceNotFoundException("PetOwnerOffer for update not found");
         }
-        if(!currentOffer.getUser().getId().equals(offerDto.getUserId())){
+        if (offerDto.getUserId() != null &&
+            !currentOffer.getUser().getId().equals(offerDto.getUserId())){
             throw new InvalidParameterException("Cannot change the id of offer's user");
         }
         PetOwnerOffer updatedOffer = petOwnerOfferRepository.save(petOwnerOfferMapper.mapToEntity(offerDto));

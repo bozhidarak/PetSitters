@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidParameterException;
 import java.util.List;
 
 @RestController
@@ -64,7 +66,11 @@ public class ReviewController {
             ReviewDTO updatedReviewDto = reviewService.updateReview(id, reviewDTO);
             return new ResponseEntity<>(updatedReviewDto, HttpStatus.OK);
         }
-        catch (Exception e) {
+        catch (ResourceNotFoundException e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        catch (InvalidParameterException e) {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }

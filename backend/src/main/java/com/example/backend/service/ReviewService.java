@@ -59,7 +59,7 @@ public class ReviewService {
     public ReviewDTO updateReview(Long reviewId, ReviewDTO reviewDTO) {
         Review currentReview = reviewRepository.findById(reviewId).orElse(null);
         if(currentReview == null){
-            return createReview(reviewDTO);
+            throw new ResourceNotFoundException("Review for update not found");
         }
         validateReviewUsersIds(currentReview, reviewDTO);
         Review updatedReview = reviewRepository.save(reviewMapper.mapToEntity(reviewDTO));
@@ -87,10 +87,14 @@ public class ReviewService {
     }
 
     private void validateReviewUsersIds(Review currentReview, ReviewDTO reviewDTO) {
-        if(currentReview.getReviewedUser().getId() != reviewDTO.getReviewedUserId()) {
+        if (reviewDTO.getReviewedUserId() != null &&
+            currentReview.getReviewedUser().getId().equals(reviewDTO.getReviewedUserId()))
+        {
             throw new InvalidParameterException("Cannot alter reviewed user's id of Review");
         }
-        if(currentReview.getAuthor().getId() != reviewDTO.getAuthorId()) {
+        if (reviewDTO.getAuthorId() != null &&
+            currentReview.getAuthor().getId().equals(reviewDTO.getAuthorId()))
+        {
             throw new InvalidParameterException("Cannot alter author's id of Review");
         }
     }
