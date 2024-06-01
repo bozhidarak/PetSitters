@@ -12,6 +12,8 @@ public interface ReviewMapper {
     @Mapping(source = "reviewedUser.id", target="reviewedUserId")
     @Mapping(source = "author.id", target="authorId")
     ReviewDTO mapToDto(Review review);
+    @Mapping(source = "reviewedUserId", target="reviewedUser.id")
+    @Mapping(source = "authorId", target="author.id")
     Review mapToEntity(ReviewDTO reviewDTO);
     List<ReviewDTO> mapToDto(List<Review> reviews);
 }
