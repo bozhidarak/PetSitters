@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidParameterException;
 import java.util.List;
 
@@ -38,13 +37,18 @@ public class ReviewController {
     public ResponseEntity<List<ReviewDTO>> getAllReviewsForUser(@PathVariable Long userId) {
         return new ResponseEntity<>(reviewService.getAllReviewsForUser(userId), HttpStatus.OK);
     }
-
     @GetMapping
-    public ResponseEntity<List<ReviewDTO>> getReviewsByStars(@RequestParam(name="stars") Integer stars) {
-        if(stars == null || stars < 1 || stars > 5) {
+    public ResponseEntity<List<ReviewDTO>> getReviewsByStars(@RequestParam Long userId,
+                                                             @RequestParam Integer stars) {
+        if(stars == null || userId == null || stars < 1 || stars > 5) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(reviewService.getAllByStars(stars), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(reviewService.getAllByStarsForUser(userId, stars), HttpStatus.OK);
+        }catch (ResourceNotFoundException e) {
+            System.out.println(e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping

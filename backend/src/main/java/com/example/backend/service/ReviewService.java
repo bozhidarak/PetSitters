@@ -42,8 +42,11 @@ public class ReviewService {
                 .toList();
     }
 
-    public List<ReviewDTO> getAllByStars(Integer stars) {
-        return reviewRepository.findByStars(stars)
+    public List<ReviewDTO> getAllByStarsForUser(Long userId, Integer stars) {
+        if(!userRepository.existsById(userId)){
+            throw new ResourceNotFoundException("No reviewedUser with the id: " + userId);
+        }
+        return reviewRepository.findByReviewedUserIdAndStars(userId, stars)
                 .stream()
                 .map(reviewMapper::mapToDto)
                 .toList();
@@ -61,7 +64,12 @@ public class ReviewService {
         if(currentReview == null){
             throw new ResourceNotFoundException("Review for update not found");
         }
+        if (reviewDTO.getId() != null &&
+            !reviewDTO.getId().equals(reviewId)) {
+            throw new InvalidParameterException("Review id in body does not match id in request url");
+        }
         validateReviewUsersIds(currentReview, reviewDTO);
+        reviewDTO.setId(reviewId);  // if it doesn't contain id
         Review updatedReview = reviewRepository.save(reviewMapper.mapToEntity(reviewDTO));
         return reviewMapper.mapToDto(updatedReview);
     }
@@ -88,12 +96,12 @@ public class ReviewService {
 
     private void validateReviewUsersIds(Review currentReview, ReviewDTO reviewDTO) {
         if (reviewDTO.getReviewedUserId() != null &&
-            currentReview.getReviewedUser().getId().equals(reviewDTO.getReviewedUserId()))
+            !currentReview.getReviewedUser().getId().equals(reviewDTO.getReviewedUserId()))
         {
             throw new InvalidParameterException("Cannot alter reviewed user's id of Review");
         }
         if (reviewDTO.getAuthorId() != null &&
-            currentReview.getAuthor().getId().equals(reviewDTO.getAuthorId()))
+            !currentReview.getAuthor().getId().equals(reviewDTO.getAuthorId()))
         {
             throw new InvalidParameterException("Cannot alter author's id of Review");
         }
