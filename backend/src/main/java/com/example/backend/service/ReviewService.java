@@ -60,10 +60,9 @@ public class ReviewService {
     }
 
     public ReviewDTO updateReview(Long reviewId, ReviewDTO reviewDTO) {
-        Review currentReview = reviewRepository.findById(reviewId).orElse(null);
-        if(currentReview == null){
-            throw new ResourceNotFoundException("Review for update not found");
-        }
+        Review currentReview = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new ResourceNotFoundException("Review for update not found"));
+
         if (reviewDTO.getId() != null &&
             !reviewDTO.getId().equals(reviewId)) {
             throw new InvalidParameterException("Review id in body does not match id in request url");
@@ -81,6 +80,7 @@ public class ReviewService {
     private void linkReviewToUsers(Review review, Long reviewedUserId, Long authorId) {
         User reviewedUser = findUser(reviewedUserId);
         review.setReviewedUser(reviewedUser);
+        reviewedUser.getReviewsForUser().add(review);
 
         User reviewAuthor = findUser(authorId);
         review.setAuthor(reviewAuthor);
