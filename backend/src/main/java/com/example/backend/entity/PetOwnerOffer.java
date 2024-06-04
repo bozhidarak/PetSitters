@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -21,9 +22,8 @@ public class PetOwnerOffer {
     @JoinColumn(name="user_id")
     private User user;
     @OneToMany(mappedBy = "petOwnerOffer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Picture> pictures;
-    @OneToMany(mappedBy = "petOwnerOffer", cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Pet> pets;
-
+    private List<Picture> pictures = new ArrayList<>();
+    @OneToMany(mappedBy = "petOwnerOffer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Pet> pets = new ArrayList<>();
     public PetOwnerOffer(){}
 }
