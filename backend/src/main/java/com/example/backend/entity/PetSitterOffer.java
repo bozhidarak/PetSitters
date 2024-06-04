@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Data
@@ -27,5 +28,15 @@ public class PetSitterOffer {
 
     public PetSitterOffer() {
     }
-
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return this.getOfferId().equals(user.getId()); // Compare only the ID for equality
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getOfferId()); // Use only ID for hash code
+    }
 }
