@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import com.example.backend.dto.PetOwnerOfferDTO;
+import com.example.backend.enums.PetType;
 import com.example.backend.service.PetOwnerOfferService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.InvalidParameterException;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -42,12 +44,19 @@ public class PetOwnerOfferController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/pet")
+    public ResponseEntity<List<PetOwnerOfferDTO>> getAllOffersByPetType(@RequestParam List<PetType> petTypes) {
+        List<PetOwnerOfferDTO> petOwnerOffers = petOwnerOfferService.getOffersByPetType(petTypes);
+        return new ResponseEntity<>(petOwnerOffers, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<PetOwnerOfferDTO> createOffer(@RequestPart(required = false) List<MultipartFile> pictures,
                                                         @RequestPart @Valid PetOwnerOfferDTO newOfferDto) {
         PetOwnerOfferDTO savedOffer = pictures != null
                 ? petOwnerOfferService.createOffer(newOfferDto, pictures)
-                : petOwnerOfferService.createOffer(newOfferDto);
+                : petOwnerOfferService.createOffer(newOfferDto, Collections.emptyList());
         return new ResponseEntity<>(savedOffer, HttpStatus.CREATED);
     }
 
