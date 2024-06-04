@@ -14,14 +14,15 @@ import java.util.List;
 public interface PetOwnerOfferMapper {
     @Mapping(source = "user.id", target="userId")
     @Mapping(source = "pictures", target = "picturePaths")
-    @Mapping(source = "pets", target = "pets")
     PetOwnerOfferDTO mapToDto(PetOwnerOffer petOwnerOffer);
-    @Mapping(target = "pets", ignore = true)
+
+    @Mapping(source = "pets", target = "pets", ignore = true)
+    @Mapping(source = "userId", target="user.id")
     PetOwnerOffer mapToEntity(PetOwnerOfferDTO petOwnerOfferDTO);
 
-    List<PetOwnerOfferDTO> mapToDto(List<PetOwnerOffer> petOwnerOffers);
-
-    List<PetOwnerOffer> mapToEntity(List<PetOwnerOfferDTO> petOwnerOfferDTOS);
+//    List<PetOwnerOfferDTO> mapToDto(List<PetOwnerOffer> petOwnerOffers);
+//
+//    List<PetOwnerOffer> mapToEntity(List<PetOwnerOfferDTO> petOwnerOfferDTOS);
 
     @IterableMapping(qualifiedByName = "mapPictureToUrl")
     List<String> mapPicturesToUrls(List<Picture> pictures);
