@@ -1,5 +1,6 @@
 package com.example.backend.service;
 
+import com.amazonaws.services.iot.model.ResourceAlreadyExistsException;
 import com.example.backend.dto.UserDTO;
 import com.example.backend.entity.User;
 import com.example.backend.mapper.UserMapper;
@@ -26,6 +27,27 @@ public class UserService {
         User user = userRepository.findById(id).orElseThrow(
                 ()-> new ResourceNotFoundException("No user with id: " + id));
         return userMapper.toDTO(user);
+    }
+
+    public UserDTO createUser(UserDTO userDTO){
+    User user = userMapper.toEntity(userDTO);
+    if(userRepository.existsByEmail(user.getEmail())){
+        throw new ResourceAlreadyExistsException("There is already an user with this email: " + user.getEmail());
+    }
+   User savedUser =  userRepository.save(user);
+    return userMapper.toDTO(savedUser);
+    }
+
+    public UserDTO login(String email, String password){
+        if(!userRepository.existsByEmail(email)){
+            throw new ResourceNotFoundException("User with this email not found.");
+        }
+        User user = userRepository.findByEmail(email);
+        if(!user.getPassword().equals(password)){
+            throw new ResourceNotFoundException("Wrong credentials. ");
+        }
+        return userMapper.toDTO(user);
+
     }
 
     public UserDTO editUser(UserDTO userDTO){
