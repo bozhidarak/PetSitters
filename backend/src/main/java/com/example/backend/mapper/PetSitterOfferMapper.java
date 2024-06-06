@@ -13,7 +13,7 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {PetMapper.class})
 public interface PetSitterOfferMapper {
 
-    @Mapping(target = "user", ignore = true) //??
+    @Mapping(target = "user", ignore = true)
     @Mapping(target = "pets", ignore = true)
     PetSitterOffer toEntity(PetSitterOfferDTO offerDTO);
 
@@ -21,7 +21,6 @@ public interface PetSitterOfferMapper {
     @Mapping(source = "pictures", target = "picturePaths")
     @Mapping(source = "pets", target = "pets")
     PetSitterOfferDTO toDTO(PetSitterOffer offerEntity);
-
 
 
     @IterableMapping(qualifiedByName = "mapPictureToUrl")

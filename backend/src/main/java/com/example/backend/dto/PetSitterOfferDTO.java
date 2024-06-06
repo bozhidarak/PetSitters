@@ -21,8 +21,8 @@ public class PetSitterOfferDTO {
     @NotNull(message = "The id of the user that the offer belongs to shouldn't be null")
     private Long userId; //1to1 relationship;
 
-    private List<PetDTO> pets;
     private List<String> picturePaths;
+    private List<PetDTO> pets;
 
     public PetSitterOfferDTO() {
     }
