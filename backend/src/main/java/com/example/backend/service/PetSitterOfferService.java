@@ -64,7 +64,6 @@ public class PetSitterOfferService {
             throw new ResourceNotFoundException("This user already has an offer -> edit the existing offer instead");
         }
         offerEntity.setUser(user);
-        //setPets
         List<PetDTO> petDTOs = offerDTO.getPets();
         List<Pet> pets = new ArrayList<>();
         for(PetDTO petDTO : petDTOs){

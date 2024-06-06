@@ -125,7 +125,6 @@ public class PetOwnerOfferService {
             throw new ResourceNotFoundException("No user with id: " + userId);
         }
         newOffer.setUser(offerUser);
-        //offerUser.getPetOwnerOffers().add(newOffer);
     }
 
     private void addPetsToOffer(PetOwnerOffer newOffer, PetOwnerOfferDTO newOfferDto) {
@@ -136,13 +135,6 @@ public class PetOwnerOfferService {
     }
 
     private void addPetToOffer(PetOwnerOffer ownerOffer, PetDTO petDTO) {
-//        Pet newPet = new Pet();
-//        newPet.setPetType(petDTO.getPetType());
-//        newPet.setNumberOfPets(petDTO.getNumberOfPets());
-//        newPet.setPetOwnerOffer(ownerOffer);
-//        ownerOffer.getPets().add(newPet);
-        // call petService to save pet to database
-//        petService.savePet(newPet);
 
         Pet pet = petService.createPet(petDTO);
         ownerOffer.getPets().add(pet);
