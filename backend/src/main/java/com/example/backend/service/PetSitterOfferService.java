@@ -13,6 +13,7 @@ import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -57,27 +58,27 @@ public class PetSitterOfferService {
     public PetSitterOfferDTO createOffer(PetSitterOfferDTO offerDTO, List<MultipartFile> pictures){
         PetSitterOffer offerEntity = offerMapper.toEntity(offerDTO);
         Long userId = offerDTO.getUserId();
-        User user = userRepository.findById(userId).orElse(null);
-//                orElseThrow(
-//                () -> new ResourceNotFoundException("No user with id: " + userId));
-        //set offer in user if an offer doesn't exist WHAT IF EXISTS
-        if(user.getPetSitterOffer() != null){
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new ResourceNotFoundException("No user with id: " + userId));
+        if(offerRepository.existsByUserId(userId)){
             throw new ResourceNotFoundException("This user already has an offer -> edit the existing offer instead");
         }
-        user.setPetSitterOffer(offerEntity);
         offerEntity.setUser(user);
         //setPets
         List<PetDTO> petDTOs = offerDTO.getPets();
+        List<Pet> pets = new ArrayList<>();
         for(PetDTO petDTO : petDTOs){
             Pet pet = petService.createPet(petDTO);
-            offerEntity.getPets().add(pet);
+            pets.add(pet);
         }
-        if(!pictures.isEmpty()){
-            for(MultipartFile picture: pictures){
-                pictureService.addPictureToOffer(picture,offerEntity,null);
+        offerEntity.setPets(pets);
+        PetSitterOffer offer = offerRepository.save(offerEntity);
+        if(!pictures.isEmpty()) {
+            for (MultipartFile picture : pictures) {
+                pictureService.addPictureToOffer(picture, offer, null);
             }
         }
-        return offerMapper.toDTO(offerRepository.save(offerEntity));
+        return offerMapper.toDTO(offer);
     }
 
     public void deleteOffer(Long id){

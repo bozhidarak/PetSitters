@@ -80,7 +80,7 @@ public class ReviewService {
     private void linkReviewToUsers(Review review, Long reviewedUserId, Long authorId) {
         User reviewedUser = findUser(reviewedUserId);
         review.setReviewedUser(reviewedUser);
-        reviewedUser.getReviewsForUser().add(review);
+        //reviewedUser.getReviewsForUser().add(review);
 
         User reviewAuthor = findUser(authorId);
         review.setAuthor(reviewAuthor);

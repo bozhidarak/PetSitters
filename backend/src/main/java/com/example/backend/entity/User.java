@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Entity
@@ -22,13 +21,6 @@ public class User {
     private Boolean gender;
     private String profilePic;
     private String name;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private PetSitterOffer petSitterOffer;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<PetOwnerOffer> petOwnerOffers;
-    @OneToMany(mappedBy = "reviewedUser", cascade = CascadeType.ALL)
-    private List<Review> reviewsForUser;
-
     public User() {
     }
 }

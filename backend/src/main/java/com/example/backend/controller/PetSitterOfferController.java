@@ -46,10 +46,16 @@ public class PetSitterOfferController {
     @PostMapping
     public ResponseEntity<PetSitterOfferDTO> createOffer(@RequestPart(required = false) List<MultipartFile> pictures,
                                                          @RequestPart @Valid PetSitterOfferDTO offerDto){
-        PetSitterOfferDTO savedOffer = pictures != null
-                ? offerService.createOffer(offerDto, pictures)
-                : offerService.createOffer(offerDto, Collections.emptyList());
-        //return ResponseEntity.ok(offerService.createOffer(offerDto, pictures));
+      PetSitterOfferDTO savedOffer;
+       try {
+            savedOffer = pictures != null
+                   ? offerService.createOffer(offerDto, pictures)
+                   : offerService.createOffer(offerDto, Collections.emptyList());
+       }
+       catch(ResourceNotFoundException e) {
+           System.out.println(e.getMessage());
+           return ResponseEntity.notFound().build();
+       }
         return new ResponseEntity<>(savedOffer, HttpStatus.CREATED);
     }
 

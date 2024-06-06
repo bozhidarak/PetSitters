@@ -45,7 +45,7 @@ public class PictureService {
         }
         else {
             newPicture.setPetOwnerOffer(petOwnerOffer);
-            petOwnerOffer.getPictures().add(newPicture);
+           petOwnerOffer.getPictures().add(newPicture);
         }
         return pictureRepository.save(newPicture);
     }

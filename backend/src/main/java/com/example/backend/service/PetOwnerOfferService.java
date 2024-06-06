@@ -17,7 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.InvalidParameterException;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -124,7 +125,7 @@ public class PetOwnerOfferService {
             throw new ResourceNotFoundException("No user with id: " + userId);
         }
         newOffer.setUser(offerUser);
-        offerUser.getPetOwnerOffers().add(newOffer);
+        //offerUser.getPetOwnerOffers().add(newOffer);
     }
 
     private void addPetsToOffer(PetOwnerOffer newOffer, PetOwnerOfferDTO newOfferDto) {
