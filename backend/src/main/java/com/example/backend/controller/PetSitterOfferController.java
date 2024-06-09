@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.InvalidParameterException;
 import java.util.Collections;
 import java.util.List;
 
@@ -59,6 +60,23 @@ public class PetSitterOfferController {
         return new ResponseEntity<>(savedOffer, HttpStatus.CREATED);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<PetSitterOfferDTO> updateOffer(@PathVariable Long id,
+                                                         @RequestBody @Valid PetSitterOfferDTO offerDto){
+        try {
+            PetSitterOfferDTO savedOfferDTO = offerService.updateOffer(id, offerDto);
+            return ResponseEntity.ok(savedOfferDTO);
+        }
+        catch (ResourceNotFoundException e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
+        catch (InvalidParameterException e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteOffer(@PathVariable Long id){

@@ -17,9 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class PetOwnerOfferService {
@@ -81,30 +80,35 @@ public class PetOwnerOfferService {
                 pictureService.addPictureToOffer(picture, null, savedOffer);
             }
         }
-
         return petOwnerOfferMapper.mapToDto(savedOffer);
     }
 
     public PetOwnerOfferDTO updateOffer(Long offerId, PetOwnerOfferDTO offerDto) {
         PetOwnerOffer currentOffer = petOwnerOfferRepository.findById(offerId).orElse(null);
-
-        if(currentOffer == null) {
-            throw new ResourceNotFoundException("PetOwnerOffer for update not found");
+        if(currentOffer == null){
+            throw new ResourceNotFoundException("Offer not found");
         }
         if (offerDto.getId() != null &&
             !offerDto.getId().equals(offerId)) {
             throw new InvalidParameterException("Owner offer id in body does not match id in request url");
         }
         if (offerDto.getUserId() != null &&
-            !currentOffer.getUser().getId().equals(offerDto.getUserId())){
+                !currentOffer.getUser().getId().equals(offerDto.getUserId())) {
             throw new InvalidParameterException("Cannot change the id of offer's user");
         }
+
         offerDto.setId(offerId);
 
         PetOwnerOffer updated = petOwnerOfferMapper.mapToEntity(offerDto);
+        User user = userRepository.findById(offerDto.getUserId()).orElseThrow(()-> new ResourceNotFoundException("User not found"));
+        updated.setUser(user);
+
+        updated.setPictures(currentOffer.getPictures()); // not updating the pictures
+
+        petOwnerOfferRepository.save(updated);
+
         updatePets(updated, offerDto.getPets());
-        PetOwnerOffer updatedOffer = petOwnerOfferRepository.save(updated);
-        return petOwnerOfferMapper.mapToDto(updatedOffer);
+        return petOwnerOfferMapper.mapToDto(updated);
     }
 
     public void deleteOfferById(Long id) {
@@ -130,34 +134,19 @@ public class PetOwnerOfferService {
     private void addPetsToOffer(PetOwnerOffer newOffer, PetOwnerOfferDTO newOfferDto) {
         List<PetDTO> petsDTOs = newOfferDto.getPets();
         for (PetDTO petDTO : petsDTOs) {
-            addPetToOffer(newOffer, petDTO);
+            Pet pet = petService.createPetOwner(petDTO, newOffer);
+            newOffer.getPets().add(pet);
         }
-    }
-
-    private void addPetToOffer(PetOwnerOffer ownerOffer, PetDTO petDTO) {
-
-        Pet pet = petService.createPet(petDTO);
-        ownerOffer.getPets().add(pet);
     }
 
     private void updatePets(PetOwnerOffer offerToUpdate, List<PetDTO> petDTOs) {
-        List<Pet> currentPets = offerToUpdate.getPets();
-        Map<PetType, Pet> currentPetsMap = currentPets.stream()
-                .collect(Collectors.toMap(Pet::getPetType, pet -> pet));
 
-        for (PetDTO petDTO : petDTOs) {
-            PetType petType = petDTO.getPetType();
-            if (!currentPetsMap.containsKey(petType)) {
-                addPetToOffer(offerToUpdate, petDTO);
-            } else {
-               Long petForUpdateId = currentPetsMap.get(petType).getId();
-               // call pet service to update pet by id
-//                petService.updatePet(petForUpdateId, petDTO.getNumberOfPets());
-                currentPetsMap.remove(petType);
-            }
+        petService.deletePetsFromOffer(offerToUpdate.getId(), true);
+        List<Pet> petsToSave = new ArrayList<>();
+        for(PetDTO petDTO: petDTOs){
+            Pet pet = petService.createPetOwner(petDTO, offerToUpdate);
+            petsToSave.add(pet);
         }
-        // will delete pets from database because of orphan removal?
-        currentPets.removeIf(pet -> currentPetsMap.containsKey(pet.getPetType()));
+        offerToUpdate.setPets(petsToSave);
     }
-
 }
