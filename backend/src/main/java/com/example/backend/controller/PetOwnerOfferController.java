@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.InvalidParameterException;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,10 +29,7 @@ public class    PetOwnerOfferController {
     @GetMapping
     public ResponseEntity<List<PetOwnerOfferDTO>> getAllOffers(@RequestParam(required = false) Integer page,
                                                                @RequestParam(required = false) Integer limit){
-        if(page != null && limit != null) {
-            return new ResponseEntity<>(petOwnerOfferService.getAllOffers(PageRequest.of(page,limit)), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(petOwnerOfferService.getAllOffers(), HttpStatus.OK );
+        return new ResponseEntity<>(petOwnerOfferService.getAllOffers(page, limit), HttpStatus.OK );
     }
     @GetMapping("/{id}")
     public ResponseEntity<PetOwnerOfferDTO> getOfferByID(@PathVariable Long id) {
@@ -46,9 +44,29 @@ public class    PetOwnerOfferController {
     }
 
     @GetMapping("/pet")
-    public ResponseEntity<List<PetOwnerOfferDTO>> getAllOffersByPetType(@RequestParam List<PetType> petTypes) {
-        List<PetOwnerOfferDTO> petOwnerOffers = petOwnerOfferService.getOffersByPetType(petTypes);
+    public ResponseEntity<List<PetOwnerOfferDTO>> getOffersByPetType(@RequestParam List<PetType> petTypes,
+                                                                     @RequestParam(required = false) Integer page,
+                                                                     @RequestParam(required = false) Integer limit) {
+        List<PetOwnerOfferDTO> petOwnerOffers = petOwnerOfferService.getOffersByPetType(petTypes, page, limit);
         return new ResponseEntity<>(petOwnerOffers, HttpStatus.OK);
+    }
+
+    @GetMapping("/datesAfter/{startDate}")
+    public ResponseEntity<List<PetOwnerOfferDTO>> getOffersAfter(@PathVariable LocalDate startDate,
+                                                                 @RequestParam(required = false) Integer page,
+                                                                 @RequestParam(required = false) Integer limit)
+    {
+        List<PetOwnerOfferDTO> offers = petOwnerOfferService.getOffersAfter(startDate, page, limit);
+        return new ResponseEntity<>(offers, HttpStatus.OK);
+    }
+
+    @GetMapping("/datesBefore/{endDate}")
+    public ResponseEntity<List<PetOwnerOfferDTO>> getOffersBefore(@PathVariable LocalDate endDate,
+                                                                  @RequestParam(required = false) Integer page,
+                                                                  @RequestParam(required = false) Integer limit)
+    {
+        List<PetOwnerOfferDTO> offers = petOwnerOfferService.getOffersBefore(endDate, page, limit);
+        return new ResponseEntity<>(offers, HttpStatus.OK);
     }
 
     @PostMapping
