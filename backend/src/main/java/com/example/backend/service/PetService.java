@@ -8,8 +8,6 @@ import com.example.backend.mapper.PetMapper;
 import com.example.backend.repository.PetRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
 
 @Service
 public class PetService {

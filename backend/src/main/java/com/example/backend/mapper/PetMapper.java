@@ -5,7 +5,6 @@ import com.example.backend.entity.Pet;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface PetMapper {

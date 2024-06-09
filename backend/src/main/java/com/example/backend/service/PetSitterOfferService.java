@@ -5,7 +5,6 @@ import com.example.backend.dto.PetSitterOfferDTO;
 import com.example.backend.entity.Pet;
 import com.example.backend.entity.PetSitterOffer;
 import com.example.backend.entity.User;
-import com.example.backend.enums.PetType;
 import com.example.backend.mapper.PetSitterOfferMapper;
 import com.example.backend.repository.PetSitterOfferRepository;
 import com.example.backend.repository.UserRepository;
@@ -17,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.security.InvalidParameterException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class PetSitterOfferService {
