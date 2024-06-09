@@ -12,13 +12,11 @@ import com.example.backend.repository.UserRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -60,6 +58,7 @@ public class PetSitterOfferService {
         return offerMapper.toDTO(offerEntity);
     }
 
+    @Transactional //?? not sure if needed
     public PetSitterOfferDTO createOffer(PetSitterOfferDTO offerDTO, List<MultipartFile> pictures){
         PetSitterOffer offerEntity = offerMapper.toEntity(offerDTO);
         Long userId = offerDTO.getUserId();
@@ -71,12 +70,12 @@ public class PetSitterOfferService {
         offerEntity.setUser(user);
         List<PetDTO> petDTOs = offerDTO.getPets();
         List<Pet> pets = new ArrayList<>();
+        PetSitterOffer offer = offerRepository.save(offerEntity);
         for(PetDTO petDTO : petDTOs){
-            Pet pet = petService.createPet(petDTO);
+            Pet pet = petService.createPetSitter(petDTO, offer);
             pets.add(pet);
         }
-        offerEntity.setPets(pets);
-        PetSitterOffer offer = offerRepository.save(offerEntity);
+        offer.setPets(pets);
         if(!pictures.isEmpty()) {
             for (MultipartFile picture : pictures) {
                 pictureService.addPictureToOffer(picture, offer, null);
@@ -87,18 +86,25 @@ public class PetSitterOfferService {
 
     public PetSitterOfferDTO updateOffer(Long id, PetSitterOfferDTO offerDTO){
         PetSitterOffer savedOffer = offerRepository.findById(id).orElse(null);
-        offerDTO.setUserId(id);
-        PetSitterOffer toSave = offerMapper.toEntity(offerDTO);
-        User user = userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User not found"));
-        toSave.setUser(user);
-        if(savedOffer == null){
-            return offerMapper.toDTO(offerRepository.save(toSave));
+        if(savedOffer == null) {
+            throw new ResourceNotFoundException("Offer not found");
         }
-       if(!offerDTO.getUserId().equals(savedOffer.getUser().getId())){
-           throw new InvalidParameterException("The user id doesn't belong to this offer");
-       }
+        if (!offerDTO.getUserId().equals(savedOffer.getUser().getId())) {
+            throw new InvalidParameterException("The user id doesn't belong to this offer");
+        }
+
+        PetSitterOffer toSave = offerMapper.toEntity(offerDTO);
+        toSave.setOfferId(id);
+        User user = userRepository.findById(offerDTO.getUserId()).orElseThrow(()-> new ResourceNotFoundException("User not found"));
+        toSave.setUser(user);
+
+        toSave.setPictures(savedOffer.getPictures()); // not updating the pictures
+
+        offerRepository.save(toSave);
+
        updatePets(toSave, offerDTO.getPets());
-        return offerMapper.toDTO(toSave);
+
+       return offerMapper.toDTO(toSave);
     }
 
     public void deleteOffer(Long id){
@@ -109,31 +115,12 @@ public class PetSitterOfferService {
     }
 
     public void updatePets(PetSitterOffer toSave, List<PetDTO> petDTOs){
-        List<Pet> currPets = toSave.getPets();
-        Map<PetType, Pet> petMap = currPets.stream().collect(Collectors.toMap(Pet::getPetType,pet ->pet));
-// need to update the petdto to hold the offerid or smth
+        petService.deletePetsFromOffer(toSave.getOfferId(), true);
+        List<Pet> petsToSave = new ArrayList<>();
         for(PetDTO petDTO: petDTOs){
-            PetType petType = petDTO.getPetType();
-            if(!petMap.containsKey(petType)){
-                Pet pet = petService.createPet(petDTO);
-                toSave.getPets().add(pet);
-            }
-            else{
-                // petdto -> count and set it in the pet
-                //vzimam petId na pettype w mapa
-                Long petId = petMap.get(petType).getId();
-                Optional<Pet> petOpt = toSave.getPets().stream()
-                        .filter(pet -> pet.getId().equals(petId))
-                        .findFirst();
-                if(petOpt.isPresent()){
-                    petOpt.get().setNumberOfPets(petDTO.getNumberOfPets());
-                    petService.updatePet(petOpt.get());
-                }
-                else{
-                    throw new ResourceNotFoundException("Pet not found");
-                }
-            }
-
+            Pet pet = petService.createPetSitter(petDTO, toSave);
+            petsToSave.add(pet);
         }
+        toSave.setPets(petsToSave);
     }
 }

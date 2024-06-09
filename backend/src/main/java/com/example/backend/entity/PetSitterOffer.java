@@ -23,7 +23,7 @@ public class PetSitterOffer {
     @JoinColumn(name = "user_id")
     private User user;
     @OneToMany(mappedBy = "petSitterOffer", orphanRemoval = true)
-    private List<Picture> pictures = new ArrayList<>();
+    private List<Picture> pictures = new ArrayList<>(); // if getPets is called the list needs to be at least initialized
     @OneToMany(mappedBy = "petSitterOffer", orphanRemoval = true)
     private List<Pet> pets = new ArrayList<>();
 
@@ -39,5 +39,19 @@ public class PetSitterOffer {
     @Override
     public int hashCode() {
         return Objects.hash(this.getOfferId()); // Use only ID for hash code
+    }
+
+    @Override
+    public String toString() {
+        return "PetSitterOffer{" +
+                "offerId=" + offerId +
+                ", description='" + description + '\'' +
+                ", pricePerDay=" + pricePerDay +
+                ", availableFrom=" + availableFrom +
+                ", availableUntil=" + availableUntil +
+                ", userId=" + (user != null ? user.getId() : null) +
+                ", picturesCount=" + (pictures != null ? pictures.size() : 0) +
+                ", petsCount=" + (pets != null ? pets.size() : 0) +
+                '}';
     }
 }

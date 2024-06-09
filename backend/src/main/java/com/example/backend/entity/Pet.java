@@ -20,4 +20,15 @@ public class Pet {
     @ManyToOne
     @JoinColumn(name = "owner_offer_id")
     private PetOwnerOffer petOwnerOffer;
+
+    @Override
+    public String toString() {
+        return "Pet{" +
+                "id=" + id +
+                ", petType=" + petType +
+                ", numberOfPets=" + numberOfPets +
+                ", petSitterOfferId=" + (petSitterOffer != null ? petSitterOffer.getOfferId() : null) +
+                ", petOwnerOfferId=" + (petOwnerOffer != null ? petOwnerOffer.getId() : null) +
+                '}';
+    }
 }
