@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.security.InvalidParameterException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -46,14 +47,14 @@ public class PetOwnerOfferService {
         this.petService = petService;
     }
 
-    public List<PetOwnerOfferDTO> getAllOffers() {
-        return petOwnerOfferRepository.findAll()
-                .stream()
-                .map(petOwnerOfferMapper::mapToDto)
-                .toList();
-    }
-    public List<PetOwnerOfferDTO> getAllOffers(PageRequest pageRequest) {
-        return petOwnerOfferRepository.findAll(pageRequest)
+    public List<PetOwnerOfferDTO> getAllOffers(Integer page, Integer limit) {
+        Pageable pageable;
+        if (page == null || limit == null) {
+            pageable = PageRequest.of(0, 9);
+        } else {
+            pageable = PageRequest.of(page, limit);
+        }
+        return petOwnerOfferRepository.findAll(pageable)
                 .stream()
                 .map(petOwnerOfferMapper::mapToDto)
                 .toList();
@@ -66,8 +67,40 @@ public class PetOwnerOfferService {
         return petOwnerOfferMapper.mapToDto(offer);
     }
 
-    public List<PetOwnerOfferDTO> getOffersByPetType(List<PetType> petTypes) {
-        return petOwnerOfferRepository.findByPetsPetTypeIn(petTypes)
+    public List<PetOwnerOfferDTO> getOffersByPetType(List<PetType> petTypes, Integer page, Integer limit) {
+        Pageable pageable;
+        if (page == null || limit == null) {
+            pageable = PageRequest.of(0, 9);
+        } else {
+            pageable = PageRequest.of(page, limit);
+        }
+        return petOwnerOfferRepository.findByPetsPetTypeIn(petTypes, pageable)
+                .stream()
+                .map(petOwnerOfferMapper::mapToDto)
+                .toList();
+    }
+
+    public List<PetOwnerOfferDTO> getOffersAfter(LocalDate startDate, Integer page, Integer limit) {
+        Pageable pageable;
+        if (page == null || limit == null) {
+            pageable = PageRequest.of(0, 9);
+        } else {
+            pageable = PageRequest.of(page, limit);
+        }
+        return petOwnerOfferRepository.findByStartDateAfter(startDate, pageable)
+                .stream()
+                .map(petOwnerOfferMapper::mapToDto)
+                .toList();
+    }
+
+    public List<PetOwnerOfferDTO> getOffersBefore(LocalDate endDate, Integer page, Integer limit) {
+        Pageable pageable;
+        if (page == null || limit == null) {
+            pageable = PageRequest.of(0, 9);
+        } else {
+            pageable = PageRequest.of(page, limit);
+        }
+        return petOwnerOfferRepository.findByEndDateBefore(endDate, pageable)
                 .stream()
                 .map(petOwnerOfferMapper::mapToDto)
                 .toList();
@@ -147,14 +180,12 @@ public class PetOwnerOfferService {
 
     private void addPetToOffer(PetOwnerOffer ownerOffer, PetDTO petDTO) {
 
-        Pet pet = petService.createPet(petDTO);
+        Pet pet = petService.createPetOwner(petDTO, ownerOffer);
         ownerOffer.getPets().add(pet);
     }
 
     private void updatePets(PetOwnerOffer offerToUpdate, List<PetDTO> petDTOs) {
         List<Pet> currentPets = offerToUpdate.getPets();
-        Map<PetType, Pet> currentPetsMap = currentPets.stream()
-                .collect(Collectors.toMap(Pet::getPetType, pet -> pet));
 
         petService.deletePetsFromOffer(offerToUpdate.getId(), true);
         List<Pet> petsToSave = new ArrayList<>();
