@@ -17,4 +17,14 @@ public class Picture {
     @JoinColumn(name = "owner_offer_id")
     private PetOwnerOffer petOwnerOffer;
     public Picture(){}
+
+    @Override
+    public String toString() {
+        return "Picture{" +
+                "id=" + id +
+                ", filepath='" + filepath + '\'' +
+                ", petSitterOfferId=" + (petSitterOffer != null ? petSitterOffer.getOfferId() : null) +
+                ", petOwnerOfferId=" + (petOwnerOffer != null ? petOwnerOffer.getId() : null) +
+                '}';
+    }
 }

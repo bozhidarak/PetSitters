@@ -46,14 +46,14 @@ public class PetOwnerOfferService {
         this.petService = petService;
     }
 
-    public List<PetOwnerOfferDTO> getAllOffers(Integer page, Integer limit) {
-        Pageable pageable;
-        if (page == null || limit == null) {
-            pageable = PageRequest.of(0, 9);
-        } else {
-            pageable = PageRequest.of(page, limit);
-        }
-        return petOwnerOfferRepository.findAll(pageable)
+    public List<PetOwnerOfferDTO> getAllOffers() {
+        return petOwnerOfferRepository.findAll()
+                .stream()
+                .map(petOwnerOfferMapper::mapToDto)
+                .toList();
+    }
+    public List<PetOwnerOfferDTO> getAllOffers(PageRequest pageRequest) {
+        return petOwnerOfferRepository.findAll(pageRequest)
                 .stream()
                 .map(petOwnerOfferMapper::mapToDto)
                 .toList();
@@ -66,40 +66,8 @@ public class PetOwnerOfferService {
         return petOwnerOfferMapper.mapToDto(offer);
     }
 
-    public List<PetOwnerOfferDTO> getOffersByPetType(List<PetType> petTypes, Integer page, Integer limit) {
-        Pageable pageable;
-        if (page == null || limit == null) {
-            pageable = PageRequest.of(0, 9);
-        } else {
-            pageable = PageRequest.of(page, limit);
-        }
-        return petOwnerOfferRepository.findByPetsPetTypeIn(petTypes, pageable)
-                .stream()
-                .map(petOwnerOfferMapper::mapToDto)
-                .toList();
-    }
-
-    public List<PetOwnerOfferDTO> getOffersAfter(LocalDate startDate, Integer page, Integer limit) {
-        Pageable pageable;
-        if (page == null || limit == null) {
-            pageable = PageRequest.of(0, 9);
-        } else {
-            pageable = PageRequest.of(page, limit);
-        }
-        return petOwnerOfferRepository.findByStartDateAfter(startDate, pageable)
-                .stream()
-                .map(petOwnerOfferMapper::mapToDto)
-                .toList();
-    }
-
-    public List<PetOwnerOfferDTO> getOffersBefore(LocalDate endDate, Integer page, Integer limit) {
-        Pageable pageable;
-        if (page == null || limit == null) {
-            pageable = PageRequest.of(0, 9);
-        } else {
-            pageable = PageRequest.of(page, limit);
-        }
-        return petOwnerOfferRepository.findByEndDateBefore(endDate, pageable)
+    public List<PetOwnerOfferDTO> getOffersByPetType(List<PetType> petTypes) {
+        return petOwnerOfferRepository.findByPetsPetTypeIn(petTypes)
                 .stream()
                 .map(petOwnerOfferMapper::mapToDto)
                 .toList();
@@ -122,8 +90,8 @@ public class PetOwnerOfferService {
 
     public PetOwnerOfferDTO updateOffer(Long offerId, PetOwnerOfferDTO offerDto) {
         PetOwnerOffer currentOffer = petOwnerOfferRepository.findById(offerId).orElse(null);
-        if(currentOffer == null) {
-            throw new ResourceNotFoundException("PetOwnerOffer for update not found");
+        if(currentOffer == null){
+            throw new ResourceNotFoundException("Offer not found");
         }
 
         if (offerDto.getId() != null &&
@@ -131,16 +99,21 @@ public class PetOwnerOfferService {
             throw new InvalidParameterException("Owner offer id in body does not match id in request url");
         }
         if (offerDto.getUserId() != null &&
-            !currentOffer.getUser().getId().equals(offerDto.getUserId())){
+                !currentOffer.getUser().getId().equals(offerDto.getUserId())) {
             throw new InvalidParameterException("Cannot change the id of offer's user");
         }
+
         offerDto.setId(offerId);
 
         PetOwnerOffer updated = petOwnerOfferMapper.mapToEntity(offerDto);
-        updated.setPictures(currentOffer.getPictures());
-        updatePets(updated, offerDto.getPets());
-        System.out.println("The saved in the db one: " + updated.getPictures().size());
+        User user = userRepository.findById(offerDto.getUserId()).orElseThrow(()-> new ResourceNotFoundException("User not found"));
+        updated.setUser(user);
 
+        updated.setPictures(currentOffer.getPictures()); // not updating the pictures
+
+        petOwnerOfferRepository.save(updated);
+
+        updatePets(updated, offerDto.getPets());
         return petOwnerOfferMapper.mapToDto(updated);
     }
 
@@ -167,11 +140,13 @@ public class PetOwnerOfferService {
     private void addPetsToOffer(PetOwnerOffer newOffer, PetOwnerOfferDTO newOfferDto) {
         List<PetDTO> petsDTOs = newOfferDto.getPets();
         for (PetDTO petDTO : petsDTOs) {
-            addPetToOffer(newOffer, petDTO);
+            Pet pet = petService.createPetOwner(petDTO, newOffer);
+            newOffer.getPets().add(pet);
         }
     }
 
     private void addPetToOffer(PetOwnerOffer ownerOffer, PetDTO petDTO) {
+
         Pet pet = petService.createPet(petDTO);
         ownerOffer.getPets().add(pet);
     }
@@ -181,21 +156,12 @@ public class PetOwnerOfferService {
         Map<PetType, Pet> currentPetsMap = currentPets.stream()
                 .collect(Collectors.toMap(Pet::getPetType, pet -> pet));
 
-        for (PetDTO petDTO : petDTOs) {
-            PetType petType = petDTO.getPetType();
-            if (!currentPetsMap.containsKey(petType)) {
-                addPetToOffer(offerToUpdate, petDTO);
-            } else {
-                Pet petForUpdate = currentPetsMap.get(petType);
-                if (petForUpdate.getNumberOfPets() != petDTO.getNumberOfPets()){
-                    // call pet service to update pet by id
-                    // petService.updatePet(petForUpdate.getId(), petDTO.getNumberOfPets());
-                }
-                currentPetsMap.remove(petType);
-            }
+        petService.deletePetsFromOffer(offerToUpdate.getId(), true);
+        List<Pet> petsToSave = new ArrayList<>();
+        for(PetDTO petDTO: petDTOs){
+            Pet pet = petService.createPetOwner(petDTO, offerToUpdate);
+            petsToSave.add(pet);
         }
-        // will delete pets from database because of orphan removal?
-        currentPets.removeIf(pet -> currentPetsMap.containsKey(pet.getPetType()));
+        offerToUpdate.setPets(petsToSave);
     }
-
 }

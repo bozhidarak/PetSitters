@@ -26,4 +26,18 @@ public class PetOwnerOffer {
     @OneToMany(mappedBy = "petOwnerOffer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pet> pets = new ArrayList<>();
     public PetOwnerOffer(){}
+
+    @Override
+    public String toString() {
+        return "PetOwnerOffer{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", location='" + location + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", userId=" + (user != null ? user.getId() : null) +
+                ", picturesCount=" + (pictures != null ? pictures.size() : 0) +
+                ", petsCount=" + (pets != null ? pets.size() : 0) +
+                '}';
+    }
 }

@@ -11,10 +11,11 @@ import com.example.backend.repository.UserRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.security.InvalidParameterException;
+import java.util.*;
 
 @Service
 public class PetSitterOfferService {
@@ -55,6 +56,7 @@ public class PetSitterOfferService {
         return offerMapper.toDTO(offerEntity);
     }
 
+    @Transactional //?? not sure if needed
     public PetSitterOfferDTO createOffer(PetSitterOfferDTO offerDTO, List<MultipartFile> pictures){
         PetSitterOffer offerEntity = offerMapper.toEntity(offerDTO);
         Long userId = offerDTO.getUserId();
@@ -66,12 +68,12 @@ public class PetSitterOfferService {
         offerEntity.setUser(user);
         List<PetDTO> petDTOs = offerDTO.getPets();
         List<Pet> pets = new ArrayList<>();
+        PetSitterOffer offer = offerRepository.save(offerEntity);
         for(PetDTO petDTO : petDTOs){
-            Pet pet = petService.createPet(petDTO);
+            Pet pet = petService.createPetSitter(petDTO, offer);
             pets.add(pet);
         }
-        offerEntity.setPets(pets);
-        PetSitterOffer offer = offerRepository.save(offerEntity);
+        offer.setPets(pets);
         if(!pictures.isEmpty()) {
             for (MultipartFile picture : pictures) {
                 pictureService.addPictureToOffer(picture, offer, null);
@@ -80,10 +82,43 @@ public class PetSitterOfferService {
         return offerMapper.toDTO(offer);
     }
 
+    public PetSitterOfferDTO updateOffer(Long id, PetSitterOfferDTO offerDTO){
+        PetSitterOffer savedOffer = offerRepository.findById(id).orElse(null);
+        if(savedOffer == null) {
+            throw new ResourceNotFoundException("Offer not found");
+        }
+        if (!offerDTO.getUserId().equals(savedOffer.getUser().getId())) {
+            throw new InvalidParameterException("The user id doesn't belong to this offer");
+        }
+
+        PetSitterOffer toSave = offerMapper.toEntity(offerDTO);
+        toSave.setOfferId(id);
+        User user = userRepository.findById(offerDTO.getUserId()).orElseThrow(()-> new ResourceNotFoundException("User not found"));
+        toSave.setUser(user);
+
+        toSave.setPictures(savedOffer.getPictures()); // not updating the pictures
+
+        offerRepository.save(toSave);
+
+       updatePets(toSave, offerDTO.getPets());
+
+       return offerMapper.toDTO(toSave);
+    }
+
     public void deleteOffer(Long id){
         if(!offerRepository.existsById(id)){
             throw new ResourceNotFoundException("No pet sitter offer with id: " + id);
         }
         offerRepository.deleteById(id);
+    }
+
+    public void updatePets(PetSitterOffer toSave, List<PetDTO> petDTOs){
+        petService.deletePetsFromOffer(toSave.getOfferId(), true);
+        List<Pet> petsToSave = new ArrayList<>();
+        for(PetDTO petDTO: petDTOs){
+            Pet pet = petService.createPetSitter(petDTO, toSave);
+            petsToSave.add(pet);
+        }
+        toSave.setPets(petsToSave);
     }
 }
