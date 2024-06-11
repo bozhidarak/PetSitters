@@ -20,10 +20,6 @@ public interface PetOwnerOfferMapper {
     @Mapping(source = "userId", target="user.id")
     PetOwnerOffer mapToEntity(PetOwnerOfferDTO petOwnerOfferDTO);
 
-//    List<PetOwnerOfferDTO> mapToDto(List<PetOwnerOffer> petOwnerOffers);
-//
-//    List<PetOwnerOffer> mapToEntity(List<PetOwnerOfferDTO> petOwnerOfferDTOS);
-
     @IterableMapping(qualifiedByName = "mapPictureToUrl")
     List<String> mapPicturesToUrls(List<Picture> pictures);
 
