@@ -13,7 +13,6 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {PetMapper.class})
 public interface PetSitterOfferMapper {
 
-    @Mapping(target = "user", ignore = true)
     @Mapping(target = "pets", ignore = true)
     @Mapping(source = "userId", target = "user.id")
     PetSitterOffer toEntity(PetSitterOfferDTO offerDTO);
