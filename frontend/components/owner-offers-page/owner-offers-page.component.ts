@@ -19,8 +19,8 @@ export interface Tile {
   selector: 'owners-page',
   standalone: true,
   imports: [CommonModule,NavBarComponent, PetCardComponent,MatGridListModule,MatButtonModule,FiltersComponent],
-  templateUrl: './owners-page.component.html',
-  styleUrl: './owners-page.component.css'
+  templateUrl: './owner-offer-page.component.html',
+  styleUrl: './owner-offer-page.component.css'
 })
 
 export class OwnersPageComponent {
@@ -30,7 +30,7 @@ export class OwnersPageComponent {
   constructor(private router:Router){
     // this.getOwners();
     // const auth = getAuth();
-    
+
     // onAuthStateChanged(auth, (user) => {
     //   if (user) {
     //     this.loggedIn = true;
@@ -47,17 +47,14 @@ export class OwnersPageComponent {
   //   const usersRef = collection(db, "users");
   //   const q = query(usersRef, where("userType", "==", 2), where("createAd", "==", true));
   //   const querySnapshot = await getDocs(q);
-  //   querySnapshot.forEach((doc) => {      
+  //   querySnapshot.forEach((doc) => {
   //     this.owners.push(doc.data() as Owner);
   //   });
   // }
-  
-  navigateToDetails(owner: Owner){
-    //seperate email to before and after @
-    const email = owner.email.split('@');
-    //sepereate second part of email to before and after .
-    const provider = email[1].split('.');
-    this.router.navigate(['owner-details', email[0], provider[0], provider[1]]);
+
+  navigateToDetails(petOwnerOffer: Owner){
+    // const id = petOwnerOffer.id;
+    // this.router.navigate(['owner-offer-details', id]);
   }
 
   navigateToRegister(){
