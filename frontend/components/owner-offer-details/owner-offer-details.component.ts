@@ -10,14 +10,14 @@ import { PetOwnerOffer } from '../../src/models/user-model';
 // import { getFirestore, collection, where, getDocs , query} from '@angular/fire/firestore';
 
 @Component({
-  selector: 'owner-details',
+  selector: 'owner-offer-details',
   standalone: true,
   imports: [NavBarComponent,RouterLink, CommonModule,
     MatButtonModule, CarouselModule, MatIconModule],
   templateUrl: './owner-offer-details.component.html',
   styleUrl: './owner-offer-details.component.css'
 })
-export class OwnerDetailsComponent {
+export class OwnerOfferDetailsComponent {
 
   petOwnerOffer: PetOwnerOffer | undefined;
 

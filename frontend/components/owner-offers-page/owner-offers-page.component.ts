@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { PetCardComponent } from '../pet-card/pet-card.component';
@@ -6,7 +6,8 @@ import {MatGridListModule } from '@angular/material/grid-list';
 import { MatButtonModule } from '@angular/material/button';
 import { FiltersComponent } from '../filters/filters.component';
 import { Router } from '@angular/router';
-import { Owner, Sitter, User } from '../../src/models/user-model';
+import { PetOwnerOffer, Owner, Sitter, User } from '../../src/models/user-model';
+import { OwnerOfferService } from '../../src/app/service/owner-offer-service.service'
 // import { getFirestore, collection, where, getDocs,query } from '@angular/fire/firestore';
 // import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
 
@@ -19,15 +20,17 @@ export interface Tile {
   selector: 'owners-page',
   standalone: true,
   imports: [CommonModule,NavBarComponent, PetCardComponent,MatGridListModule,MatButtonModule,FiltersComponent],
-  templateUrl: './owner-offer-page.component.html',
-  styleUrl: './owner-offer-page.component.css'
+  templateUrl: './owner-offers-page.component.html',
+  styleUrl: './owner-offers-page.component.css'
 })
 
-export class OwnersPageComponent {
-  owners: Owner[] = [];
+export class OwnerOffersPageComponent implements OnInit{
+  petOwnerOffers: PetOwnerOffer[] = [];
   loggedIn: boolean = true;
+  page: number = 1;
+  limit: number = 9;
 
-  constructor(private router:Router){
+  constructor(private ownerOfferService: OwnerOfferService, private router:Router){
     // this.getOwners();
     // const auth = getAuth();
 
@@ -42,6 +45,19 @@ export class OwnersPageComponent {
 
   }
 
+  ngOnInit() {
+    this.getOwnerOffers();
+  }
+
+  getOwnerOffers() {
+    this.ownerOfferService.findAll().subscribe( (data) => {
+        this.petOwnerOffers = data;
+        for (let offer of this.petOwnerOffers) {
+          console.log(offer);
+        }
+      })
+  }
+
   // async getOwners(){
   //   const db = getFirestore();
   //   const usersRef = collection(db, "users");
@@ -52,9 +68,9 @@ export class OwnersPageComponent {
   //   });
   // }
 
-  navigateToDetails(petOwnerOffer: Owner){
-    // const id = petOwnerOffer.id;
-    // this.router.navigate(['owner-offer-details', id]);
+  navigateToDetails(petOwnerOffer: PetOwnerOffer){
+    const id = petOwnerOffer.id;
+    this.router.navigate(['owner-offer-details', id]);
   }
 
   navigateToRegister(){
