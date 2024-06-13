@@ -10,8 +10,8 @@ import { Sitter, UserType } from '../../src/models/user-model';
   selector: 'sitter-card',
   standalone: true,
   imports: [CommonModule,MatCardModule, MatButtonModule],
-  templateUrl: './sitter-card.component.html',
-  styleUrl: './sitter-card.component.css'
+  templateUrl: './sitter-offer-card.component.html',
+  styleUrl: './sitter-offer-card.component.css'
 })
 export class SitterCardComponent {
   

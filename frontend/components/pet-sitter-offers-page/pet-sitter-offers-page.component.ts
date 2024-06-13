@@ -4,7 +4,7 @@ import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { MatButtonModule } from '@angular/material/button';
 import { PetCardComponent } from '../pet-card/pet-card.component';
 import {MatGridListModule} from '@angular/material/grid-list';
-import { SitterCardComponent } from '../sitter-card/sitter-card.component';
+import { SitterCardComponent } from '../sitter-offer-card/sitter-offer-card.component';
 import { FiltersComponent } from '../filters/filters.component';
 import { Router } from '@angular/router';
 // import { collection, getDocs, getFirestore, query, where } from '@angular/fire/firestore';
@@ -17,8 +17,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
   selector: 'pet-sitters',
   standalone: true,
   imports: [CommonModule, NavBarComponent, MatButtonModule, SitterCardComponent, MatGridListModule, FiltersComponent, MatCheckboxModule],
-  templateUrl: './pet-sitters-page.component.html',
-  styleUrl: './pet-sitters-page.component.css'
+  templateUrl: './pet-sitter-offers-page.component.html',
+  styleUrl: './pet-sitter-offers-page.component.css'
 })
 
 export class PetSittersPageComponent {
