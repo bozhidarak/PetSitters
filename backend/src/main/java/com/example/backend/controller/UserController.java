@@ -1,13 +1,16 @@
 package com.example.backend.controller;
 
 import com.amazonaws.services.iot.model.ResourceAlreadyExistsException;
+import com.example.backend.dto.PetOwnerOfferDTO;
 import com.example.backend.dto.UserDTO;
 import com.example.backend.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -32,11 +35,12 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO){
-        // if there is a picture should call pic service
+    public ResponseEntity<UserDTO> createUser(@RequestPart(required = false) MultipartFile profilePic,
+                                              @RequestPart @Valid UserDTO userDTO)
+    {
         try{
-        return ResponseEntity.ok(userService.createUser(userDTO));}
-        catch (ResourceAlreadyExistsException e){
+            return ResponseEntity.ok(userService.createUser(userDTO, profilePic));
+        } catch (ResourceAlreadyExistsException e){
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
