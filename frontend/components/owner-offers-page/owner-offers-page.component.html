@@ -18,7 +18,7 @@
                         rowspan="1" ><!--(click)="navigateToDetails(petOwnerOffer)">-->
 <!--                        <pet-card [owner]="owner"></pet-card>-->
                         <div>
-                          <img src="{{petOwnerOffer.picturePaths[0]}}" alt="pet image">
+                          <img [src]="petOwnerOffer.picturePaths[0]" alt="pet image">
                           <p>Pet Sitter needed immediately</p>
                           <p>От {{ petOwnerOffer.startDate }} до {{ petOwnerOffer.endDate }}</p>
                           <p>{{ petOwnerOffer.location }}</p>
