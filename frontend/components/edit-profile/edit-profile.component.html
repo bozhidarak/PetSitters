@@ -1,119 +1,37 @@
-
+<!DOCTYPE html>
 <html>
-<form [formGroup]="editProfileForm">
-  <h2>Редактиране на профил</h2>
-  <mat-radio-group aria-label="Select an option" formControlName="userType">
-    <span>Ти си:</span>
-    <mat-radio-button [value]="1" >Гледач</mat-radio-button>
-    <mat-radio-button [value]="2">Стопанин</mat-radio-button>
-</mat-radio-group>
-<div class="owner-sitter">
-    <h3>За теб: </h3>
-    <div class="about-self">
-        <mat-form-field>
-            <mat-label>Имейл:</mat-label>
-            <input matInput [value]="currentUserEmail" disabled>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Име:</mat-label>
-            <input matInput placeholder="Василена Илиева" formControlName="name" required>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Локация:</mat-label>
-            <input matInput placeholder="София, България" formControlName="location" required>
-        </mat-form-field>   
-        <!-- ng if sitter -->
-        <mat-form-field *ngIf="editProfileForm.get('userType')?.value == 1">
-            <mat-label>Възраст:</mat-label>
-            <input matInput type="number" placeholder="34" formControlName="age" required>
-        </mat-form-field>
-    </div>
-    <div>
-        <span>Профилна снимка:</span>
-        <input type="file" #profilePicInput hidden (change)="onProfilePicSelect($event)">
-        <button type="button" mat-icon-button (click)="profilePicInput.click()">
-            <mat-icon>attach_file</mat-icon>
-        </button>
-        <div class="selectedPictureContainer">
-            <button type="button" mat-icon-button (click)="removeProfilePic()" *ngIf="profilePicBlob">
-                <mat-icon>delete</mat-icon>
-            </button>
-            <img class="selectedPicture" [src]="profilePicBlob ?? currentUser?.profilePic" >
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pet Sitters</title>
+    </head>
+    <body>
+            <nav-bar></nav-bar>
+            <div class="user-info">
+                <mat-grid-list cols="3" rowHeight="2:1">
+                    <mat-grid-tile>
+                        <img src="assets/profile-pic1.jpg" alt="Profile Picture" class="profile-picture">
+                        <div class="info">
+                        <span class="name">Petya Petrova</span>
+                        <span class="email">email.com</span>
+                        <span class="location">Sofia, Bulgaria</span>
+                        </div>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <button mat-raised-button href="#" color="primary" (click)="createPetOwnerOffer">Създай обява "Търся гледач"</button>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <button mat-raised-button href="#" color="primary" (click)="createPetOwnerOffer">Създай обява "Аз съм гледач"</button>
+                    </mat-grid-tile>
+                </mat-grid-list>
+                <div class="line"></div>
+                <div class="title-offers">Твоите обяви:</div>
+                <div class="offers">
+                    <mat-grid-list cols="3" rowHeight="2:3">
+                        <mat-grid-tile *ngFor="let offer of offers"
+                        colspan="1"
+                        rowspan="1" (click)="navigateToDetails(offer)"><pet-card [owner]="offer"></pet-card></mat-grid-tile>
+                    </mat-grid-list>
+            </div>
         </div>
-    </div>
-    <div>
-        <!-- ng if owner -->
-        <h3 *ngIf="editProfileForm.get('userType')?.value == 2">За любимците: </h3>
-        <!-- ng if sitter -->
-        <h3 *ngIf="editProfileForm.get('userType')?.value == 1">Любимци, които бихте гледали: </h3>
-        <div class="aboutPets">
-            <span>Вид:</span>
-                <mat-checkbox formControlName="cats">Котки</mat-checkbox>
-                <mat-checkbox formControlName="dogs">Кучета</mat-checkbox>
-                <mat-checkbox formControlName="birds" class="birds">Птици</mat-checkbox>
-            <span>Големина:</span>
-                <mat-checkbox formControlName="small">Малки</mat-checkbox>
-                <mat-checkbox formControlName="large">Големи</mat-checkbox>
-            <!-- ng if owner -->
-            <mat-form-field *ngIf="editProfileForm.get('userType')?.value == 2">
-                <mat-label>Брой:</mat-label>
-                <input matInput type="number" placeholder="1" formControlName="numberOfPets" required>
-            </mat-form-field>
-        </div>
-        <div class="dates-description" *ngIf="editProfileForm.get('userType')?.value == 2">
-            <h3>Дати: </h3>
-            <mat-form-field>
-                <mat-label>Начална дата:</mat-label>
-                <input matInput type="date" formControlName="startDate" required>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Крайна дата:</mat-label>
-                <input matInput type="date" formControlName="endDate" required>
-            </mat-form-field>
-        </div>
-    </div>
-    
-    <div class="more-info">
-        <h3>Допълнителна информация: </h3>
-        <!-- ng if sitter -->
-        <div class="sitter" *ngIf="editProfileForm.get('userType')?.value == 1">
-            <mat-form-field>
-                <mat-label>Цена на час (лв.):</mat-label>
-                <input matInput type="number" placeholder="10" formControlName="price" required>
-            </mat-form-field>
-        </div>
-        <mat-form-field>
-            <textarea matInput type="text" formControlName="description"></textarea>
-        </mat-form-field>
-    </div>
-    <span>Снимки: </span>
-    <input type="file" #fileInput hidden (change)="onFileSelect($event)" multiple>
-    <button type="button" mat-icon-button (click)="fileInput.click()">
-        <mat-icon>attach_file</mat-icon>
-    </button>
-    <div  class="selectedPictures">
-        <div class="selectedPictureContainer" *ngFor="let picture of pictureBlobs; let i = index">
-            <button type="button" mat-icon-button (click)="removePicture(i)">
-                <mat-icon>delete</mat-icon>
-            </button>
-            <img class="selectedPicture" [src]="picture" alt ="picture" >
-        </div>
-        <div class="existing-pictures" *ngFor="let picture of currentUser?.pictures; let i = index">
-            <button type="button" mat-icon-button (click)="removeExistingPicture(i)">
-                <mat-icon>delete</mat-icon>
-            </button>
-            <img class="selectedPicture" [src]="picture">
-        </div>
-    </div>
-    <div class="createAd">
-        <mat-checkbox formControlName="createAd"><p class="createAd-checkbox">Искам да се създаде обява с тази информация</p></mat-checkbox>
-        <p class="all-fields">(Всички полета трябва да бъдат попълнени) </p>
-    </div>
-</div>
-<div class="buttons">
-    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="isSubmitting">Запази</button>
-    <button mat-stroked-button class="stroked" color="primary" (click)="navigateToHome()">Анулирай промени</button>
-    <button mat-stroked-button class="stroked" color="primary" (click)="signOutUser()" >Изход</button>
-</div>  
-</form>
-  </html>
+    </body>
+</html>
