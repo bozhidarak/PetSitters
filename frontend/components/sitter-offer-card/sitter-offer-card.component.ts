@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { getAuth } from '@angular/fire/auth';
 // import { collection, getDocs, getFirestore, query, where } from '@angular/fire/firestore';
 import { Sitter, UserType } from '../../src/models/user-model';
+import { SitterOffer } from '../../src/models/sitter-offer-model';
 
 @Component({
   selector: 'sitter-card',
@@ -15,7 +16,7 @@ import { Sitter, UserType } from '../../src/models/user-model';
 })
 export class SitterCardComponent {
   
-  @Input() sitter: Sitter | undefined;
+  @Input() sitter: SitterOffer | undefined;
   
   constructor() {
     
