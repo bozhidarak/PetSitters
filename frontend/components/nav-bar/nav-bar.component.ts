@@ -66,7 +66,7 @@ export class NavBarComponent {
     this.router.navigate(['how-page'])
   }
 
-  NavigateToEditProfile(){
-    this.router.navigate(['edit-profile'])
+  NavigateToUserProfile(){
+    this.router.navigate(['user-profile'])
   }
 }

@@ -9,7 +9,7 @@
     <div>
         <button *ngIf="!loggedIn" mat-button class="login-btn" (click)="NavigateToLogin()">Вход</button>
         <button *ngIf="!loggedIn" mat-raised-button class="signup-btn" color="accent" (click)="NavigateToRegistration()">Създай профил</button>
-        <button *ngIf="loggedIn" mat-raised-button class="edit-btn" color="accent" (click)="NavigateToEditProfile()">
+        <button *ngIf="loggedIn" mat-raised-button class="edit-btn" color="accent" (click)="NavigateToUserProfile()">
             <div class="profile-button">
                 <img class="profile-pic" [src]="picture">
                 <span>{{userName}}</span>

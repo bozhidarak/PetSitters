@@ -20,14 +20,14 @@ import { PetCardComponent } from '../pet-card/pet-card.component';
 
 
 @Component({
-  selector: 'edit-profile',
+  selector: 'user-profile',
   standalone: true,
   imports: [NavBarComponent, MatGridListModule, PetCardComponent, CommonModule, MatFormFieldModule, MatButtonModule,
     MatInputModule, FormsModule, ReactiveFormsModule, MatIconModule, MatRadioModule, MatCheckboxModule],
-  templateUrl: './edit-profile.component.html',
-  styleUrl: './edit-profile.component.css'
+  templateUrl: './user-profile.component.html',
+  styleUrl: './user-profile.component.css'
 })
-export class EditProfileComponent {
+export class UserProfileComponent {
   
   offers: Owner[] = [];
 
