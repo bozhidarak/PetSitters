@@ -20,6 +20,6 @@ export const routes: Routes = [
     {path:'login', component:LoginComponent},
     {path: 'how-page', component:HowPageComponent},
     {path: 'sitter-details/:sitterEmail/:sitterEmailProvider/:sitterEmailDomain', component:SitterDetailsComponent},
-    {path: 'owner-details/:id', component:OwnerOfferDetailsComponent},
+    {path: 'owner-offer-details/:id', component:OwnerOfferDetailsComponent},
     {path: 'user-profile', component:UserProfileComponent}
 ];
