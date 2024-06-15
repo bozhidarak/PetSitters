@@ -1,31 +1,24 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Pet Owners</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Pet Owners</title>
     </head>
     <body>
-            <nav-bar></nav-bar>
-            <div *ngIf="!loggedIn" class="banner">
-                <h2>Присъединете се към семейството!</h2>
-               <button mat-raised-button href="#" color="accent" (click)="navigateToRegister()" >Създай профил</button>
-            </div>
-            <div class="pet-list">
-              <filters></filters>
-                <mat-grid-list cols="3" rowHeight="2:3">
-                      <mat-grid-tile *ngFor="let petOwnerOffer of petOwnerOffers"
-                        colspan="1"
-                        rowspan="1" ><!--(click)="navigateToDetails(petOwnerOffer)">-->
-<!--                        <pet-card [owner]="owner"></pet-card>-->
-                        <div>
-                          <img [src]="petOwnerOffer.picturePaths[0]" alt="pet image">
-                          <p>Pet Sitter needed immediately</p>
-                          <p>От {{ petOwnerOffer.startDate }} до {{ petOwnerOffer.endDate }}</p>
-                          <p>{{ petOwnerOffer.location }}</p>
-                          <p>{{ petOwnerOffer.description }}</p>
-                        </div>
-                      </mat-grid-tile>
-                </mat-grid-list>
-            </div>
+      <nav-bar></nav-bar>
+      <div *ngIf="!loggedIn" class="banner">
+        <h2>Присъединете се към семейството!</h2>
+        <button mat-raised-button href="#" color="accent" (click)="navigateToRegister()" >Създай профил</button>
+      </div>
+      <div class="pet-list">
+        <filters></filters>
+        <mat-grid-list cols="3" rowHeight="2:3">
+          <mat-grid-tile *ngFor="let petOwnerOffer of petOwnerOffers"
+                         colspan="1"
+                         rowspan="1" (click)="navigateToDetails(petOwnerOffer)">
+            <owner-offer-card [ownerOffer]="petOwnerOffer"></owner-offer-card>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
     </body>
 </html>

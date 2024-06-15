@@ -4,7 +4,7 @@ html,body{
     margin:0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Popins', sans-serif; 
+    font-family: 'Popins', sans-serif;
     background-color: #FEFEFE;
 }
 .banner{
@@ -32,7 +32,7 @@ button{
 }
 
 .pet-list{
-    margin: 5%;
+    margin: 3%;
     display: flex;
 }
 
@@ -41,10 +41,10 @@ filters, mat-grid-list {
 }
 
 mat-grid-list{
-    max-width: 80%;
+    max-width: 84%;
 }
 
 filters{
-    max-width: 20%;
+    max-width: 16%;
 }
 

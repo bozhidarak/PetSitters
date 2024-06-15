@@ -1,12 +1,16 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {MatCardModule} from "@angular/material/card";
+import {CommonModule, NgForOf, NgIf} from "@angular/common";
+import {PetOwnerOffer} from "../../src/models/owner-offer-model";
+
 
 @Component({
-  selector: 'app-owner-offer-card',
+  selector: 'owner-offer-card',
   standalone: true,
-  imports: [],
+  imports: [MatCardModule, CommonModule, NgForOf, NgIf],
   templateUrl: './owner-offer-card.component.html',
   styleUrl: './owner-offer-card.component.css'
 })
 export class OwnerOfferCardComponent {
-
+  @Input() ownerOffer: PetOwnerOffer = {} as PetOwnerOffer;
 }
