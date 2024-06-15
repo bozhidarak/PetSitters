@@ -6,35 +6,27 @@ import { MatButtonModule } from '@angular/material/button';
 import { CarouselModule } from '@coreui/angular';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { Owner } from '../../src/models/user-model';
+import { PetOwnerOffer } from '../../src/models/user-model';
 // import { getFirestore, collection, where, getDocs , query} from '@angular/fire/firestore';
 
-export interface OwnerInfo{
-  adress: string;
-  price: number;
-  typeOfPets: string;//????
-  description: string;
-}
-
 @Component({
-  selector: 'owner-details',
+  selector: 'owner-offer-details',
   standalone: true,
   imports: [NavBarComponent,RouterLink, CommonModule,
     MatButtonModule, CarouselModule, MatIconModule],
-  templateUrl: './owner-details.component.html',
-  styleUrl: './owner-details.component.css'
+  templateUrl: './owner-offer-details.component.html',
+  styleUrl: './owner-offer-details.component.css'
 })
-export class OwnerDetailsComponent {
+export class OwnerOfferDetailsComponent {
 
-  owner: Owner | undefined;
-  ownerEmail: String | null = null;
+  petOwnerOffer: PetOwnerOffer | undefined;
 
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
 
-    this.ownerEmail = this.route.snapshot.paramMap.get('ownerEmail') + '@' + this.route.snapshot.paramMap.get('ownerEmailProvider') + '.' + this.route.snapshot.paramMap.get('ownerEmailDomain');
-    console.log(this.ownerEmail);
+    // this.ownerEmail = this.route.snapshot.paramMap.get('ownerEmail') + '@' + this.route.snapshot.paramMap.get('ownerEmailProvider') + '.' + this.route.snapshot.paramMap.get('ownerEmailDomain');
+    // console.log(this.ownerEmail);
     //this.getOwner();
   }
 
@@ -44,6 +36,6 @@ export class OwnerDetailsComponent {
   //   const q = query(usersRef, where("email", "==", this.ownerEmail));
   //   const querySnapshot = await getDocs(q);
   //   this.owner = querySnapshot.docs[0].data() as Owner;
-    
+
   // }
 }

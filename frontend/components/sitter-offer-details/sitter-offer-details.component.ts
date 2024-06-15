@@ -14,8 +14,8 @@ import { Owner, Sitter } from '../../src/models/user-model';
   standalone: true,
   imports: [NavBarComponent,RouterLink, CommonModule,
      MatButtonModule, CarouselModule, MatIconModule],
-  templateUrl: './sitter-details.component.html',
-  styleUrl: './sitter-details.component.css'
+  templateUrl: './sitter-offer-details.component.html',
+  styleUrl: './sitter-offer-details.component.css'
 })
 export class SitterDetailsComponent {
 

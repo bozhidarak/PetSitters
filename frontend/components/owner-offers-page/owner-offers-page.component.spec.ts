@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OwnersPageComponent } from './owners-page.component';
+import { OwnerOffersPageComponent } from './owner-offers-page.component';
 
 describe('OwnersPageComponent', () => {
-  let component: OwnersPageComponent;
-  let fixture: ComponentFixture<OwnersPageComponent>;
+  let component: OwnerOffersPageComponent;
+  let fixture: ComponentFixture<OwnerOffersPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [OwnersPageComponent]
+      imports: [OwnerOffersPageComponent]
     })
     .compileComponents();
-    
-    fixture = TestBed.createComponent(OwnersPageComponent);
+
+    fixture = TestBed.createComponent(OwnerOffersPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

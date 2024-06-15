@@ -58,9 +58,11 @@ public class PictureService {
         return String.format("https://%s.s3.amazonaws.com/%s", bucketName, filename);
     }
     public void deleteFile(String filepath) {
-        String[] filepathParts = filepath.split("/");
-        String fileName = filepathParts[filepathParts.length - 1];
-        s3Client.deleteObject(bucketName, fileName);
+        if (filepath.contains("/")) {
+            String[] filepathParts = filepath.split("/");
+            String fileName = filepathParts[filepathParts.length - 1];
+            s3Client.deleteObject(bucketName, fileName);
+        }
     }
 
     private File convertMultipartFileToFile(MultipartFile mpartFile) {
