@@ -69,7 +69,9 @@ public class UserService {
     public void deleteUser(Long id){
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No user with id: " + id));
-        pictureService.deleteFile(user.getProfilePic());
+        if(user.getProfilePic() != null) {
+            pictureService.deleteFile(user.getProfilePic());
+        }
         userRepository.deleteById(id);
     }
 }
