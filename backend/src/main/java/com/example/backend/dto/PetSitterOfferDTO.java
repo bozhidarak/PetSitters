@@ -24,6 +24,11 @@ public class PetSitterOfferDTO {
     private List<String> picturePaths;
     private List<PetDTO> pets;
 
+    private String userName;
+    private String userEmail;
+    private String userLocation;
+    private String userProfilePic;
+
     public PetSitterOfferDTO() {
     }
 
