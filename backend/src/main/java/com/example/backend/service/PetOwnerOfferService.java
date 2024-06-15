@@ -135,13 +135,9 @@ public class PetOwnerOfferService {
                 !currentOffer.getUser().getId().equals(offerDto.getUserId())) {
             throw new InvalidParameterException("Cannot change the id of offer's user");
         }
-
         offerDto.setId(offerId);
 
         PetOwnerOffer updated = petOwnerOfferMapper.mapToEntity(offerDto);
-        User user = userRepository.findById(offerDto.getUserId()).orElseThrow(()-> new ResourceNotFoundException("User not found"));
-        updated.setUser(user);
-
         updated.setPictures(currentOffer.getPictures()); // not updating the pictures
 
         petOwnerOfferRepository.save(updated);
@@ -187,7 +183,7 @@ public class PetOwnerOfferService {
     private void updatePets(PetOwnerOffer offerToUpdate, List<PetDTO> petDTOs) {
         List<Pet> currentPets = offerToUpdate.getPets();
 
-        petService.deletePetsFromOffer(offerToUpdate.getId(), true);
+        petService.deletePetsFromOffer(offerToUpdate.getId(), false);
         List<Pet> petsToSave = new ArrayList<>();
         for(PetDTO petDTO: petDTOs){
             Pet pet = petService.createPetOwner(petDTO, offerToUpdate);

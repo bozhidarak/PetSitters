@@ -10,11 +10,12 @@ import { initializeAppCheck, ReCaptchaEnterpriseProvider, provideAppCheck } from
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
+import {provideHttpClient} from "@angular/common/http";
 
 export const appConfig: ApplicationConfig = {
-  
+
   providers: [provideRouter(routes),
-  provideAnimations(),
+  provideAnimations(), provideHttpClient(),
   //  importProvidersFrom(provideFirebaseApp(() => initializeApp(environment.firebase))),
   //  importProvidersFrom(AngularFireModule.initializeApp(environment.firebase)),
   //  importProvidersFrom(provideAuth(() => getAuth())),

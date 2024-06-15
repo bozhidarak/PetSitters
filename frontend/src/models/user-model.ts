@@ -40,7 +40,7 @@ export class User {
 export class Owner extends User {
     startDate:string;
     endDate:string;
-    
+
     constructor(name:string,email:string, numberOfPets:number, location:string, description:string, cats:boolean, dogs:boolean, birds:boolean, small:boolean, large:boolean, startDate:string, endDate:string, userType:UserType, profilePic:string, pictures:string[], createAd: boolean) {
         super(name, email, numberOfPets, location, description, cats, dogs, birds, small, large, userType, profilePic, pictures, createAd);
         this.startDate = startDate;
@@ -57,4 +57,20 @@ export class Sitter extends User {
         this.age = age;
         this.price = price;
     }
+}
+
+export interface PetOwnerOffer {
+  id: number;
+  description: string;
+  location: string;
+  startDate: Date;
+  endDate: Date;
+  userId: number;
+  picturePaths: string[];
+  pets: Pet[];
+}
+
+export interface Pet {
+  petType: string;
+  numberOfPets: number;
 }

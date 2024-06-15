@@ -37,23 +37,29 @@ public class PetSitterOfferService {
     }
 
     public List<PetSitterOfferDTO> getAllOffers(){
-        return offerRepository.findAll()
+        List<PetSitterOfferDTO> offers = offerRepository.findAll()
                 .stream()
                 .map(offerMapper::toDTO)
                 .toList();
+        offers.forEach(this::setUser);
+        return offers;
     }
 
     public List<PetSitterOfferDTO> getAllOffers(PageRequest pageRequest){
-        return offerRepository.findAll(pageRequest)
+        List<PetSitterOfferDTO> offers = offerRepository.findAll(pageRequest)
                 .stream()
                 .map(offerMapper::toDTO)
                 .toList();
+        offers.forEach(this::setUser);
+        return offers;
     }
 
     public PetSitterOfferDTO getOfferById(Long id){
         PetSitterOffer offerEntity = offerRepository.findById(id).orElseThrow(
                 ()-> new ResourceNotFoundException("No pet sitter offer with id: " + id));
-        return offerMapper.toDTO(offerEntity);
+        PetSitterOfferDTO offer = offerMapper.toDTO(offerEntity);
+        setUser(offer);
+        return offer;
     }
 
     @Transactional //?? not sure if needed
@@ -79,7 +85,9 @@ public class PetSitterOfferService {
                 pictureService.addPictureToOffer(picture, offer, null);
             }
         }
-        return offerMapper.toDTO(offer);
+        PetSitterOfferDTO offerDTOtoSave = offerMapper.toDTO(offer);
+        setUser(offerDTOtoSave);
+        return offerDTOtoSave;
     }
 
     public PetSitterOfferDTO updateOffer(Long id, PetSitterOfferDTO offerDTO){
@@ -93,16 +101,15 @@ public class PetSitterOfferService {
 
         PetSitterOffer toSave = offerMapper.toEntity(offerDTO);
         toSave.setOfferId(id);
-        User user = userRepository.findById(offerDTO.getUserId()).orElseThrow(()-> new ResourceNotFoundException("User not found"));
-        toSave.setUser(user);
 
         toSave.setPictures(savedOffer.getPictures()); // not updating the pictures
 
         offerRepository.save(toSave);
 
        updatePets(toSave, offerDTO.getPets());
-
-       return offerMapper.toDTO(toSave);
+        PetSitterOfferDTO offerDTOtoSave = offerMapper.toDTO(toSave);
+        setUser(offerDTOtoSave);
+       return offerDTOtoSave;
     }
 
     public void deleteOffer(Long id){
@@ -120,5 +127,15 @@ public class PetSitterOfferService {
             petsToSave.add(pet);
         }
         toSave.setPets(petsToSave);
+    }
+
+    public void setUser(PetSitterOfferDTO offer){
+        User user = userRepository.findById(offer.getUserId()).orElseThrow(
+                () -> new ResourceNotFoundException("User not found")
+        );
+        offer.setUserName(user.getName());
+        offer.setUserEmail(user.getEmail());
+        offer.setUserLocation(user.getLocation());
+        offer.setUserProfilePic(user.getProfilePic());
     }
 }
