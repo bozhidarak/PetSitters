@@ -10,7 +10,7 @@ body{
 .background{
     width: 100%;
     min-height: 100vh;
-    background-image: url(../../src/assets/background-squares3.png);
+    background-image: url(/assets/background-squares3.png);
     background-position: center;
     background-size: cover; 
 }

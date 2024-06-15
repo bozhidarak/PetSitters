@@ -93,8 +93,6 @@ public class PetSitterOfferService {
 
         PetSitterOffer toSave = offerMapper.toEntity(offerDTO);
         toSave.setOfferId(id);
-        User user = userRepository.findById(offerDTO.getUserId()).orElseThrow(()-> new ResourceNotFoundException("User not found"));
-        toSave.setUser(user);
 
         toSave.setPictures(savedOffer.getPictures()); // not updating the pictures
 

@@ -1,0 +1,46 @@
+<nav-bar></nav-bar>
+<div class="sitter-info">
+  <div *ngIf="petOwnerOffer != undefined" class="carousel">
+    <c-carousel [animate]="false" [dark]="true" [interval]="9999999" [transition]="'crossfade'">
+      <c-carousel-inner>
+<!--        <c-carousel-item *ngFor="let picture of owner!.pictures">-->
+<!--          <img-->
+<!--            [src]="picture"-->
+<!--            class="d-block w-100"-->
+<!--          />-->
+<!--        </c-carousel-item>-->
+        <c-carousel-control class="prev" caption="Previous" direction="prev">
+          <mat-icon aria-hidden="false" fontIcon="keyboard_arrow_right"></mat-icon></c-carousel-control>
+        <c-carousel-control class="next" caption="Next" direction="next">
+          <mat-icon aria-hidden="false" fontIcon="keyboard_arrow_left"></mat-icon></c-carousel-control>
+      </c-carousel-inner>
+      <div class="approved"><p class="auth">100% Проверена самоличност</p></div>
+    </c-carousel>
+  </div>
+  <div class="info">
+    <div class="name">Спешно търся гледачи!</div>
+    <button mat-raised-button href="#" color="accent">Свържете се</button>
+    <table>
+      <tr>
+        <td>Адрес:</td>
+        <td>{{petOwnerOffer?.location}}</td>
+      </tr>
+      <tr>
+        <td>Любимци: </td>
+<!--        <td><span *ngIf="owner?.dogs">Куче, </span><span *ngIf="owner?.cats">Котка, </span><span *ngIf="owner?.birds">Птица</span></td>-->
+      </tr>
+      <tr>
+      <tr>
+        <td>Брой: </td>
+<!--        <td>{{petOwnerOffer?.pets[0].numberOfPets}}</td>-->
+      </tr>
+      <tr>
+        <td>Дати: </td>
+        <td>{{petOwnerOffer?.startDate}} - {{petOwnerOffer?.endDate}}</td>
+      </tr>
+      <tr>
+        <td>Описание:</td>
+        <td>{{petOwnerOffer?.description}}</td>
+    </table>
+  </div>
+</div>

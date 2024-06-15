@@ -1,0 +1,59 @@
+.owner-offer-card {
+  width: 260px;
+  /*padding-bottom: 50px;*/
+  min-height: 350px;
+  /*height: auto;*/
+}
+
+mat-card-title {
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+mat-card-content {
+  margin-top: 15px;
+  margin-bottom: 80px;
+}
+
+.fontawesomesvg {
+  max-width: 1.5vw;
+  padding-right: 2%;
+}
+
+.pet {
+  margin-right: 10px;
+}
+
+.small-text {
+  font-size: 12px;
+}
+
+.owner-offer-card {
+  max-width: 400px;
+  max-height: 300px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.profile-picture {
+  background-size: cover;
+}
+
+.offer-picture {
+  height: 40vh;
+  width: 100%;
+  object-fit: cover;
+}
+
+.details-icon {
+  max-height: 10px;
+  max-width: 10px;
+  margin-right: 4px;
+}
+
+.details {
+  margin-bottom: 3%;
+}
