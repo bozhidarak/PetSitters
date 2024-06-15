@@ -14,6 +14,9 @@ import java.util.List;
 public interface PetOwnerOfferMapper {
     @Mapping(source = "user.id", target="userId")
     @Mapping(source = "pictures", target = "picturePaths")
+    @Mapping(source = "user.name", target = "userName")
+    @Mapping(source = "user.email", target = "userEmail")
+    @Mapping(source = "user.profilePic", target = "userProfilePic")
     PetOwnerOfferDTO mapToDto(PetOwnerOffer petOwnerOffer);
 
     @Mapping(source = "pets", target = "pets", ignore = true)

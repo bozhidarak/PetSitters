@@ -22,4 +22,8 @@ public class PetOwnerOfferDTO {
     private Long userId;
     private List<String> picturePaths;
     private List<PetDTO> pets;
+
+    private String userName;
+    private String userEmail;
+    private String userProfilePic;
 }
