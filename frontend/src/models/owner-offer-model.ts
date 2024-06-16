@@ -12,6 +12,5 @@ export interface PetOwnerOffer {
 
   userName?: string;
   userEmail?: string;
-  userLocation?: string;
   userProfilePic?: string;
 }
