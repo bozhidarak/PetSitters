@@ -8,10 +8,10 @@ export class SitterOffer{
     picturePaths: string[];
     pets: Pet[];
 
-    userName?: string;
-    userEmail?: string;
-    userLocation?: string;
-    userProfilePic?: string;
+    userName: string;
+    userEmail: string;
+    userLocation: string;
+    userProfilePic: string;
 
     constructor(offerId: number, description: string, pricePerDay: number, availableFrom: Date, availableUntil: Date, userId: number, picturePaths: string[], pets: Pet[], userName: string, userEmail: string, userLocation: string, userProfilePic: string){
         this.offerId = offerId;

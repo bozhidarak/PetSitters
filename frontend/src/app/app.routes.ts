@@ -19,7 +19,7 @@ export const routes: Routes = [
     {path:'registration', component:RegistrationComponent},
     {path:'login', component:LoginComponent},
     {path: 'how-page', component:HowPageComponent},
-    {path: 'sitter-details/:sitterEmail/:sitterEmailProvider/:sitterEmailDomain', component:SitterDetailsComponent},
+    {path: 'sitter-details/:id', component:SitterDetailsComponent},
     {path: 'owner-offer-details/:id', component:OwnerOfferDetailsComponent},
     {path: 'user-profile', component:UserProfileComponent}
 ];

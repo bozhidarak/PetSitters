@@ -7,10 +7,10 @@
     <body>
         <nav-bar></nav-bar>
         <div class="sitter-info">
-            <div  *ngIf="sitter != undefined" class="carousel">
+            <div  *ngIf="sitterOffer != undefined" class="carousel">
                 <c-carousel [animate]="false" [dark]="true" [interval]="99999999999">
                     <c-carousel-inner>
-                      <c-carousel-item *ngFor="let picture of sitter!.pictures">
+                      <c-carousel-item *ngFor="let picture of sitterOffer!.picturePaths">
                         <img
                           [src]="picture"
                           class="d-block w-100"
@@ -25,35 +25,31 @@
                   </c-carousel>
             </div>
             <div class="info">
-                <div class="name">{{sitter?.name}}</div>
-                <div class="price">Цена: {{sitter?.price}}<span>лв/час</span></div>
+                <div class="name">{{sitterOffer?.userName}}</div>
+                <div class="price">Цена: {{sitterOffer?.pricePerDay}}<span>лв/час</span></div>
                 <button mat-raised-button href="#" color="accent">Свържете се</button>
                 <table>
                     <tr>
                         <td>Адрес:</td>
-                        <td>{{sitter?.location}}</td>
+                        <td>{{sitterOffer?.userLocation}}</td>
                     </tr>
                     <tr>
                         <td>Грижа се за: </td>
-                        <td><span *ngIf="sitter?.dogs">Куче, </span><span *ngIf="sitter?.cats">Котка, </span><span *ngIf="sitter?.birds">Птица</span></td>
-
+                            <span *ngFor="let pet of sitterOffer?.pets">
+                                <td><span *ngIf="pet.petType === 'DOG'">Кучета, </span><span *ngIf="pet.petType === 'CAT'">Котки, </span><span *ngIf="pet.petType === 'BIRD'">Птици, </span><span *ngIf="pet.petType === 'FISH'">Риби, </span><span *ngIf="pet.petType === 'OTHER'">Други</span></td>
+                             </span>
                     </tr>
                     <tr>
-                        <td>Големина: </td>
-                        <td><span *ngIf="sitter?.small">Малки, </span><span *ngIf="sitter?.large">Големи</span></td>
-                        
+                        <td>Свободен съм от: </td>
+                        <td>{{sitterOffer?.availableFrom}}</td>
                     </tr>
                     <tr>
-                        <td>Възраст: </td>
-                        <td>{{sitter?.age}}</td>
-                    </tr>
-                    <tr>
-                        <td>Дата на публикуване: </td>
-                        <td>2/10/2023</td>
+                        <td>Свободен съм до: </td>
+                        <td>{{sitterOffer?.availableUntil}}</td>
                     </tr>
                     <tr>
                         <td>За мен:</td>
-                        <td>{{sitter?.description}}</td>
+                        <td>{{sitterOffer?.description}}</td>
                 </table>
             </div>     
         </div>
