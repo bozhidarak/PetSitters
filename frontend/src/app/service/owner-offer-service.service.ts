@@ -13,4 +13,13 @@ export class OwnerOfferService {
   public findAll(): Observable<PetOwnerOffer[]> {
     return this.http.get<PetOwnerOffer[]>('api/petOwnerOffers');
   }
+
+  public findById(offerId: number) : Observable<PetOwnerOffer> {
+    console.log(`api/petOwnerOffers/${offerId}`);
+    return this.http.get<PetOwnerOffer>(`api/petOwnerOffers/${offerId}`);
+  }
+
+  public createOffer(newOwnerOffer: PetOwnerOffer): Observable<PetOwnerOffer> {
+    return this.http.post<PetOwnerOffer>('api/petOwnerOffers', newOwnerOffer);
+  }
 }
