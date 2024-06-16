@@ -1,5 +1,6 @@
 package com.example.backend.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -17,6 +18,7 @@ public class UserDTO {
     private String email;
     private String location;
     @NotNull(message = "Birth date shouldn't be null")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date birthDate;
     @NotNull(message = "Gender shouldn't be null") // not sure if needed because boolean cant be null
     private boolean gender;

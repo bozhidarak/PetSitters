@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 @RestController
-@RequestMapping("/petSitterOffers")
+@RequestMapping("/api/petSitterOffers")
 public class PetSitterOfferController {
 
    private final PetSitterOfferService offerService;

@@ -1,5 +1,6 @@
 package com.example.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,7 +18,9 @@ public class PetSitterOffer {
     private Long offerId;
     private String description;
     private Double pricePerDay;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date availableFrom;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date availableUntil;
     @OneToOne
     @JoinColumn(name = "user_id")
