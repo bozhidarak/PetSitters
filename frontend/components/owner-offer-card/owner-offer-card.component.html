@@ -3,7 +3,7 @@
     <img class="profile-picture" mat-card-avatar src="assets/profile-pic.jpg">
     <mat-card-title>ivan ivanov</mat-card-title>
   </mat-card-header>
-  <img mat-card-image class="offer-picture" [src]="ownerOffer?.picturePaths && ownerOffer.picturePaths.length > 0 ? ownerOffer.picturePaths[0] : 'assets/no-image-available.jpg'" alt="Offer picture">
+  <img mat-card-image class="offer-picture" [src]="(ownerOffer?.picturePaths?.length ?? 0) > 0 ? ownerOffer!.picturePaths[0] : 'assets/no-image-available.jpg'" alt="Offer picture">
   <mat-card-content>
     <div class="details">
       <span *ngFor="let pet of ownerOffer?.pets" class="pet">
