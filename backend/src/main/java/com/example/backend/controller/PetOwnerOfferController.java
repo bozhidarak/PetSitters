@@ -17,7 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 @RestController
-@RequestMapping("/petOwnerOffers")
+@RequestMapping("/api/petOwnerOffers")
 public class    PetOwnerOfferController {
     private final PetOwnerOfferService petOwnerOfferService;
     @Autowired
