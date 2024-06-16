@@ -8,13 +8,9 @@ import { Router } from '@angular/router';
 import { PetOwnerOffer } from '../../src/models/owner-offer-model';
 import { OwnerOfferCardComponent } from "../owner-offer-card/owner-offer-card.component";
 import { OwnerOfferService } from '../../src/app/service/owner-offer-service.service'
+import { SharingOwnerOfferService } from '../../src/app/service/sharing-owner-offer.service';
 // import { getFirestore, collection, where, getDocs,query } from '@angular/fire/firestore';
 // import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
-
-export interface Tile {
-  color: string;
-  text: string;
-}
 
 @Component({
   selector: 'owners-page',
@@ -30,7 +26,10 @@ export class OwnerOffersPageComponent implements OnInit{
   page: number = 1;
   limit: number = 9;
 
-  constructor(private ownerOfferService: OwnerOfferService, private router:Router){
+  constructor(private ownerOfferService: OwnerOfferService,
+              private sharingOfferService: SharingOwnerOfferService,
+              private router:Router)
+  {
     // this.getOwners();
     // const auth = getAuth();
 
@@ -52,9 +51,6 @@ export class OwnerOffersPageComponent implements OnInit{
   getOwnerOffers() {
     this.ownerOfferService.findAll().subscribe( (data) => {
         this.petOwnerOffers = data;
-        for (let offer of this.petOwnerOffers) {
-          console.log(offer);
-        }
       })
   }
 
@@ -69,6 +65,7 @@ export class OwnerOffersPageComponent implements OnInit{
   // }
 
   navigateToDetails(petOwnerOffer: PetOwnerOffer){
+    this.sharingOfferService.setPetOwnerOffer(petOwnerOffer);
     const id: number = petOwnerOffer.id;
     this.router.navigate(['owner-offer-details', id]);
   }

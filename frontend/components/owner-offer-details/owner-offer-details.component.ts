@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatCommonModule } from '@angular/material/core';
@@ -7,6 +7,8 @@ import { CarouselModule } from '@coreui/angular';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { PetOwnerOffer } from '../../src/models/user-model';
+import {SharingOwnerOfferService} from "../../src/app/service/sharing-owner-offer.service";
+import {OwnerOfferService} from "../../src/app/service/owner-offer-service.service";
 // import { getFirestore, collection, where, getDocs , query} from '@angular/fire/firestore';
 
 @Component({
@@ -17,17 +19,25 @@ import { PetOwnerOffer } from '../../src/models/user-model';
   templateUrl: './owner-offer-details.component.html',
   styleUrl: './owner-offer-details.component.css'
 })
-export class OwnerOfferDetailsComponent {
+export class OwnerOfferDetailsComponent implements OnInit{
 
   petOwnerOffer: PetOwnerOffer | undefined;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private sharingOwnerService: SharingOwnerOfferService,
+              private ownerOfferService: OwnerOfferService,
+              private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.petOwnerOffer = this.sharingOwnerService.getPetOwnerOffer();
 
-    // this.ownerEmail = this.route.snapshot.paramMap.get('ownerEmail') + '@' + this.route.snapshot.paramMap.get('ownerEmailProvider') + '.' + this.route.snapshot.paramMap.get('ownerEmailDomain');
-    // console.log(this.ownerEmail);
-    //this.getOwner();
+    // if (!this.petOwnerOffer) {
+    //   console.log("hereeeeeeeeeeeeeeeeeeeee");
+    //   const id = Number(this.route.snapshot.paramMap.get('id'));
+    //   this.ownerOfferService.findById(id).subscribe( (offer) => {
+    //     this.petOwnerOffer = offer;
+    //   });
+    // }
+
   }
 
   // async getOwner(){

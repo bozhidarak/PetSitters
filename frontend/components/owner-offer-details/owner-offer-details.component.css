@@ -1,28 +1,28 @@
-.approved,.name,.price, table{
+.approved,.name, table {
     font-family: 'Popins', sans-serif;
 }
 
-.sitter-info {
-  padding: 1rem 0 1rem 0;
+.owner-offer-info {
+  padding: 20px 0 20px 20px;
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   margin: 2rem 5rem 1rem 5rem;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   border-radius: 20px;
 }
 
-.carousel{
-    margin-right: 2rem;
+.carousel {
+  margin-right: 1rem;
 }
 
-img{
-    border-radius: 20px;
-    width: 40vw;
+img {
+  border-radius: 15px;
+  width: 40vw;
+  max-height: 50vw;
 }
 
-button{
+button {
     padding: 20px 40px;
     font-size: 15px;
     border-radius: 30px;
@@ -31,7 +31,7 @@ button{
    font-weight: bold;
 }
 
-.approved{
+.approved {
     margin-top:0.5rem;
     background-color: #F9D45E;
     border-radius: 10px;
@@ -39,12 +39,12 @@ button{
     justify-content: space-between;
 }
 
-.auth{
+.auth {
     padding-left: 30px;
     padding-right: 30px;
 }
 
-.prev{
+.prev {
     position: absolute;
     top: 50%;
     left: 95%;
@@ -52,45 +52,46 @@ button{
 
 }
 
-
-.next{
+.next {
     position: absolute;
     top:50%;
     transition: transform 0.3s ease-in-out;
 }
 
-.prev:hover, .next:hover{
+.prev:hover, .next:hover {
     transform: scale(1.5);
 }
 
-.name{
+.name {
     padding-top: 15%;
     font-size: 30px;
     font-weight: 700
 }
 
-.pet-names{
-    font-size: 20px;
-    font-weight: 500;
-    font-style:oblique;
-    padding-top: 2%;
-    padding-bottom: 6%;
+td {
+  max-width: 300px;
+  padding: 1rem 1.5rem 1rem 0;
+  font-size: 16px;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(48, 45, 45, 0.196);
 }
 
-td{
-    max-width: 300px;
-    padding: 0.5rem;
-    font-size: 16px;
-    font-weight: 500;
-    border-bottom: 1px solid rgba(48, 45, 45, 0.196);
-}
-
-.currency{
-    margin:0;
-    font-size: small;
-}
-
-span{
+span {
     font-size: medium;
 }
 
+.pet {
+  margin-right: 20px;
+}
+
+.fontawesomesvg {
+  max-height: 30px;
+  max-width: 30px;
+  margin-right: 10px;
+  margin-top: 6px;
+}
+
+.numbOfPets {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
