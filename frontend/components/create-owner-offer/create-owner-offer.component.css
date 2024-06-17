@@ -1,0 +1,47 @@
+.form-container {
+  border: 2px solid crimson;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  padding-left: 2rem;
+}
+
+.header {
+  font-family: roboto, Arial, serif;
+  font-size: 2rem;
+  color: crimson;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 30rem;
+}
+
+.form-section {
+  margin-top: 20px;
+}
+
+.form-text {
+  font-family: roboto, Arial, serif;
+  font-size: 1.5rem;
+  color: crimson;
+}
+
+.petNumber {
+  width: 60px;
+  margin-left: 20px;
+}
+
+#offer-pictures {
+  margin-top: 20px;
+  border: 2px solid crimson;
+  border-radius: 7px;
+  padding: 20px 30px;
+}
+
+.submit {
+  font-size: 18px;
+  padding: 10px;
+  margin: 20px 0;
+}

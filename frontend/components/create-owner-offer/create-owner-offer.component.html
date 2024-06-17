@@ -1,1 +1,55 @@
-<p>create-owner-offer works!</p>
+<div class="form-container">
+  <p class="header">Създай обява</p>
+  <form [formGroup]="ownerOfferForm">
+    <div class="form-section">
+      <p class="form-text">Pазкажи от какво се нуждаеш</p>
+      <mat-form-field class="description-input">
+        <mat-label>Описание</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+      </mat-form-field>
+    </div>
+    <div class="form-section">
+      <p class="form-text">Къде са твоите любимци?</p>
+      <mat-form-field class="location-input">
+        <mat-label>Локация</mat-label>
+        <input matInput placeholder="Ex. Plovdiv" formControlName="location">
+      </mat-form-field>
+    </div>
+    <div class="form-section">
+      <p class="form-text">Кога имаш нужда от гледач?</p>
+      <mat-form-field>
+        <mat-label>Избери от календара</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input matStartDate formControlName="startDate" placeholder="Start date" readonly>
+          <input matEndDate formControlName="endDate" placeholder="End date" readonly>
+        </mat-date-range-input>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+    </div>
+    <div class="form-section">
+      <p class="form-text">Какви са твоите любимци?</p>
+      <p><mat-checkbox (change)="onPetTypeSelect('DOG')">Куче</mat-checkbox>
+        <input *ngIf="isPetTypeSelected('DOG')" class="petNumber" type="number" formControlName="dogsNum">
+      </p>
+      <p><mat-checkbox (change)="onPetTypeSelect('CAT')">Котка</mat-checkbox>
+        <input *ngIf="isPetTypeSelected('CAT')" class="petNumber" type="number" formControlName="catsNum">
+      </p>
+      <p><mat-checkbox (change)="onPetTypeSelect('BIRD')">Птица</mat-checkbox>
+        <input *ngIf="isPetTypeSelected('BIRD')" class="petNumber" type="number" formControlName="birdsNum">
+      </p>
+      <p><mat-checkbox (change)="onPetTypeSelect('FISH')">Рибка</mat-checkbox>
+        <input *ngIf="isPetTypeSelected('FISH')" class="petNumber" type="number" formControlName="fishNum">
+      </p>
+      <p><mat-checkbox (change)="onPetTypeSelect('OTHER')">Друго</mat-checkbox>
+        <input *ngIf="isPetTypeSelected('OTHER')" class="petNumber" type="number" formControlName="otherNum">
+      </p>
+    </div>
+    <div class="form-section">
+      <label class="form-text" for="offer-pictures">Покажи любимците си</label><br>
+      <input type="file" id="offer-pictures" name="offer-pictures"
+             accept="image/png, image/jpeg, image/jpg" (change)="onFileChange($event)" multiple/>
+    </div>
+    <button mat-flat-button class="submit" color="primary" (click)="handleOfferCreation()">Създай</button>
+  </form>
+</div>
