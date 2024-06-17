@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
 import { PetOwnerOffer } from '../../src/models/owner-offer-model';
 import {SharingOwnerOfferService} from "../../src/app/service/sharing-owner-offer.service";
 import {OwnerOfferService} from "../../src/app/service/owner-offer-service.service";
-// import { getFirestore, collection, where, getDocs , query} from '@angular/fire/firestore';
 
 @Component({
   selector: 'owner-offer-details',
@@ -21,7 +20,7 @@ import {OwnerOfferService} from "../../src/app/service/owner-offer-service.servi
 })
 export class OwnerOfferDetailsComponent implements OnInit{
 
-  petOwnerOffer: PetOwnerOffer | undefined;
+  petOwnerOffer: PetOwnerOffer = {} as PetOwnerOffer;
 
   constructor(private sharingOwnerService: SharingOwnerOfferService,
               private ownerOfferService: OwnerOfferService,
@@ -30,8 +29,7 @@ export class OwnerOfferDetailsComponent implements OnInit{
   ngOnInit(): void {
     this.petOwnerOffer = this.sharingOwnerService.getPetOwnerOffer();
 
-    if (!this.petOwnerOffer) {
-      console.log("hereeeeeeeeeeeeeeeeeeeee");
+    if (!this.petOwnerOffer) {;
       const id = Number(this.route.snapshot.paramMap.get('id'));
       this.ownerOfferService.findById(id).subscribe( (offer) => {
         this.petOwnerOffer = offer;

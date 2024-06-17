@@ -5,7 +5,7 @@ import {PetOwnerOffer} from "../../models/owner-offer-model";
   providedIn: 'root'
 })
 export class SharingOwnerOfferService {
-  petOwnerOffer: PetOwnerOffer | undefined;
+  petOwnerOffer: PetOwnerOffer = {} as PetOwnerOffer;
 
   constructor() { }
 
@@ -13,7 +13,7 @@ export class SharingOwnerOfferService {
     this.petOwnerOffer = petOwnerOffer;
   }
 
-  getPetOwnerOffer(): PetOwnerOffer | undefined {
+  getPetOwnerOffer(): PetOwnerOffer {
     return this.petOwnerOffer;
   }
 }
