@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { CarouselModule } from '@coreui/angular';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { PetOwnerOffer } from '../../src/models/user-model';
+import { PetOwnerOffer } from '../../src/models/owner-offer-model';
 import {SharingOwnerOfferService} from "../../src/app/service/sharing-owner-offer.service";
 import {OwnerOfferService} from "../../src/app/service/owner-offer-service.service";
 // import { getFirestore, collection, where, getDocs , query} from '@angular/fire/firestore';
@@ -30,13 +30,13 @@ export class OwnerOfferDetailsComponent implements OnInit{
   ngOnInit(): void {
     this.petOwnerOffer = this.sharingOwnerService.getPetOwnerOffer();
 
-    // if (!this.petOwnerOffer) {
-    //   console.log("hereeeeeeeeeeeeeeeeeeeee");
-    //   const id = Number(this.route.snapshot.paramMap.get('id'));
-    //   this.ownerOfferService.findById(id).subscribe( (offer) => {
-    //     this.petOwnerOffer = offer;
-    //   });
-    // }
+    if (!this.petOwnerOffer) {
+      console.log("hereeeeeeeeeeeeeeeeeeeee");
+      const id = Number(this.route.snapshot.paramMap.get('id'));
+      this.ownerOfferService.findById(id).subscribe( (offer) => {
+        this.petOwnerOffer = offer;
+      });
+    }
 
   }
 
