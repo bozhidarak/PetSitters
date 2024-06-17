@@ -28,18 +28,20 @@ import { PetCardComponent } from '../pet-card/pet-card.component';
   styleUrl: './user-profile.component.css'
 })
 export class UserProfileComponent {
-  
+
   offers: Owner[] = [];
 
   constructor(private router:Router){ }
 
   createPetSitterOffer(){}
-  createPetOwnerOffer(){}
+  createPetOwnerOffer(){
+    this.router.navigate(['create-owner-offer'])
+  }
   navigateToDetails(offer: any){}
 
   navigateToHome(){
     this.router.navigate(['home-page']);
   }
-  
+
 }
 
