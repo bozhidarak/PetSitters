@@ -66,7 +66,7 @@ export class OwnerOffersPageComponent implements OnInit{
 
   navigateToDetails(petOwnerOffer: PetOwnerOffer){
     this.sharingOfferService.setPetOwnerOffer(petOwnerOffer);
-    const id: number = petOwnerOffer.id;
+    const id = petOwnerOffer.id;
     this.router.navigate(['owner-offer-details', id]);
   }
 
