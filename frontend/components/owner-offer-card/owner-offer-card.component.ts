@@ -12,5 +12,5 @@ import {PetOwnerOffer} from "../../src/models/owner-offer-model";
   styleUrl: './owner-offer-card.component.css'
 })
 export class OwnerOfferCardComponent {
-  @Input() ownerOffer: PetOwnerOffer | undefined;
+  @Input() ownerOffer: PetOwnerOffer = {} as PetOwnerOffer;
 }
