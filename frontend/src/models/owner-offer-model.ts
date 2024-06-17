@@ -4,8 +4,8 @@ export class PetOwnerOffer {
   id?: number;
   description: string;
   location: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: string;
+  endDate: string;
   userId: number;
   picturePaths: string[];
   pets: Pet[];
@@ -14,7 +14,7 @@ export class PetOwnerOffer {
   userEmail?: string;
   userProfilePic?: string;
 
-  constructor(description: string, location: string, startDate: Date, endDate: Date, userId: number, pets: Pet[]) {
+  constructor(description: string, location: string, startDate: string, endDate: string, userId: number, pets: Pet[]) {
     this.description = description;
     this.location = location;
     this.startDate = startDate;

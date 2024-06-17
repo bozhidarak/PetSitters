@@ -2,21 +2,22 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { OwnerOfferService } from "../../src/app/service/owner-offer-service.service";
 import { PetOwnerOffer } from "../../src/models/owner-offer-model";
 import { Pet } from "../../src/models/sitter-offer-model";
-import { FormsModule, FormBuilder, FormGroup, ReactiveFormsModule, FormControl } from '@angular/forms';
+import {FormsModule, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { JsonPipe } from '@angular/common';
+import { JsonPipe, NgIf } from '@angular/common';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule} from '@angular/material/checkbox';
-import { NgIf } from "@angular/common";
+import { NavBarComponent } from "../nav-bar/nav-bar.component";
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'create-owner-offer',
   standalone: true,
-  imports: [NgIf, MatCheckboxModule, MatButtonModule, MatNativeDateModule, MatDatepickerModule,
-            JsonPipe, FormsModule, ReactiveFormsModule, ReactiveFormsModule,
+  imports: [NavBarComponent, NgIf, MatCheckboxModule, MatButtonModule, MatNativeDateModule, MatDatepickerModule,
+            JsonPipe, FormsModule, ReactiveFormsModule, ReactiveFormsModule, MatDividerModule,
             MatFormFieldModule, MatInputModule, MatDatepickerModule, FormsModule],
   templateUrl: './create-owner-offer.component.html',
   styleUrl: './create-owner-offer.component.css',
@@ -24,10 +25,10 @@ import { NgIf } from "@angular/common";
 })
 export class CreateOwnerOfferComponent {
   ownerOfferForm: FormGroup = this.formBuilder.group({
-    description: [''],
-    location: [''],
-    startDate: Date,
-    endDate: Date,
+    description: ['', Validators.required],
+    location: ['', Validators.required],
+    startDate: [Date, Validators.required],
+    endDate: [Date, Validators.required],
     dogsNum: null,
     catsNum: null,
     birdsNum: null,
@@ -36,11 +37,48 @@ export class CreateOwnerOfferComponent {
   });
   pictures: File[] = [] as File[];
   petTypes: string[] = [] as string[];
+  isSubmitPressed: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private ownerOfferService: OwnerOfferService) {
   }
 
   handleOfferCreation() {
+    this.isSubmitPressed = true;
+    if(this.petTypes.length === 0) { return }
+    const pets= this.createPets();
+    const startDate = this.formatDateToString(this.ownerOfferForm.value.startDate);
+    const endDate = this.formatDateToString(this.ownerOfferForm.value.endDate)
+    let petOwnerOffer = new PetOwnerOffer(this.ownerOfferForm.value.description,
+                                                        this.ownerOfferForm.value.location,
+                                                        startDate, endDate, 2, pets);
+
+    this.ownerOfferService.createOffer(petOwnerOffer, this.pictures).subscribe();
+  }
+
+  onFileChange(event: any) {
+    this.pictures = event.target.files;
+  }
+
+  onPetTypeSelect(petType: string) {
+    if (!this.petTypes.includes(petType)) {
+      this.petTypes.push(petType);
+    } else {
+      this.petTypes = this.petTypes.filter(pt => pt !== petType)
+    }
+  }
+
+  isPetTypeSelected(petType: string) {
+    return this.petTypes.includes(petType);
+  }
+
+  formatDateToString(date: Date) {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  }
+
+  createPets() {
     let pets: Pet[] = [];
     for (let petType of this.petTypes) {
       let pet: Pet = {} as Pet;
@@ -62,26 +100,6 @@ export class CreateOwnerOfferComponent {
       }
       pets.push(pet);
     }
-    let petOwnerOffer = new PetOwnerOffer(this.ownerOfferForm.value.description,
-                                      this.ownerOfferForm.value.location, this.ownerOfferForm.value.startDate,
-                                      this.ownerOfferForm.value.endDate, 2, pets);
-
-    this.ownerOfferService.createOffer(petOwnerOffer, this.pictures).subscribe();
-  }
-
-  onFileChange(event: any) {
-    this.pictures = event.target.files;
-  }
-
-  onPetTypeSelect(petType: string) {
-    if (!this.petTypes.includes(petType)) {
-      this.petTypes.push(petType);
-    } else {
-      this.petTypes = this.petTypes.filter(pt => pt !== petType)
-    }
-  }
-
-  isPetTypeSelected(petType: string) {
-    return this.petTypes.includes(petType);
+    return pets;
   }
 }

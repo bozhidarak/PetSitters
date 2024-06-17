@@ -22,15 +22,16 @@ export class OwnerOfferService {
   }
 
   public createOffer(newOwnerOffer: PetOwnerOffer, pictures: File[]): Observable<PetOwnerOffer> {
+    console.log("creating offer");
     const formData = new FormData();
-    // formData.append('newOfferDto', JSON.stringify(newOwnerOffer));
-    // if (pictures && pictures.length > 0) {
-    //   for (let picture of pictures) {
-    //     formData.append('pictures', picture, picture.name);
-    //   }
-    // }
-    let pets = [{petType:"DOG", numberOfPets: 2}] as Pet[];
-    // let offer = new PetOwnerOffer('alabala', 'plovdiv', ,Date(21,3,2024),2,pets)
-    return this.http.put<PetOwnerOffer>(this.apiUrl, formData);
+
+    formData.append('newOfferDto', new Blob([JSON.stringify(newOwnerOffer)], {type: 'application/json'}));
+
+    if (pictures && pictures.length > 0) {
+      for (let picture of pictures) {
+        formData.append('pictures', picture, picture.name);
+      }
+    }
+    return this.http.post<PetOwnerOffer>(this.apiUrl, formData);
   }
 }
