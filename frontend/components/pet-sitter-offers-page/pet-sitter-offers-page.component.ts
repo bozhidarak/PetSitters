@@ -27,7 +27,7 @@ import { SitterOfferService } from '../../src/app/service/sitter-offer.service';
 export class PetSittersPageComponent {
 
   sitters: SitterOffer[] | undefined = [];
-  loggedIn: boolean = false;
+  loggedIn: boolean = !!localStorage.getItem('userId'); //true if user is not null or empty
 
   constructor(private router:Router, private sitterOfferService: SitterOfferService){
     this.getOffers();
@@ -44,8 +44,10 @@ export class PetSittersPageComponent {
   
 
   navigateToDetails(sitter: SitterOffer) {
-    //TODO if(this.loggedIn)
+    if(this.loggedIn) { 
+      console.log(localStorage.getItem('userId'));
       this.router.navigate(['sitter-details', sitter.offerId])
+    }
   }
 
   navigateToRegister() {

@@ -22,7 +22,7 @@ import { SharingOwnerOfferService } from '../../src/app/service/sharing-owner-of
 
 export class OwnerOffersPageComponent implements OnInit{
   petOwnerOffers: PetOwnerOffer[] = [];
-  loggedIn: boolean = true;
+  loggedIn: boolean = !!localStorage.getItem('userId');
   page: number = 1;
   limit: number = 9;
 
@@ -65,9 +65,11 @@ export class OwnerOffersPageComponent implements OnInit{
   // }
 
   navigateToDetails(petOwnerOffer: PetOwnerOffer){
+    if(this.loggedIn){
     this.sharingOfferService.setPetOwnerOffer(petOwnerOffer);
     const id = petOwnerOffer.id;
     this.router.navigate(['owner-offer-details', id]);
+    }
   }
 
   navigateToRegister(){
