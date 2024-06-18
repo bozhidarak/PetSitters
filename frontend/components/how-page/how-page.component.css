@@ -6,7 +6,7 @@ html,body{
     box-sizing: border-box;
     font-family: 'Popins', sans-serif; 
     background-color: #FEFEFE;
-    background-image: url(../../src/assets/background-squares3.png);
+    background-image: url(/assets/background-squares3.png);
     background-position: center;
     background-size: cover;   
     min-height: 100vh;
@@ -16,7 +16,7 @@ html,body{
     margin: 20px auto;
     width: 80%;
     height: 50vh;
-    background-image: url(../../src/assets/banner-dogs2.png);
+    background-image: url(/assets/banner-dogs2.png);
     background-position: center;
     background-size: cover;
     border-radius: 30px;

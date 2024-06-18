@@ -70,7 +70,8 @@ export class UserProfileComponent {
   }
 
   logout(){
-
+    localStorage.clear();
+    this.router.navigate(['home-page']);
   }
 
   createPetSitterOffer(){}
