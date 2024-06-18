@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatCheckboxModule } from '@angular/material/checkbox';
 // import { arrayRemove, collection, doc, getDoc, getFirestore, setDoc, updateDoc } from '@angular/fire/firestore';
@@ -17,21 +17,61 @@ import { Owner, PetOwnerOffer, Sitter, User, UserType } from '../../src/models/u
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { PetCardComponent } from '../pet-card/pet-card.component';
+import { UserService } from '../../src/app/service/user.service';
+import { SitterOffer } from '../../src/models/sitter-offer-model';
+import { OwnerOfferCardComponent } from '../owner-offer-card/owner-offer-card.component';
+import { OwnerOfferService } from '../../src/app/service/owner-offer-service.service';
+import { SitterOfferService } from '../../src/app/service/sitter-offer.service';
 
 
 @Component({
   selector: 'user-profile',
   standalone: true,
-  imports: [NavBarComponent, MatGridListModule, PetCardComponent, CommonModule, MatFormFieldModule, MatButtonModule,
-    MatInputModule, FormsModule, ReactiveFormsModule, MatIconModule, MatRadioModule, MatCheckboxModule],
+  imports: [NavBarComponent, MatGridListModule, OwnerOfferCardComponent, CommonModule, MatButtonModule],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css'
 })
 export class UserProfileComponent {
 
-  offers: Owner[] = [];
+  ownerOffers: PetOwnerOffer[] = [];
+  sitterOffer: SitterOffer = [] as any;
+  user: User | undefined;
+  userId: number;
+  isMyProfile: boolean = false;
 
-  constructor(private router:Router){ }
+
+  constructor(private activeRoute:ActivatedRoute, private router: Router, 
+    private userService: UserService, private OwnerOfferService: OwnerOfferService, private sitterOfferService: SitterOfferService) {
+ 
+    const id = this.activeRoute.snapshot.paramMap.get('id');
+    this.userId = Number(id);
+    if(this.userId == Number(localStorage.getItem('userId'))){
+      this.isMyProfile = true;
+    }
+    this.getUser();
+    this.getOwnerOffers();
+  }
+
+  getUser(){
+        this.userService.getUserById(this.userId).subscribe(
+        (data: User | undefined) => {
+          this.user = data;
+        });
+  }
+
+  getsitterOffers(){
+  }
+
+  getOwnerOffers(){
+  }
+
+  createReview(){
+    
+  }
+
+  logout(){
+
+  }
 
   createPetSitterOffer(){}
   createPetOwnerOffer(){

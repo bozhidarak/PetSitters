@@ -38,7 +38,6 @@ async login() {
   }
 
   this.userService.login(email, password).subscribe((user) => {
-    console.log(user);
     let user1: User = user;
     localStorage.setItem('userId', user1.id!.toString());
     console.log(localStorage.getItem('userId'));  

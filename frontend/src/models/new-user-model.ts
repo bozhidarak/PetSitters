@@ -4,6 +4,7 @@ export class User {
     email:string;
     location:string;
     name:string;
+    profilePic?: string;
 
 
     constructor( password: string, email:string, location:string, name:string) {
