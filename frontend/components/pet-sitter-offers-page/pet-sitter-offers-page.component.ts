@@ -44,6 +44,7 @@ export class PetSittersPageComponent {
   
 
   navigateToDetails(sitter: SitterOffer) {
+    //TODO if(this.loggedIn)
       this.router.navigate(['sitter-details', sitter.offerId])
   }
 
