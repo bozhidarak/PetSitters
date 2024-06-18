@@ -19,4 +19,6 @@ public class ReviewDTO {
     private Long reviewedUserId;
     @NotNull(message = "The ID of Review Author is required")
     private Long authorId;
+    private String authorName;
+    private String authorProfilePic;
 }
