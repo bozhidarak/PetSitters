@@ -138,4 +138,8 @@ public class PetSitterOfferService {
         offer.setUserLocation(user.getLocation());
         offer.setUserProfilePic(user.getProfilePic());
     }
+
+    public void deleteByUserId(Long userId){
+        offerRepository.deleteByUserId(userId);
+    }
 }

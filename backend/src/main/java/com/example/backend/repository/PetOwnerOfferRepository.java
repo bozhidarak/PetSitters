@@ -16,5 +16,6 @@ public interface PetOwnerOfferRepository extends JpaRepository<PetOwnerOffer, Lo
     Page<PetOwnerOffer> findByPetsPetTypeIn(List<PetType> petTypes, Pageable pageable);
     Page<PetOwnerOffer> findByStartDateAfter(LocalDate startDate, Pageable pageable);
     Page<PetOwnerOffer> findByEndDateBefore(LocalDate endDate, Pageable pageable);
+    void deleteByUserId(Long userId);
 }
 
