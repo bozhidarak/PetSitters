@@ -34,6 +34,9 @@
                     </mat-grid-list> -->
                 </div>
                 <div class="title-offers">Oбяви "Аз съм гледач":</div>
+                <div *ngIf="sitterOffer != undefined" class="sitter-card">
+                <sitter-card [sitter]="sitterOffer" (click)="navigateToDetails(sitterOffer)"></sitter-card>
+                </div>
                 <div class="title-offers">Ревюта за {{user!.name}}:</div>
                 <button *ngIf="isMyProfile" class = "logout" mat-raised-button href="#" color="primary" (click)="logout()">Изход</button>
         </div>

@@ -22,26 +22,28 @@ import { SitterOffer } from '../../src/models/sitter-offer-model';
 import { OwnerOfferCardComponent } from '../owner-offer-card/owner-offer-card.component';
 import { OwnerOfferService } from '../../src/app/service/owner-offer-service.service';
 import { SitterOfferService } from '../../src/app/service/sitter-offer.service';
+import { SitterCardComponent } from '../sitter-offer-card/sitter-offer-card.component';
 
 
 @Component({
   selector: 'user-profile',
   standalone: true,
-  imports: [NavBarComponent, MatGridListModule, OwnerOfferCardComponent, CommonModule, MatButtonModule],
+  imports: [NavBarComponent, MatGridListModule, OwnerOfferCardComponent,SitterCardComponent, CommonModule, MatButtonModule],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css'
 })
 export class UserProfileComponent {
 
   ownerOffers: PetOwnerOffer[] = [];
-  sitterOffer: SitterOffer = [] as any;
+  sitterOffer: SitterOffer | undefined = [] as any;
   user: User | undefined;
   userId: number;
   isMyProfile: boolean = false;
 
 
   constructor(private activeRoute:ActivatedRoute, private router: Router, 
-    private userService: UserService, private OwnerOfferService: OwnerOfferService, private sitterOfferService: SitterOfferService) {
+    private userService: UserService, private OwnerOfferService: OwnerOfferService, 
+    private sitterOfferService: SitterOfferService) {
  
     const id = this.activeRoute.snapshot.paramMap.get('id');
     this.userId = Number(id);
@@ -50,6 +52,7 @@ export class UserProfileComponent {
     }
     this.getUser();
     this.getOwnerOffers();
+    this.getsitterOffer();
   }
 
   getUser(){
@@ -59,7 +62,11 @@ export class UserProfileComponent {
         });
   }
 
-  getsitterOffers(){
+  getsitterOffer(){
+    this.sitterOfferService.getSitterOfferByUserId(this.userId).subscribe(
+      (data: SitterOffer | undefined) => {
+        this.sitterOffer = data;
+      });
   }
 
   getOwnerOffers(){
@@ -75,10 +82,13 @@ export class UserProfileComponent {
   }
 
   createPetSitterOffer(){}
+
   createPetOwnerOffer(){
     this.router.navigate(['create-owner-offer'])
   }
-  navigateToDetails(offer: any){}
+  navigateToDetails(offer: any){
+    this.router.navigate(['sitter-details', this.sitterOffer?.offerId])
+  }
 
   navigateToHome(){
     this.router.navigate(['home-page']);

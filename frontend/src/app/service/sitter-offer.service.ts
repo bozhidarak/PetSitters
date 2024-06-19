@@ -18,4 +18,8 @@ export class SitterOfferService {
   public getOfferById(id: number): Observable<SitterOffer> {
     return this.http.get<SitterOffer>(`api/petSitterOffers/${id}`);
   }
+
+  getSitterOfferByUserId(userId: number): Observable<SitterOffer> {
+    return this.http.get<SitterOffer>(`api/petSitterOffers/user/${userId}`);
+  }
 }
