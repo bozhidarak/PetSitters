@@ -3,6 +3,7 @@ package com.example.backend.service;
 import com.amazonaws.services.dynamodbv2.xspec.M;
 import com.amazonaws.services.iot.model.ResourceAlreadyExistsException;
 import com.example.backend.dto.UserDTO;
+import com.example.backend.entity.PetOwnerOffer;
 import com.example.backend.entity.User;
 import com.example.backend.mapper.UserMapper;
 import com.example.backend.repository.UserRepository;
@@ -18,12 +19,16 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PictureService pictureService;
+    private final PetSitterOfferService sitterOfferService;
+    private final PetOwnerOfferService ownerOfferService;
 
     @Autowired
-    public UserService(UserRepository userRepository, UserMapper userMapper, PictureService pictureService) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, PictureService pictureService, PetSitterOfferService sitterOfferService, PetOwnerOfferService ownerOfferService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.pictureService = pictureService;
+        this.sitterOfferService = sitterOfferService;
+        this.ownerOfferService = ownerOfferService;
     }
 
     @Transactional //?
@@ -66,12 +71,17 @@ public class UserService {
         return userMapper.toDTO(userRepository.save(user));
     }
 
+    @Transactional
     public void deleteUser(Long id){
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No user with id: " + id));
         if(user.getProfilePic() != null) {
             pictureService.deleteFile(user.getProfilePic());
         }
+        //delete offers
+        sitterOfferService.deleteByUserId(id);
+        ownerOfferService.deleteOfferByUserId(id);
+
         userRepository.deleteById(id);
     }
 }

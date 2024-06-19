@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PetSitterOfferRepository extends JpaRepository<PetSitterOffer, Long> {
 Boolean existsByUserId(Long id);
+void deleteByUserId(Long userId);
 }
