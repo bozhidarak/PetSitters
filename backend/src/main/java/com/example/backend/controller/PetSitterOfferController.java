@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import com.example.backend.dto.PetSitterOfferDTO;
+import com.example.backend.entity.PetSitterOffer;
 import com.example.backend.service.PetSitterOfferService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
@@ -42,6 +43,18 @@ public class PetSitterOfferController {
             System.out.println(e.getMessage());
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<PetSitterOfferDTO> getOfferByUserId(@PathVariable Long id){
+         try {
+             PetSitterOfferDTO offerDTO = offerService.getByUserId(id);
+             return ResponseEntity.ok(offerDTO);
+         }
+         catch (ResourceNotFoundException e){
+             System.out.println(e.getMessage());
+             return ResponseEntity.notFound().build();
+         }
     }
 
     @PostMapping
