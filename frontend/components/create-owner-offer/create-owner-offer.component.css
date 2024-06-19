@@ -1,5 +1,5 @@
 .form-container {
-  border: 2px solid crimson;
+  border: 2px solid #d80075;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -10,7 +10,7 @@
 
 .header {
   font-size: 2rem;
-  color: crimson;
+  color: #d80075;
 }
 
 form {
@@ -29,7 +29,7 @@ form {
 
 .form-text {
   font-size: 1.5rem;
-  color: crimson;
+  color: #d80075;
 }
 
 .form-text.pets-text {
@@ -69,16 +69,16 @@ mat-checkbox {
 .count-text {
   font-size: 12px;
   margin-left: 30px;
-  color: crimson;
+  color: #d80075;
 }
 
 .error-message {
-  color: red;
+  color: #d80075;
 }
 
 mat-divider {
   width: 30rem;
-  background-color: lightpink;
+  background-color: #d80075;
 }
 
 .picture-section {
@@ -87,7 +87,7 @@ mat-divider {
 
 #offer-pictures {
   margin-top: 20px;
-  border: 2px solid crimson;
+  border: 2px solid #d80075;
   border-radius: 7px;
   padding: 20px 30px;
 }

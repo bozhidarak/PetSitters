@@ -1,0 +1,102 @@
+.form-container {
+    border: 2px solid#d80075;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 2rem;
+    margin: 1rem;
+    font-family: Roboto, Arial, serif;
+  }
+  
+  .header {
+    font-size: 2rem;
+    color: #d80075;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    max-width: 30rem;
+  }
+  
+  .description-input {
+    width: 25rem;
+  }
+  
+  .form-section {
+    margin-top: 20px;
+  }
+  
+  .form-text {
+    font-size: 1.5rem;
+    color: #d80075;
+  }
+  
+  .form-text.pets-text {
+    margin-bottom: 2.5rem;
+  }
+  
+  .pet-selection-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  mat-checkbox {
+    position: relative;
+    bottom: 12px
+  }
+  
+  .icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: inline;
+    margin-right: 1.4rem;
+  }
+  
+  .icon.dog {
+    margin-top:-28px;
+    height: 2.8rem;
+    width: 2.8rem;
+    margin-right: 1.1rem;
+  }
+  
+  .number-input {
+    width: 60px;
+    margin-left: 20px;
+  }
+  
+  .count-text {
+    font-size: 12px;
+    margin-left: 30px;
+    color: #d80075;
+  }
+  
+  .error-message {
+    color: #d80075;
+  }
+  
+  mat-divider {
+    width: 30rem;
+    background-color: #d80075;
+  }
+  
+  .picture-section {
+    margin-top: 3rem;
+  }
+  
+  #offer-pictures {
+    margin-top: 20px;
+    border: 2px solid #d80075;
+    border-radius: 7px;
+    padding: 20px 30px;
+  }
+  
+  .submit {
+    font-size: 18px;
+    padding: 10px;
+    width: 10rem;
+    margin: 20px auto 20px 45rem;
+    letter-spacing: normal
+  }
+  

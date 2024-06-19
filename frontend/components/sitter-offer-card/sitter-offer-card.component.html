@@ -1,9 +1,9 @@
 <mat-card class="example-card">
     <mat-card-header (click)="navigateToUser()">
-      <img class="profile-picture" mat-card-avatar [src]="sitter!.userProfilePic.length != 0 ? sitter!.userProfilePic : 'assets/no-image.jpg'">
+      <img class="profile-picture" mat-card-avatar [src]="sitter.userProfilePic ? sitter!.userProfilePic : 'assets/no-image.jpg'">
       <mat-card-title>{{sitter?.userName}}</mat-card-title>
     </mat-card-header>
-    <img class="picture" mat-card-image [src]="(sitter?.picturePaths?.length ?? 0) > 0 ? sitter!.picturePaths[0] : 'assets/no-photo-available.png'" >
+    <img class="picture" mat-card-image [src]="sitter.picturePaths  && sitter.picturePaths.length > 0 ? sitter!.picturePaths[0]! : 'assets/no-photo-available.png'" >
     <mat-card-content class="content">
           <div>
           <span *ngFor="let pet of sitter?.pets">

@@ -9,7 +9,7 @@
             <div class="user-info">
                 <mat-grid-list cols="3" rowHeight="2:1">
                     <mat-grid-tile>
-                        <img [src]="user!.profilePic" alt="Profile Picture" class="profile-picture">
+                        <img [src]="user!.profilePic ? user!.profilePic : 'assets/no-image.jpg'"  class="profile-picture">
                         <div class="info">
                         <span class="name">{{user!.name}}</span>
                         <span class="email">{{user!.email}}</span>
@@ -21,7 +21,7 @@
                         <button *ngIf="!isMyProfile" mat-raised-button href="#" color="primary" (click)="createReview()">Остави ревю</button>
                     </mat-grid-tile>
                     <mat-grid-tile>
-                        <button *ngIf="isMyProfile" mat-raised-button href="#" color="primary" (click)="createPetSitterOffer">Създай обява "Аз съм гледач"</button>
+                        <button *ngIf="isMyProfile" mat-raised-button href="#" color="primary" (click)="createPetSitterOffer()">Създай обява "Аз съм гледач"</button>
                     </mat-grid-tile>
                 </mat-grid-list>
                 <div class="line"></div>

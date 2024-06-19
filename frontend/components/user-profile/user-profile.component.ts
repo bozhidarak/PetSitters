@@ -81,7 +81,9 @@ export class UserProfileComponent {
     this.router.navigate(['home-page']);
   }
 
-  createPetSitterOffer(){}
+  createPetSitterOffer(){
+    this.router.navigate(['create-sitter-offer'])
+  }
 
   createPetOwnerOffer(){
     this.router.navigate(['create-owner-offer'])

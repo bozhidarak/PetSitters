@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 })
 export class SitterCardComponent {
   
-  @Input() sitter: SitterOffer | undefined;
+  @Input() sitter: SitterOffer = {} as SitterOffer;
   
   constructor(private router: Router) {
     
