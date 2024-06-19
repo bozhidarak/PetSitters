@@ -157,6 +157,10 @@ public class PetOwnerOfferService {
         petOwnerOfferRepository.deleteById(id);
     }
 
+    public void deleteOfferByUserId(Long id){
+        petOwnerOfferRepository.deleteByUserId(id);
+    }
+
     private void linkOfferToUser(PetOwnerOffer newOffer, PetOwnerOfferDTO newOfferDto) {
         Long userId = newOfferDto.getUserId();
         User offerUser = userRepository.findById(userId).orElse(null);
