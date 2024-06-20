@@ -9,6 +9,8 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ReviewMapper {
+    @Mapping(source = "author.name", target="authorName")
+    @Mapping(source = "author.profilePic", target="authorProfilePic")
     @Mapping(source = "reviewedUser.id", target="reviewedUserId")
     @Mapping(source = "author.id", target="authorId")
     ReviewDTO mapToDto(Review review);

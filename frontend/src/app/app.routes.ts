@@ -9,6 +9,7 @@ import { SitterDetailsComponent } from '../../components/sitter-offer-details/si
 import { OwnerOfferDetailsComponent } from '../../components/owner-offer-details/owner-offer-details.component';
 import { UserProfileComponent } from '../../components/user-profile/user-profile.component';
 import {CreateOwnerOfferComponent} from "../../components/create-owner-offer/create-owner-offer.component";
+import { CreateSitterOfferComponent } from '../../components/create-sitter-offer/create-sitter-offer.component';
 
 export const routes: Routes = [
     {
@@ -22,6 +23,7 @@ export const routes: Routes = [
     {path: 'how-page', component:HowPageComponent},
     {path: 'sitter-details/:id', component:SitterDetailsComponent},
     {path: 'owner-offer-details/:id', component:OwnerOfferDetailsComponent},
-    {path: 'user-profile', component:UserProfileComponent},
-    {path: 'create-owner-offer', component:CreateOwnerOfferComponent}
+    {path: 'user-profile/:id', component:UserProfileComponent},
+    {path: 'create-owner-offer', component:CreateOwnerOfferComponent},
+    {path: 'create-sitter-offer', component:CreateSitterOfferComponent}
 ];

@@ -21,7 +21,7 @@ import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 
 export class OwnerOffersPageComponent implements OnInit{
   petOwnerOffers: PetOwnerOffer[] = [];
-  loggedIn: boolean = true;
+  loggedIn: boolean = !!localStorage.getItem('userId');
   pageSize: number = 9;
   currentPage: number = 0;
 
@@ -54,9 +54,11 @@ export class OwnerOffersPageComponent implements OnInit{
   }
 
   navigateToDetails(petOwnerOffer: PetOwnerOffer){
+    if(this.loggedIn){
     this.sharingOfferService.setPetOwnerOffer(petOwnerOffer);
     const id = petOwnerOffer.id;
     this.router.navigate(['owner-offer-details', id]);
+    }
   }
 
   navigateToRegister(){

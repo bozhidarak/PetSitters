@@ -6,6 +6,7 @@ import { getAuth } from '@angular/fire/auth';
 // import { collection, getDocs, getFirestore, query, where } from '@angular/fire/firestore';
 import { Sitter, UserType } from '../../src/models/user-model';
 import { SitterOffer } from '../../src/models/sitter-offer-model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'sitter-card',
@@ -16,10 +17,13 @@ import { SitterOffer } from '../../src/models/sitter-offer-model';
 })
 export class SitterCardComponent {
   
-  @Input() sitter: SitterOffer | undefined;
+  @Input() sitter: SitterOffer = {} as SitterOffer;
   
-  constructor() {
+  constructor(private router: Router) {
     
-    }
+  }
 
+  navigateToUser() {
+    this.router.navigate(['user-profile', this.sitter!.userId]);
+  }
 }

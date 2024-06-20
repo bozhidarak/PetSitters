@@ -138,4 +138,17 @@ public class PetSitterOfferService {
         offer.setUserLocation(user.getLocation());
         offer.setUserProfilePic(user.getProfilePic());
     }
+
+    public void deleteByUserId(Long userId){
+        offerRepository.deleteByUserId(userId);
+    }
+
+    public PetSitterOfferDTO getByUserId(Long userId){
+       PetSitterOffer offer = offerRepository.getByUserId(userId).orElseThrow(
+               () -> new ResourceNotFoundException("offer with this user id not found")
+       );
+       PetSitterOfferDTO offerDTO = offerMapper.toDTO(offer);
+       setUser(offerDTO);
+       return offerDTO;
+    }
 }

@@ -53,7 +53,7 @@ export class CreateOwnerOfferComponent {
     const endDate = this.formatDateToString(this.ownerOfferForm.value.endDate)
     let petOwnerOffer = new PetOwnerOffer(this.ownerOfferForm.value.description,
                                                         this.ownerOfferForm.value.location,
-                                                        startDate, endDate, 2, pets);
+                                                        startDate, endDate, Number(localStorage.getItem("userId")), pets);
 
     this.ownerOfferService.createOffer(petOwnerOffer, this.pictures).subscribe();
   }
