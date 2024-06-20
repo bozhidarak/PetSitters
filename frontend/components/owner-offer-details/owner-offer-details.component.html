@@ -1,5 +1,5 @@
 <nav-bar></nav-bar>
-<div class="owner-offer-info">
+<div class="owner-offer-info offer-section">
   <div *ngIf="petOwnerOffer != undefined" class="carousel">
     <c-carousel [animate]="false" [dark]="true" [interval]="9999999" [transition]="'crossfade'">
       <c-carousel-inner>
@@ -22,7 +22,7 @@
     <table>
       <tr class="info-row">
         <td>Локация</td>
-        <td>{{petOwnerOffer.location}}</td>
+        <td>{{petOwnerOffer?.location}}</td>
       </tr>
       <tr class="info-row">
         <td>Любимци</td>
@@ -37,12 +37,20 @@
       </tr>
       <tr class="info-row">
         <td>Дати</td>
-        <td>{{ petOwnerOffer.startDate }} - {{ petOwnerOffer.endDate }}</td>
+        <td>{{ petOwnerOffer?.startDate }} - {{ petOwnerOffer?.endDate }}</td>
       </tr>
       <tr class="info-row">
         <td>Описание</td>
-        <td>{{petOwnerOffer.description}}</td>
+        <td>{{petOwnerOffer?.description}}</td>
       </tr>
     </table>
   </div>
 </div>
+<div class="offer-section">
+    <p>За собственика</p>
+    <div class="picture-container">
+      <img class="profile-picture" [src]="petOwnerOffer?.userProfilePic ? 'assets/profile-pic1.jpg' : 'assets/profile-pic1.jpg'">
+      <p>{{petOwnerOffer?.userName}}</p>
+    </div>
+</div>
+

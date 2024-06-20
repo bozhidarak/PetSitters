@@ -9,18 +9,19 @@ import { CommonModule } from '@angular/common';
 import { PetOwnerOffer } from '../../src/models/owner-offer-model';
 import {SharingOwnerOfferService} from "../../src/app/service/sharing-owner-offer.service";
 import {OwnerOfferService} from "../../src/app/service/owner-offer-service.service";
+import {MatCardModule} from "@angular/material/card";
 
 @Component({
   selector: 'owner-offer-details',
   standalone: true,
-  imports: [NavBarComponent,RouterLink, CommonModule,
-    MatButtonModule, CarouselModule, MatIconModule],
+  imports: [NavBarComponent, RouterLink, CommonModule,
+    MatButtonModule, CarouselModule, MatIconModule, MatCardModule],
   templateUrl: './owner-offer-details.component.html',
   styleUrl: './owner-offer-details.component.css'
 })
 export class OwnerOfferDetailsComponent implements OnInit{
 
-  petOwnerOffer: PetOwnerOffer = {} as PetOwnerOffer;
+  petOwnerOffer: PetOwnerOffer | undefined;
 
   constructor(private sharingOwnerService: SharingOwnerOfferService,
               private ownerOfferService: OwnerOfferService,
@@ -28,22 +29,11 @@ export class OwnerOfferDetailsComponent implements OnInit{
 
   ngOnInit(): void {
     this.petOwnerOffer = this.sharingOwnerService.getPetOwnerOffer();
-
-    if (!this.petOwnerOffer) {;
+    if (!this.petOwnerOffer || Object.keys(this.petOwnerOffer).length === 0) {
       const id = Number(this.route.snapshot.paramMap.get('id'));
       this.ownerOfferService.findById(id).subscribe( (offer) => {
         this.petOwnerOffer = offer;
       });
     }
-
   }
-
-  // async getOwner(){
-  //   const db = getFirestore();
-  //   const usersRef = collection(db, "users");
-  //   const q = query(usersRef, where("email", "==", this.ownerEmail));
-  //   const querySnapshot = await getDocs(q);
-  //   this.owner = querySnapshot.docs[0].data() as Owner;
-
-  // }
 }
