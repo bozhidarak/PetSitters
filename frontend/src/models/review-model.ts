@@ -4,6 +4,8 @@ export class Review {
   description: string;
   reviewedUserId: number;
   authorId: number;
+  authorName?: string;
+  authorProfilePic?: string;
 
   constructor(stars: number, description: string, reviewedUserId: number, authorId: number) {
     this.stars = stars;
