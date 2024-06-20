@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { NavBarComponent } from "../nav-bar/nav-bar.component";
 import { MatDividerModule } from '@angular/material/divider';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'create-owner-offer',
@@ -39,23 +40,25 @@ export class CreateOwnerOfferComponent {
   petTypes: string[] = [] as string[];
   isSubmitPressed: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private ownerOfferService: OwnerOfferService) {
+  constructor(private formBuilder: FormBuilder, private ownerOfferService: OwnerOfferService, private router:Router) {
   }
 
   handleOfferCreation() {
     this.isSubmitPressed = true;
     if(this.petTypes.length === 0 || !this.ownerOfferForm.valid || !this.isPetNumberSet()) {
-      return
+      return;
     }
     const pets= this.createPets();
 
     const startDate = this.formatDateToString(this.ownerOfferForm.value.startDate);
-    const endDate = this.formatDateToString(this.ownerOfferForm.value.endDate)
+    const endDate = this.formatDateToString(this.ownerOfferForm.value.endDate);
+    const userId = Number(localStorage.getItem("userId"));
     let petOwnerOffer = new PetOwnerOffer(this.ownerOfferForm.value.description,
                                                         this.ownerOfferForm.value.location,
-                                                        startDate, endDate, Number(localStorage.getItem("userId")), pets);
+                                                        startDate, endDate, userId, pets);
 
     this.ownerOfferService.createOffer(petOwnerOffer, this.pictures).subscribe();
+    this.router.navigate(['user-profile', userId]);
   }
 
   onFileChange(event: any) {
