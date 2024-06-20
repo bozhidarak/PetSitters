@@ -10,6 +10,7 @@ import { OwnerOfferDetailsComponent } from '../../components/owner-offer-details
 import { UserProfileComponent } from '../../components/user-profile/user-profile.component';
 import {CreateOwnerOfferComponent} from "../../components/create-owner-offer/create-owner-offer.component";
 import { CreateSitterOfferComponent } from '../../components/create-sitter-offer/create-sitter-offer.component';
+import {CreateReviewComponent} from "../../components/create-review/create-review.component";
 
 export const routes: Routes = [
     {
@@ -25,5 +26,6 @@ export const routes: Routes = [
     {path: 'owner-offer-details/:id', component:OwnerOfferDetailsComponent},
     {path: 'user-profile/:id', component:UserProfileComponent},
     {path: 'create-owner-offer', component:CreateOwnerOfferComponent},
-    {path: 'create-sitter-offer', component:CreateSitterOfferComponent}
+    {path: 'create-sitter-offer', component:CreateSitterOfferComponent},
+    {path: 'create-review/:userId', component:CreateReviewComponent}
 ];

@@ -1,6 +1,12 @@
+.form-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 form {
-  padding: 1rem;
   font-family: Roboto, Arial, serif;
+  padding: 1rem;
   color: crimson;
 }
 
