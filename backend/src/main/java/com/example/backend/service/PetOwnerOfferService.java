@@ -67,6 +67,13 @@ public class PetOwnerOfferService {
         return petOwnerOfferMapper.mapToDto(offer);
     }
 
+    public List<PetOwnerOfferDTO> getOffersByUserId(Long userId) {
+        return petOwnerOfferRepository.findByUserId(userId)
+                .stream()
+                .map(petOwnerOfferMapper::mapToDto)
+                .toList();
+    }
+
     public List<PetOwnerOfferDTO> getOffersByPetType(List<PetType> petTypes, Integer page, Integer limit) {
         Pageable pageable;
         if (page == null || limit == null) {

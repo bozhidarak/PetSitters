@@ -13,6 +13,7 @@ import java.util.List;
 @Repository
 public interface PetOwnerOfferRepository extends JpaRepository<PetOwnerOffer, Long> {
     Page<PetOwnerOffer> findAll(Pageable pageable);
+    List<PetOwnerOffer> findByUserId(Long userId);
     Page<PetOwnerOffer> findByPetsPetTypeIn(List<PetType> petTypes, Pageable pageable);
     Page<PetOwnerOffer> findByStartDateAfter(LocalDate startDate, Pageable pageable);
     Page<PetOwnerOffer> findByEndDateBefore(LocalDate endDate, Pageable pageable);
