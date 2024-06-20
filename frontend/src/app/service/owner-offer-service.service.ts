@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
 import {PetOwnerOffer} from "../../models/owner-offer-model";
@@ -12,17 +12,22 @@ export class OwnerOfferService {
 
   constructor(private http: HttpClient) { }
 
-  public findAll(): Observable<PetOwnerOffer[]> {
-    return this.http.get<PetOwnerOffer[]>(this.apiUrl);
+  public findAll(currentPage: number, pageSize: number): Observable<PetOwnerOffer[]> {
+    let params = new HttpParams();
+    if(currentPage !== undefined && currentPage !== null && currentPage >= 0) {
+      params = params.set('page', currentPage.toString());
+    }
+    if(pageSize !== undefined && pageSize !== null && pageSize >= 0) {
+      params = params.set('limit', pageSize.toString());
+    }
+    return this.http.get<PetOwnerOffer[]>(this.apiUrl, { params });
   }
 
   public findById(offerId: number) : Observable<PetOwnerOffer> {
-    console.log(`api/petOwnerOffers/${offerId}`);
     return this.http.get<PetOwnerOffer>(this.apiUrl + '/' + offerId);
   }
 
   public createOffer(newOwnerOffer: PetOwnerOffer, pictures: File[]): Observable<PetOwnerOffer> {
-    console.log("creating offer");
     const formData = new FormData();
 
     formData.append('newOfferDto', new Blob([JSON.stringify(newOwnerOffer)], {type: 'application/json'}));

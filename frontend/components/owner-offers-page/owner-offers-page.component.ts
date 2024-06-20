@@ -9,13 +9,12 @@ import { PetOwnerOffer } from '../../src/models/owner-offer-model';
 import { OwnerOfferCardComponent } from "../owner-offer-card/owner-offer-card.component";
 import { OwnerOfferService } from '../../src/app/service/owner-offer-service.service'
 import { SharingOwnerOfferService } from '../../src/app/service/sharing-owner-offer.service';
-// import { getFirestore, collection, where, getDocs,query } from '@angular/fire/firestore';
-// import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
+import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 
 @Component({
   selector: 'owners-page',
   standalone: true,
-  imports: [CommonModule, NavBarComponent, MatGridListModule, MatButtonModule, FiltersComponent, OwnerOfferCardComponent],
+  imports: [CommonModule, NavBarComponent, MatGridListModule, MatButtonModule, FiltersComponent, OwnerOfferCardComponent, MatPaginatorModule],
   templateUrl: './owner-offers-page.component.html',
   styleUrl: './owner-offers-page.component.css'
 })
@@ -23,8 +22,8 @@ import { SharingOwnerOfferService } from '../../src/app/service/sharing-owner-of
 export class OwnerOffersPageComponent implements OnInit{
   petOwnerOffers: PetOwnerOffer[] = [];
   loggedIn: boolean = true;
-  page: number = 1;
-  limit: number = 9;
+  pageSize: number = 9;
+  currentPage: number = 0;
 
   constructor(private ownerOfferService: OwnerOfferService,
               private sharingOfferService: SharingOwnerOfferService,
@@ -45,24 +44,14 @@ export class OwnerOffersPageComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.getOwnerOffers();
+    this.getOwnerOffers(this.currentPage, this.pageSize);
   }
 
-  getOwnerOffers() {
-    this.ownerOfferService.findAll().subscribe( (data) => {
+  getOwnerOffers(currentPage: number, pageSize: number) {
+    this.ownerOfferService.findAll(currentPage, pageSize).subscribe( (data) => {
         this.petOwnerOffers = data;
       })
   }
-
-  // async getOwners(){
-  //   const db = getFirestore();
-  //   const usersRef = collection(db, "users");
-  //   const q = query(usersRef, where("userType", "==", 2), where("createAd", "==", true));
-  //   const querySnapshot = await getDocs(q);
-  //   querySnapshot.forEach((doc) => {
-  //     this.owners.push(doc.data() as Owner);
-  //   });
-  // }
 
   navigateToDetails(petOwnerOffer: PetOwnerOffer){
     this.sharingOfferService.setPetOwnerOffer(petOwnerOffer);
@@ -72,5 +61,10 @@ export class OwnerOffersPageComponent implements OnInit{
 
   navigateToRegister(){
     this.router.navigate(['registration']);
+  }
+
+  pageChanged(event: PageEvent) {
+    this.currentPage = event.pageIndex;
+    this.getOwnerOffers(this.currentPage, this.pageSize);
   }
 }
