@@ -17,19 +17,21 @@ import { Owner, PetOwnerOffer, Sitter, User, UserType } from '../../src/models/u
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { PetCardComponent } from '../pet-card/pet-card.component';
+import {ReviewsListComponent} from "../reviews-list/reviews-list.component";
 
 
 @Component({
   selector: 'user-profile',
   standalone: true,
   imports: [NavBarComponent, MatGridListModule, PetCardComponent, CommonModule, MatFormFieldModule, MatButtonModule,
-    MatInputModule, FormsModule, ReactiveFormsModule, MatIconModule, MatRadioModule, MatCheckboxModule],
+    MatInputModule, FormsModule, ReactiveFormsModule, MatIconModule, MatRadioModule, MatCheckboxModule, ReviewsListComponent],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css'
 })
 export class UserProfileComponent {
 
   offers: Owner[] = [];
+  showReviews: boolean = false;
 
   constructor(private router:Router){ }
 
@@ -43,5 +45,8 @@ export class UserProfileComponent {
     this.router.navigate(['home-page']);
   }
 
+  handleShowReviews() {
+    this.showReviews = true;
+  }
 }
 

@@ -33,5 +33,9 @@
                     </mat-grid-list>
             </div>
         </div>
+        <div class="reviews-section">
+          <button mat-raised-button href="#" color="primary" (click)="handleShowReviews()">Виж ревюта</button>
+          <reviews-list *ngIf="showReviews"></reviews-list>
+        </div>
     </body>
 </html>
