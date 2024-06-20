@@ -44,8 +44,11 @@ export class CreateOwnerOfferComponent {
 
   handleOfferCreation() {
     this.isSubmitPressed = true;
-    if(this.petTypes.length === 0) { return }
+    if(this.petTypes.length === 0 || !this.ownerOfferForm.valid || !this.isPetNumberSet()) {
+      return
+    }
     const pets= this.createPets();
+
     const startDate = this.formatDateToString(this.ownerOfferForm.value.startDate);
     const endDate = this.formatDateToString(this.ownerOfferForm.value.endDate)
     let petOwnerOffer = new PetOwnerOffer(this.ownerOfferForm.value.description,
@@ -76,6 +79,12 @@ export class CreateOwnerOfferComponent {
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
     return `${day}-${month}-${year}`;
+  }
+
+  isPetNumberSet() {
+    return !(!this.ownerOfferForm.value.dogsNum && !this.ownerOfferForm.value.catsNum &&
+      !this.ownerOfferForm.value.birdsNum && !this.ownerOfferForm.value.fishNum &&
+      !this.ownerOfferForm.value.otherNum);
   }
 
   createPets() {
