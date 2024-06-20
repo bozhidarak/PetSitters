@@ -2,7 +2,6 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
 import {PetOwnerOffer} from "../../models/owner-offer-model";
-import {Pet} from "../../models/sitter-offer-model";
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +24,10 @@ export class OwnerOfferService {
 
   public findById(offerId: number) : Observable<PetOwnerOffer> {
     return this.http.get<PetOwnerOffer>(this.apiUrl + '/' + offerId);
+  }
+
+  public findOffersByUserId(userId: number): Observable<PetOwnerOffer[]> {
+    return this.http.get<PetOwnerOffer[]>(this.apiUrl + '/user/' + userId);
   }
 
   public createOffer(newOwnerOffer: PetOwnerOffer, pictures: File[]): Observable<PetOwnerOffer> {
