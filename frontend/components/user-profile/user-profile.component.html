@@ -9,29 +9,40 @@
             <div class="user-info">
                 <mat-grid-list cols="3" rowHeight="2:1">
                     <mat-grid-tile>
-                        <img src="assets/profile-pic1.jpg" alt="Profile Picture" class="profile-picture">
+                        <img [src]="user!.profilePic ? user!.profilePic : 'assets/no-image.jpg'"  class="profile-picture">
                         <div class="info">
-                        <span class="name">Petya Petrova</span>
-                        <span class="email">email.com</span>
-                        <span class="location">Sofia, Bulgaria</span>
+                        <span class="name">{{user!.name}}</span>
+                        <span class="email">{{user!.email}}</span>
+                        <span class="location">{{user!.location}}</span>
                         </div>
                     </mat-grid-tile>
                     <mat-grid-tile>
-                        <button mat-raised-button href="#" color="primary" (click)="createPetOwnerOffer">Създай обява "Търся гледач"</button>
+                        <button *ngIf="isMyProfile" mat-raised-button href="#" color="primary" (click)="createPetOwnerOffer()">Създай обява "Търся гледач"</button>
+                        <button *ngIf="!isMyProfile" mat-raised-button href="#" color="primary" (click)="createReview()">Остави ревю</button>
                     </mat-grid-tile>
                     <mat-grid-tile>
-                        <button mat-raised-button href="#" color="primary" (click)="createPetOwnerOffer">Създай обява "Аз съм гледач"</button>
+                        <button *ngIf="isMyProfile" mat-raised-button href="#" color="primary" (click)="createPetSitterOffer()">Създай обява "Аз съм гледач"</button>
                     </mat-grid-tile>
                 </mat-grid-list>
                 <div class="line"></div>
-                <div class="title-offers">Твоите обяви:</div>
+                <div class="title-offers">Oбяви "Търся гледач":</div>
                 <div class="offers">
                     <mat-grid-list cols="3" rowHeight="2:3">
-                        <mat-grid-tile *ngFor="let offer of offers"
+                        <mat-grid-tile *ngFor="let offer of ownerOffers"
                         colspan="1"
-                        rowspan="1" (click)="navigateToDetails(offer)"><pet-card [owner]="offer"></pet-card></mat-grid-tile>
+                        rowspan="1" (click)="navigateToOwnerOfferDetails(offer.id!)"><owner-offer-card [ownerOffer]="offer"></owner-offer-card></mat-grid-tile>
                     </mat-grid-list>
-            </div>
+                </div>
+                <div class="title-offers">Oбяви "Аз съм гледач":</div>
+                <div *ngIf="sitterOffer != undefined" class="sitter-card">
+                <sitter-card [sitter]="sitterOffer" (click)="navigateToDetails(sitterOffer)"></sitter-card>
+                </div>
+                <div class="title-offers">Ревюта за {{user!.name}}:</div>
+                <button *ngIf="isMyProfile" class = "logout" mat-raised-button href="#" color="primary" (click)="logout()">Изход</button>
+        </div>
+        <div class="reviews-section">
+          <button class="show-reviews-btn" mat-raised-button href="#" color="primary" (click)="handleShowReviews()">Виж ревюта</button>
+          <reviews-list *ngIf="showReviews"></reviews-list>
         </div>
     </body>
 </html>

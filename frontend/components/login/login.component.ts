@@ -8,6 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 // import { AngularFireAuth } from '@angular/fire/compat/auth';
 // import { GoogleAuthProvider } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { UserService } from '../../src/app/service/user.service';
+import { User } from '../../src/models/new-user-model';
 
 
 @Component({
@@ -24,7 +26,7 @@ export class LoginComponent {
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required]);
 
-  constructor(private router: Router, /*private auth: AngularFireAuth*/) {}
+  constructor(private router: Router, private userService: UserService) {}
 
 async login() {
 
@@ -35,30 +37,13 @@ async login() {
   return;
   }
 
-    try {
-      console.log('User logged in');
-    }
-    catch (error) {
-      console.error('Error logging in: ', error);
-    }
+  this.userService.login(email, password).subscribe((user) => {
+    let user1: User = user;
+    localStorage.setItem('userId', user1.id!.toString());
+    console.log(localStorage.getItem('userId'));  
+    this.router.navigate(['home-page']);
+  });
+
   }
-
-  
-async singInWithGoogle(){
-
-//   return this.auth.signInWithPopup(new GoogleAuthProvider).then((result) => {
-//    this.router.navigate(['home-page']);
-//     const user = result.user;
-//    }).catch((error) => {
-//      // Handle Errors here.
-//      const errorCode = error.code;
-//      const errorMessage = error.message;
-//      // The email of the user's account used.
-//      const email = error.customData.email;
-//      // The AuthCredential type that was used.
-//      const credential = GoogleAuthProvider.credentialFromError(error);
-//    });
- }
- 
 
 }

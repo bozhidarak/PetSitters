@@ -21,3 +21,12 @@
     width: 100%;
     object-fit: cover;
   }
+
+  .details-icon {
+    max-height: 10px;
+    max-width: 10px;
+  }
+  
+  .details {
+    margin-bottom: 3%;
+  }

@@ -20,5 +20,8 @@
           </mat-grid-tile>
         </mat-grid-list>
       </div>
+      <mat-paginator [length]="100" [pageSize]=pageSize [pageIndex]=currentPage (page)=pageChanged($event) class="paginator"></mat-paginator>
+<!--      <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>-->
+
     </body>
 </html>

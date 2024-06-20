@@ -8,7 +8,7 @@
     border-radius: 50%;
     margin-bottom: 10px;
   }
-  
+
 
   .info{
     display: flex;
@@ -30,7 +30,7 @@
   .location{
     color: #3f3e3e;
   }
-  
+
 
   button{
     padding: 15px 30px;
@@ -52,4 +52,18 @@
     color: #222;
     margin-top: 1%;
     margin-left:2%;
+}
+
+.logout{
+    margin-top: 5%;
+    margin-left: 45%;
+}
+
+.sitter-card{
+  margin:2%;
+  padding-left: 2%;
+}
+
+.show-reviews-btn {
+  margin-top: 20px;
 }

@@ -32,8 +32,9 @@ button{
 }
 
 .pet-list{
-    margin: 3%;
-    display: flex;
+  margin: 3%;
+  display: flex;
+  align-items: flex-start;
 }
 
 filters, mat-grid-list {
@@ -41,10 +42,16 @@ filters, mat-grid-list {
 }
 
 mat-grid-list{
-    max-width: 84%;
+  max-width: 84%;
+  height: 100%;
 }
 
 filters{
-    max-width: 16%;
+  max-width: 16%;
 }
+
+.mat-paginator-page-size-label,
+.mat-paginator-range-label {
+  display: none;
+}/* Hide the length display */
 

@@ -27,31 +27,11 @@ import { SitterOfferService } from '../../src/app/service/sitter-offer.service';
 export class PetSittersPageComponent {
 
   sitters: SitterOffer[] | undefined = [];
-  loggedIn: boolean = false;
+  loggedIn: boolean = !!localStorage.getItem('userId'); //true if user is not null or empty
 
   constructor(private router:Router, private sitterOfferService: SitterOfferService){
     this.getOffers();
-    // const auth = getAuth();
-   
-    // onAuthStateChanged(auth, (user) => {
-    //   if (user) {
-    //     this.loggedIn = true;
-    //   } else {
-    //     // User is signed out
-    //     this.loggedIn = false;
-    //   }
-    // });
   }
-
-  // async getSitters(){
-  //   const db = getFirestore();
-  //   const usersRef = collection(db, "users");
-  //   const q = query(usersRef, where("userType", "==", 1), where("createAd", "==", true));
-  //   const querySnapshot = await getDocs(q);
-  //   querySnapshot.forEach((doc) => {
-  //     this.sitters.push(doc.data() as Sitter);
-  //   });
-  // }
 
   async getOffers(){
      this.sitterOfferService.getSitterOffers().subscribe((data: SitterOffer[] | undefined) => {
@@ -64,11 +44,10 @@ export class PetSittersPageComponent {
   
 
   navigateToDetails(sitter: SitterOffer) {
-      //seperate email to before and after @
-      // const email = sitter.email.split('@');
-      // //sepereate second part of email to before and after .
-      // const provider = email[1].split('.');
-      //  this.router.navigate(['sitter-details', email[0], provider[0], provider[1]])
+    if(this.loggedIn) { 
+      console.log(localStorage.getItem('userId'));
+      this.router.navigate(['sitter-details', sitter.offerId])
+    }
   }
 
   navigateToRegister() {

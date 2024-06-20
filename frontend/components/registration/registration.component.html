@@ -1,11 +1,11 @@
 <html>
 <form [formGroup]="registerForm">
   <h2>Създай профил</h2>
+  <div *ngIf="currentStep === 1">
     <mat-form-field>
         <mat-label>Имейл:</mat-label>
         <input matInput placeholder="pat@example.com" formControlName="email" required>
       </mat-form-field>
-  
     <mat-form-field>
         <mat-label>Парола:</mat-label>
         <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
@@ -13,16 +13,30 @@
           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
     </mat-form-field>
-
     <mat-form-field>
       <mat-label>Повтори парола:</mat-label>
-      <input matInput [type]="hide ? 'password' : 'text'" formControlName="confirmPassword" required>
-      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      <input matInput [type]="hide1 ? 'password' : 'text'" formControlName="confirmPassword" required>
+      <button mat-icon-button matSuffix (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide1">
+        <mat-icon>{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
   </mat-form-field>
-  
-    <button mat-raised-button color="primary" (click)="register()" [disabled]="!registerForm.valid || !passwordsMatch()">Регистрация</button>
-    <button mat-stroked-button class="google-btn" color="primary" (click)="singInWithGoogle()"><img class="logo" src="/assets/googleLogo.png"> GOOGLE</button>
+  </div>
+  <div *ngIf="currentStep === 2">
+  <mat-form-field>
+    <mat-label>Име и фамилия:</mat-label>
+    <input matInput placeholder="Петя Георгиева" formControlName="name" required>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Локация:</mat-label>
+    <input matInput placeholder="София, България" formControlName="location" required>
+  </mat-form-field>
+  <div>
+    <label>Профилна снимка:</label><br>
+    <input type="file" id="offer-pictures" name="offer-pictures"
+           accept="image/png, image/jpeg, image/jpg" (change)="onFileChange($event)"/>
+  </div>
+</div>
+    <button *ngIf="currentStep === 1" mat-raised-button color="primary" (click)="nextStep()" [disabled]="!validFirstStep()">Следваща стъпка</button>
+    <button *ngIf="currentStep === 2" mat-raised-button color="primary" (click)="register()" [disabled]="!registerForm.valid">Регистрация</button>
   </form>
   </html>

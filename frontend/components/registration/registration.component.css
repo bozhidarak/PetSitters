@@ -1,5 +1,5 @@
 html{
-    background-image: url(../../src/assets/back-register1.png);
+    background-image: url(/assets/back-register1.png);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -27,7 +27,7 @@ button{
 }
 
 mat-form-field{
-    max-width: 55%;
+    max-width: 85%;
 }
 h2{
     font-size: 28px;
@@ -42,3 +42,13 @@ h2{
 .google-btn{
     border-width: 2px;
 }
+
+div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+

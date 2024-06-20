@@ -7,6 +7,8 @@ import { PetSittersPageComponent } from '../pet-sitter-offers-page/pet-sitter-of
 // import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
 // import { getFirestore, collection, where, getDocs, query } from '@angular/fire/firestore';
 import { Owner } from '../../src/models/user-model';
+import { UserService } from '../../src/app/service/user.service';
+import { User } from '../../src/models/new-user-model';
 
 
 @Component({
@@ -18,33 +20,28 @@ import { Owner } from '../../src/models/user-model';
 })
 export class NavBarComponent {
 
-  loggedIn: boolean = true;
+  loggedIn: boolean = !!localStorage.getItem('userId');
   userName: string = "";
-  picture: string = "";
+  picture: string | undefined = "";
 
-  constructor(private router:Router){
-      // const auth = getAuth();
-      
-      // onAuthStateChanged(auth, (user) => {
-      //   if (user) {
-      //     this.loggedIn = true;
-      //     this.getUserName();
-      //   } else {
-      //     this.loggedIn = false;
-      //   }
-      // });
+  constructor(private router:Router, private userService: UserService){
+    this.getUserName();
   }
 
-  // async getUserName(){
-  //     const db = getFirestore();
-  //     const usersRef = collection(db, "users");
-  //     // create query from uid from auth
-  //    const q = query(usersRef, where("email", "==", getAuth().currentUser?.email));
-  //     const querySnapshot = await getDocs(q);
-  //    this.userName = querySnapshot.docs[0].data()['name'];
-  //     this.picture = querySnapshot.docs[0].data()['profilePic']; 
-      
-  //   }
+getUserName(){
+    if(localStorage.getItem('userId') != null){
+      const userId = localStorage.getItem('userId');
+      if (userId !== null) {
+        const userIdNumber = parseInt(userId);
+        this.userService.getUserById(userIdNumber).subscribe(
+        (data: User | undefined) => {
+          this.userName = data!.name;
+          this.picture = data!.profilePic;
+        });
+      }
+    }
+  
+  }
 
   NavigateToSitters(){
     this.router.navigate(['pet-sitters'])
@@ -67,6 +64,6 @@ export class NavBarComponent {
   }
 
   NavigateToUserProfile(){
-    this.router.navigate(['user-profile'])
+    this.router.navigate(['user-profile', localStorage.getItem('userId')])
   }
 }

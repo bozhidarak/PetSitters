@@ -92,3 +92,9 @@ span{
     font-size: medium;
 }
 
+svg{
+    margin-top: 2%;
+    margin-right: 2%;
+    max-height: 25px;
+}
+

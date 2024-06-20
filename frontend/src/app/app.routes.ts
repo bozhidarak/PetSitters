@@ -8,6 +8,9 @@ import { HowPageComponent } from '../../components/how-page/how-page.component';
 import { SitterDetailsComponent } from '../../components/sitter-offer-details/sitter-offer-details.component';
 import { OwnerOfferDetailsComponent } from '../../components/owner-offer-details/owner-offer-details.component';
 import { UserProfileComponent } from '../../components/user-profile/user-profile.component';
+import {CreateOwnerOfferComponent} from "../../components/create-owner-offer/create-owner-offer.component";
+import { CreateSitterOfferComponent } from '../../components/create-sitter-offer/create-sitter-offer.component';
+import {CreateReviewComponent} from "../../components/create-review/create-review.component";
 
 export const routes: Routes = [
     {
@@ -19,7 +22,10 @@ export const routes: Routes = [
     {path:'registration', component:RegistrationComponent},
     {path:'login', component:LoginComponent},
     {path: 'how-page', component:HowPageComponent},
-    {path: 'sitter-details/:sitterEmail/:sitterEmailProvider/:sitterEmailDomain', component:SitterDetailsComponent},
+    {path: 'sitter-details/:id', component:SitterDetailsComponent},
     {path: 'owner-offer-details/:id', component:OwnerOfferDetailsComponent},
-    {path: 'user-profile', component:UserProfileComponent}
+    {path: 'user-profile/:id', component:UserProfileComponent},
+    {path: 'create-owner-offer', component:CreateOwnerOfferComponent},
+    {path: 'create-sitter-offer', component:CreateSitterOfferComponent},
+    {path: 'create-review/:userId', component:CreateReviewComponent}
 ];
