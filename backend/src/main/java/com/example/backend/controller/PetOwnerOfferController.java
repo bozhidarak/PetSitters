@@ -42,6 +42,11 @@ public class    PetOwnerOfferController {
         }
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<PetOwnerOfferDTO>> getOffersByUserId(@PathVariable Long userId) {
+        return new ResponseEntity<>(petOwnerOfferService.getOffersByUserId(userId), HttpStatus.OK);
+    }
+
     @GetMapping("/pet")
     public ResponseEntity<List<PetOwnerOfferDTO>> getOffersByPetType(@RequestParam List<PetType> petTypes,
                                                                      @RequestParam(required = false) Integer page,
