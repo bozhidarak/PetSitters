@@ -18,7 +18,7 @@
     <div class="approved"><p class="auth">100% Проверена самоличност</p></div>
   </div>
   <div class="more-info">
-    <button mat-raised-button href="#" color="accent">Свържете се</button>
+    <button mat-raised-button href="#" color="accent" (click)="navigateToUserProfile()">Свържете се</button>
     <table>
       <tr class="info-row">
         <td>Локация</td>
@@ -46,11 +46,5 @@
     </table>
   </div>
 </div>
-<div class="offer-section">
-    <p>За собственика</p>
-    <div class="picture-container">
-      <img class="profile-picture" [src]="petOwnerOffer?.userProfilePic ? 'assets/profile-pic1.jpg' : 'assets/profile-pic1.jpg'">
-      <p>{{petOwnerOffer?.userName}}</p>
-    </div>
-</div>
+
 

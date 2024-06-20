@@ -27,7 +27,7 @@
             <div class="info">
                 <div class="name">{{sitterOffer?.userName}}</div>
                 <div class="price">Цена: {{sitterOffer?.pricePerDay}}<span>лв/час</span></div>
-                <button mat-raised-button href="#" color="accent">Свържете се</button>
+                <button mat-raised-button href="#" color="accent" (click)="navigateToUserProfile()">Свържете се</button>
                 <table>
                     <tr>
                         <td>Адрес:</td>
@@ -56,7 +56,7 @@
                         <td>За мен:</td>
                         <td>{{sitterOffer?.description}}</td>
                 </table>
-            </div>     
+            </div>
         </div>
     </body>
 </html>

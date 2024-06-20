@@ -94,24 +94,7 @@ span {
   margin-top: 10px;
 }
 
-.user-info {
-  font-family: Roboto, Arial, serif;
-  padding: 10px 20px;
-  max-width: 15rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.profile-picture {
-  max-width: 10rem;
-  max-height: 10rem;
-  margin-right: 20px;
-}
-
 .numbOfPets {
   font-size: 18px;
   margin-bottom: 8px;
 }
-

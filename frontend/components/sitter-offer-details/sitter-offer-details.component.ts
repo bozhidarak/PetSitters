@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { CarouselModule } from '@coreui/angular';
-import { ActivatedRoute, Route, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule, formatDate } from '@angular/common';
 import {MatTableModule} from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,13 +25,13 @@ export class SitterDetailsComponent {
   sitterOffer: SitterOffer | undefined;
   sitterOfferservice: SitterOfferService;
 
-  constructor(private route: ActivatedRoute, private sitterOfferService: SitterOfferService) {
+  constructor(private route: ActivatedRoute, private sitterOfferService: SitterOfferService, private router: Router) {
     this.sitterOfferservice = sitterOfferService;
     const id = this.route.snapshot.paramMap.get('id');
     this.sitterofferId = Number(id);
-    
+
     this.getSitter(this.sitterofferId);
-    
+
   }
 
   ngOnInit(): void {
@@ -42,5 +42,9 @@ export class SitterDetailsComponent {
       this.sitterOffer = data;
       console.log(this.sitterOffer);
     });
+  }
+
+  navigateToUserProfile() {
+    this.router.navigate(['user-profile', this.sitterOffer?.userId])
   }
 }

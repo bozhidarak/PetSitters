@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatCommonModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { CarouselModule } from '@coreui/angular';
@@ -14,7 +14,7 @@ import {MatCardModule} from "@angular/material/card";
 @Component({
   selector: 'owner-offer-details',
   standalone: true,
-  imports: [NavBarComponent, RouterLink, CommonModule,
+  imports: [NavBarComponent, CommonModule,
     MatButtonModule, CarouselModule, MatIconModule, MatCardModule],
   templateUrl: './owner-offer-details.component.html',
   styleUrl: './owner-offer-details.component.css'
@@ -25,15 +25,19 @@ export class OwnerOfferDetailsComponent implements OnInit{
 
   constructor(private sharingOwnerService: SharingOwnerOfferService,
               private ownerOfferService: OwnerOfferService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.petOwnerOffer = this.sharingOwnerService.getPetOwnerOffer();
     if (!this.petOwnerOffer || Object.keys(this.petOwnerOffer).length === 0) {
       const id = Number(this.route.snapshot.paramMap.get('id'));
-      this.ownerOfferService.findById(id).subscribe( (offer) => {
+      this.ownerOfferService.findById(id).subscribe((offer) => {
         this.petOwnerOffer = offer;
       });
     }
+  }
+
+  navigateToUserProfile() {
+    this.router.navigate(['user-profile', this.petOwnerOffer?.userId]);
   }
 }
