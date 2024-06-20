@@ -27,11 +27,11 @@
                 <div class="line"></div>
                 <div class="title-offers">Oбяви "Търся гледач":</div>
                 <div class="offers">
-                    <!-- <mat-grid-list cols="3" rowHeight="2:3">
+                    <mat-grid-list cols="3" rowHeight="2:3">
                         <mat-grid-tile *ngFor="let offer of ownerOffers"
                         colspan="1"
-                        rowspan="1" (click)="navigateToDetails(offer)"><owner-offer-card [ownerOffer]="offer"></owner-offer-card></mat-grid-tile>
-                    </mat-grid-list> -->
+                        rowspan="1" (click)="navigateToOwnerOfferDetails(offer.id!)"><owner-offer-card [ownerOffer]="offer"></owner-offer-card></mat-grid-tile>
+                    </mat-grid-list>
                 </div>
                 <div class="title-offers">Oбяви "Аз съм гледач":</div>
                 <div *ngIf="sitterOffer != undefined" class="sitter-card">
@@ -41,7 +41,7 @@
                 <button *ngIf="isMyProfile" class = "logout" mat-raised-button href="#" color="primary" (click)="logout()">Изход</button>
         </div>
         <div class="reviews-section">
-          <button mat-raised-button href="#" color="primary" (click)="handleShowReviews()">Виж ревюта</button>
+          <button class="show-reviews-btn" mat-raised-button href="#" color="primary" (click)="handleShowReviews()">Виж ревюта</button>
           <reviews-list *ngIf="showReviews"></reviews-list>
         </div>
     </body>

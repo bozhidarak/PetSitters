@@ -13,7 +13,7 @@ import {MatCheckboxModule } from '@angular/material/checkbox';
 // import { addDoc } from '@firebase/firestore';
 // import { getAuth, onAuthStateChanged, signOut } from '@angular/fire/auth';
 // import { getStorage, uploadBytesResumable, ref, getDownloadURL, deleteObject } from '@firebase/storage';
-import { Owner, PetOwnerOffer, Sitter, User, UserType } from '../../src/models/user-model';
+import { Owner, Sitter, User, UserType } from '../../src/models/user-model';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { PetCardComponent } from '../pet-card/pet-card.component';
@@ -24,6 +24,7 @@ import { OwnerOfferCardComponent } from '../owner-offer-card/owner-offer-card.co
 import { OwnerOfferService } from '../../src/app/service/owner-offer-service.service';
 import { SitterOfferService } from '../../src/app/service/sitter-offer.service';
 import { SitterCardComponent } from '../sitter-offer-card/sitter-offer-card.component';
+import { PetOwnerOffer } from '../../src/models/owner-offer-model';
 
 
 @Component({
@@ -33,11 +34,11 @@ import { SitterCardComponent } from '../sitter-offer-card/sitter-offer-card.comp
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css'
 })
-export class UserProfileComponent {
+export class UserProfileComponent implements OnInit{
 
   offers: Owner[] = [];
   showReviews: boolean = false;
-  ownerOffers: PetOwnerOffer[] = [];
+  ownerOffers: PetOwnerOffer[] = [] as PetOwnerOffer[];
   sitterOffer: SitterOffer | undefined = [] as any;
   user: User | undefined;
   userId: number;
@@ -45,7 +46,7 @@ export class UserProfileComponent {
 
 
   constructor(private activeRoute:ActivatedRoute, private router: Router,
-    private userService: UserService, private OwnerOfferService: OwnerOfferService,
+    private userService: UserService, private ownerOfferService: OwnerOfferService,
     private sitterOfferService: SitterOfferService) {
 
     const id = this.activeRoute.snapshot.paramMap.get('id');
@@ -56,6 +57,11 @@ export class UserProfileComponent {
     this.getUser();
     this.getOwnerOffers();
     this.getsitterOffer();
+  }
+
+  ngOnInit() {
+    this.getOwnerOffers();
+    this.getsitterOffer()
   }
 
   getUser(){
@@ -73,10 +79,14 @@ export class UserProfileComponent {
   }
 
   getOwnerOffers(){
+    this.ownerOfferService.findOffersByUserId(this.userId).subscribe(
+      data => {
+        this.ownerOffers = data;
+      });
   }
 
   createReview(){
-
+    this.router.navigate(['create-review', this.userId])
   }
 
   logout(){
@@ -91,6 +101,12 @@ export class UserProfileComponent {
   createPetOwnerOffer(){
     this.router.navigate(['create-owner-offer'])
   }
+
+  navigateToOwnerOfferDetails(offerId: number){
+    console.log("in nav to owner offer")
+    this.router.navigate(['owner-offer-details', offerId])
+  }
+
   navigateToDetails(offer: any){
     this.router.navigate(['sitter-details', this.sitterOffer?.offerId])
   }
@@ -100,7 +116,7 @@ export class UserProfileComponent {
   }
 
   handleShowReviews() {
-    this.showReviews = true;
+    this.showReviews = !this.showReviews;
   }
 }
 
