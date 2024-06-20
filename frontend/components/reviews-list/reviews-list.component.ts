@@ -15,13 +15,13 @@ import {MatCardModule} from "@angular/material/card";
 })
 export class ReviewsListComponent {
   reviews: Review[] = [] as Review[];
-  reviewedUserId: number = 2;
+  reviewedUserId: number = 0;
 
   constructor(private reviewService: ReviewService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    // this.reviewedUserId = this.route.snapshot.paramMap.get('id');
+    this.reviewedUserId = Number(this.route.snapshot.paramMap.get('id'));
     this.getReviews();
   }
 

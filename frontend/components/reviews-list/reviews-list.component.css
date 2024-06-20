@@ -7,8 +7,14 @@
   display: inline;
   width: 20px;
   height: 20px;
+  fill: crimson;
 }
 
 span {
   margin-left: 30px;
+}
+
+.no-reviews-msg {
+  font-family: 'Popins', sans-serif;
+  margin: 20px;
 }
