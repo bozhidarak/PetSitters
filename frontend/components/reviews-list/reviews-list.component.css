@@ -1,0 +1,14 @@
+.review-card {
+  width: 70%;
+  padding: 20px;
+}
+
+.star-icon {
+  display: inline;
+  width: 20px;
+  height: 20px;
+}
+
+span {
+  margin-left: 30px;
+}

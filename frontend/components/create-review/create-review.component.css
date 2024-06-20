@@ -1,0 +1,45 @@
+form {
+  padding: 1rem;
+  font-family: Roboto, Arial, serif;
+  color: crimson;
+}
+
+.stars-section {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+
+  .star-icon {
+    width: 2rem;
+    height: 2rem;
+    fill: gray;
+    font-size: 24px;
+    cursor: pointer;
+
+    &.rated,
+    &:hover,
+    &:hover ~ .star-icon {
+      fill: crimson;
+    }
+
+    transition: fill 0.2s ease-in-out;
+  }
+
+  &.readOnly {
+    fa-icon {
+      cursor: default;
+      &:hover:not(.rated),
+      &:hover ~ fa-icon:not(.rated) {
+        fill: gray;
+      }
+    }
+  }
+}
+
+mat-form-field {
+  width: 20rem;
+}
+
+.error-message {
+  color: red;
+}
