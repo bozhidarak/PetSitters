@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
-// import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
+
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,19 +13,5 @@ import { Router } from '@angular/router';
   templateUrl: './how-page.component.html',
   styleUrl: './how-page.component.css'
 })
-export class HowPageComponent {
-  loggedIn: boolean = true;
+export class HowPageComponent {}
 
-  constructor(private router:Router){
-  //   const auth = getAuth();
-
-  //   onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       this.loggedIn = true;
-  //     } else {
-  //       this.loggedIn = false;
-  //     }
-  //   });
- }
-
-}

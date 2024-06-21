@@ -1,22 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router } from '@angular/router';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatCheckboxModule } from '@angular/material/checkbox';
-// import { arrayRemove, collection, doc, getDoc, getFirestore, setDoc, updateDoc } from '@angular/fire/firestore';
-// import { addDoc } from '@firebase/firestore';
-// import { getAuth, onAuthStateChanged, signOut } from '@angular/fire/auth';
-// import { getStorage, uploadBytesResumable, ref, getDownloadURL, deleteObject } from '@firebase/storage';
-import { Owner, Sitter, User, UserType } from '../../src/models/user-model';
+import { User } from '../../src/models/user-model';
 import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { PetCardComponent } from '../pet-card/pet-card.component';
 import {ReviewsListComponent} from "../reviews-list/reviews-list.component";
 import { UserService } from '../../src/app/service/user.service';
 import { SitterOffer } from '../../src/models/sitter-offer-model';
@@ -36,7 +27,6 @@ import { PetOwnerOffer } from '../../src/models/owner-offer-model';
 })
 export class UserProfileComponent implements OnInit{
 
-  offers: Owner[] = [];
   showReviews: boolean = false;
   ownerOffers: PetOwnerOffer[] = [] as PetOwnerOffer[];
   sitterOffer: SitterOffer | undefined = [] as any;

@@ -59,13 +59,6 @@ export class CreateSitterOfferComponent {
     }
   }
 
-  // formatDateToString(date: Date) {
-  //   const day = date.getDate().toString().padStart(2, '0');
-  //   const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  //   const year = date.getFullYear();
-  //   return `${day}-${month}-${year}`;
-  // }
-
   createPets() {
     let pets: Pet[] = [];
     for (let petType of this.petTypes) {

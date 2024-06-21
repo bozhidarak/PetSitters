@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
 import { PetOwnerOffer } from '../../src/models/owner-offer-model';
 import { OwnerOfferCardComponent } from "../owner-offer-card/owner-offer-card.component";
 import { OwnerOfferService } from '../../src/app/service/owner-offer-service.service'
-import { SharingOwnerOfferService } from '../../src/app/service/sharing-owner-offer.service';
 import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 
 @Component({
@@ -25,23 +24,7 @@ export class OwnerOffersPageComponent implements OnInit{
   pageSize: number = 9;
   currentPage: number = 0;
 
-  constructor(private ownerOfferService: OwnerOfferService,
-              private sharingOfferService: SharingOwnerOfferService,
-              private router:Router)
-  {
-    // this.getOwners();
-    // const auth = getAuth();
-
-    // onAuthStateChanged(auth, (user) => {
-    //   if (user) {
-    //     this.loggedIn = true;
-    //   } else {
-    //     // User is signed out
-    //     this.loggedIn = false;
-    //   }
-    // });
-
-  }
+  constructor(private ownerOfferService: OwnerOfferService, private router:Router) {}
 
   ngOnInit() {
     this.getOwnerOffers(this.currentPage, this.pageSize);
@@ -55,7 +38,6 @@ export class OwnerOffersPageComponent implements OnInit{
 
   navigateToDetails(petOwnerOffer: PetOwnerOffer){
     if(this.loggedIn){
-    this.sharingOfferService.setPetOwnerOffer(petOwnerOffer);
     const id = petOwnerOffer.id;
     this.router.navigate(['owner-offer-details', id]);
     }

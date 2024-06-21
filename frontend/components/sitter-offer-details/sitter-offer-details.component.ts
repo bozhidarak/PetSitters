@@ -3,13 +3,10 @@ import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { CarouselModule } from '@coreui/angular';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule, formatDate } from '@angular/common';
-import {MatTableModule} from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { Owner, Sitter } from '../../src/models/user-model';
 import { SitterOffer } from '../../src/models/sitter-offer-model';
 import { SitterOfferService } from '../../src/app/service/sitter-offer.service';
-// import { getFirestore, collection, where, getDocs, query } from '@angular/fire/firestore';
 
 @Component({
   selector: 'sitter-details',
