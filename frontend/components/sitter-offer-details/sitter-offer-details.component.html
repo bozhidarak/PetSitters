@@ -8,8 +8,8 @@
         <nav-bar></nav-bar>
         <div class="sitter-info">
             <div class="carousel">
-                <c-carousel [animate]="false" [dark]="true" [interval]="99999999999">
-                    <c-carousel-inner>
+                <c-carousel *ngIf="sitterOffer?.picturePaths != undefined" [animate]="false" [dark]="true" [interval]="99999999999">
+                    <c-carousel-inner >
                       <c-carousel-item *ngFor="let picture of sitterOffer!.picturePaths">
                         <img
                           [src]="picture"

@@ -48,4 +48,25 @@ export class SitterOfferService {
   deleteOffer(offerId: number) {
     return this.http.delete<void>(`api/petSitterOffers/${offerId}`);
   }
+
+  getFilteredOffers(pets:string[], availableFrom: string | null, availableUntil: string | null, currentPage: number, pageSize: number): Observable<SitterOffer[]> {
+    let params = new HttpParams();
+    
+    if(pets !== undefined && pets !== null && pets.length > 0) {
+      params = params.set('petTypes', pets.join(','));
+    }
+    if(availableFrom !== undefined && availableFrom !== null && availableFrom !== '') {
+      params = params.set('availableFrom', availableFrom);
+    }
+    if(availableUntil !== undefined && availableUntil !== null && availableUntil !== '') {
+      params = params.set('availableUntil', availableUntil);
+    }
+    if(currentPage !== undefined && currentPage !== null && currentPage >= 0) {
+      params = params.set('page', currentPage.toString());
+    }
+    if(pageSize !== undefined && pageSize !== null && pageSize >= 0) {
+      params = params.set('limit', pageSize.toString());
+    }
+    return this.http.get<SitterOffer[]>(`api/petSitterOffers/filters`, { params });
+  }
 }

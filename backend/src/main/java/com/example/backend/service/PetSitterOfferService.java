@@ -18,7 +18,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.security.InvalidParameterException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class PetSitterOfferService {
@@ -84,7 +86,7 @@ public class PetSitterOfferService {
         return offer;
     }
 
-    @Transactional //?? not sure if needed
+    @Transactional //needed because of S3
     public PetSitterOfferDTO createOffer(PetSitterOfferDTO offerDTO, List<MultipartFile> pictures){
         PetSitterOffer offerEntity = offerMapper.toEntity(offerDTO);
         Long userId = offerDTO.getUserId();

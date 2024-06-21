@@ -33,7 +33,7 @@ export class PetSittersPageComponent {
     this.getOffers(this.currentPage, this.pageSize);
   }
 
-  async getOffers(currentPage: number, pageSize: number){
+  getOffers(currentPage: number, pageSize: number){
      this.sitterOfferService.getSitterOffers(currentPage, pageSize).subscribe((data: SitterOffer[] | undefined) => {
       this.sitters = data;
        if(this.sitters?.length! < 9) {
@@ -66,5 +66,11 @@ export class PetSittersPageComponent {
 
   onFiltersApplied(filters: {pets: string[], startDate: string | null, endDate: string | null}) {
     console.log("FILTERS", filters);
+    this.currentPage = 0;
+    this.pageSize = 9;
+    this.sitterOfferService.getFilteredOffers(filters.pets, filters.startDate, filters.endDate, this.currentPage, this.pageSize)
+                            .subscribe((data: SitterOffer[] | undefined) => {
+                                                  this.sitters = data;});
   }
+
 }
