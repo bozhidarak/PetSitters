@@ -8,7 +8,10 @@ import com.example.backend.entity.User;
 import com.example.backend.mapper.PetSitterOfferMapper;
 import com.example.backend.repository.PetSitterOfferRepository;
 import com.example.backend.repository.UserRepository;
+import com.example.backend.specification.PetSitterOfferSpecification;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,6 +55,25 @@ public class PetSitterOfferService {
                 .toList();
         offers.forEach(this::setUser);
         return offers;
+    }
+
+    public List<PetSitterOfferDTO> getFilteredOffers(List<String> petTypes, Date availableFrom, Date availableUntil, Integer page, Integer limit) {
+
+        Specification<PetSitterOffer> spec = Specification.where(PetSitterOfferSpecification.AvailableFrom(availableFrom))
+                                                            .and(PetSitterOfferSpecification.availableUntil(availableUntil))
+                                                            .and(PetSitterOfferSpecification.petsWithTypes(petTypes));
+        Pageable pageable;
+        if (page == null || limit == null) {
+            pageable = PageRequest.of(0, 9);
+        } else {
+            pageable = PageRequest.of(page, limit);
+        }
+
+
+        return offerRepository.findAll(spec, pageable)
+                .stream()
+                .map(offerMapper::toDTO)
+                .toList();
     }
 
     public PetSitterOfferDTO getOfferById(Long id){

@@ -6,13 +6,14 @@ import com.example.backend.entity.Pet;
 import com.example.backend.entity.PetOwnerOffer;
 import com.example.backend.entity.Picture;
 import com.example.backend.entity.User;
-import com.example.backend.enums.PetType;
 import com.example.backend.mapper.PetOwnerOfferMapper;
 import com.example.backend.repository.PetOwnerOfferRepository;
 import com.example.backend.repository.UserRepository;
+import com.example.backend.specification.PetOwnerOfferSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,12 +49,7 @@ public class PetOwnerOfferService {
     }
 
     public List<PetOwnerOfferDTO> getAllOffers(Integer page, Integer limit) {
-        Pageable pageable;
-        if (page == null || limit == null) {
-            pageable = PageRequest.of(0, 9);
-        } else {
-            pageable = PageRequest.of(page, limit);
-        }
+        Pageable pageable = PageRequest.of(page, limit);
         return petOwnerOfferRepository.findAll(pageable)
                 .stream()
                 .map(petOwnerOfferMapper::mapToDto)
@@ -74,44 +70,25 @@ public class PetOwnerOfferService {
                 .toList();
     }
 
-    public List<PetOwnerOfferDTO> getOffersByPetType(List<PetType> petTypes, Integer page, Integer limit) {
+    public List<PetOwnerOfferDTO> findFilteredOffers(List<String> petTypes, LocalDate startDate, LocalDate endDate, Integer page, Integer limit) {
+        Specification<PetOwnerOffer> spec = Specification
+                .where(PetOwnerOfferSpecification.startDateAfter(startDate))
+                .and(PetOwnerOfferSpecification.endDateBefore(endDate))
+                .and(PetOwnerOfferSpecification.petsWithTypes(petTypes));
+
         Pageable pageable;
         if (page == null || limit == null) {
             pageable = PageRequest.of(0, 9);
         } else {
             pageable = PageRequest.of(page, limit);
         }
-        return petOwnerOfferRepository.findByPetsPetTypeIn(petTypes, pageable)
+
+        return petOwnerOfferRepository.findAll(spec, pageable)
                 .stream()
                 .map(petOwnerOfferMapper::mapToDto)
                 .toList();
     }
 
-    public List<PetOwnerOfferDTO> getOffersAfter(LocalDate startDate, Integer page, Integer limit) {
-        Pageable pageable;
-        if (page == null || limit == null) {
-            pageable = PageRequest.of(0, 9);
-        } else {
-            pageable = PageRequest.of(page, limit);
-        }
-        return petOwnerOfferRepository.findByStartDateAfter(startDate, pageable)
-                .stream()
-                .map(petOwnerOfferMapper::mapToDto)
-                .toList();
-    }
-
-    public List<PetOwnerOfferDTO> getOffersBefore(LocalDate endDate, Integer page, Integer limit) {
-        Pageable pageable;
-        if (page == null || limit == null) {
-            pageable = PageRequest.of(0, 9);
-        } else {
-            pageable = PageRequest.of(page, limit);
-        }
-        return petOwnerOfferRepository.findByEndDateBefore(endDate, pageable)
-                .stream()
-                .map(petOwnerOfferMapper::mapToDto)
-                .toList();
-    }
 
     public PetOwnerOfferDTO createOffer(PetOwnerOfferDTO newOfferDto, List<MultipartFile> pictures) {
         PetOwnerOffer newOffer = petOwnerOfferMapper.mapToEntity(newOfferDto);

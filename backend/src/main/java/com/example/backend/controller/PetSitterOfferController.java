@@ -6,6 +6,7 @@ import com.example.backend.service.PetSitterOfferService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.security.InvalidParameterException;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -33,6 +35,7 @@ public class PetSitterOfferController {
         }
         return ResponseEntity.ok(offerService.getAllOffers());
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<PetSitterOfferDTO> getOfferById(@PathVariable Long id){
         try {
@@ -53,11 +56,21 @@ public class PetSitterOfferController {
          }
          catch (ResourceNotFoundException e){
              System.out.println(e.getMessage());
-             return ResponseEntity.notFound().build();
+             return ResponseEntity.ok().build();
          }
     }
 
-    @PostMapping
+    @GetMapping("/filters")
+    public List<PetSitterOfferDTO> getOffers(
+            @RequestParam(required = false) List<String> petTypes,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date availableFrom,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date availableUntil,
+            @RequestParam(required = false, defaultValue = "0") Integer page,
+            @RequestParam(required = false, defaultValue = "9") Integer limit) {
+        return offerService.getFilteredOffers(petTypes, availableFrom, availableUntil, page, limit);
+    }
+
+    @PostMapping()
     public ResponseEntity<PetSitterOfferDTO> createOffer(@RequestPart(required = false) List<MultipartFile> pictures,
                                                          @RequestPart @Valid PetSitterOfferDTO offerDto){
       PetSitterOfferDTO savedOffer;
