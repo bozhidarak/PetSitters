@@ -21,6 +21,8 @@ export class SitterCardComponent {
   }
 
   navigateToUser() {
+    if(!!localStorage.getItem('userId')){
     this.router.navigate(['user-profile', this.sitter!.userId]);
+    }
   }
 }

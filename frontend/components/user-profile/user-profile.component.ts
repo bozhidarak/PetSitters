@@ -66,7 +66,7 @@ export class UserProfileComponent implements OnInit{
       (data: SitterOffer | undefined) => {
         this.sitterOffer = data;
       });
-  }
+    }
 
   getOwnerOffers(){
     this.ownerOfferService.findOffersByUserId(this.userId).subscribe(
@@ -80,6 +80,12 @@ export class UserProfileComponent implements OnInit{
   }
 
   logout(){
+    localStorage.clear();
+    this.router.navigate(['home-page']);
+  }
+
+  deleteAccount(){
+    this.userService.deleteUser(this.userId).subscribe();
     localStorage.clear();
     this.router.navigate(['home-page']);
   }

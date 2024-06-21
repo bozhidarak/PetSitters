@@ -25,6 +25,9 @@ export class OwnerOfferDetailsComponent {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.ownerOfferService.findById(id).subscribe((offer) => {
       this.petOwnerOffer = offer;
+      if(this.petOwnerOffer?.picturePaths.length === 0){
+        this.petOwnerOffer.picturePaths.push('assets/no-photo-available.png');
+      }
     });
   }
 

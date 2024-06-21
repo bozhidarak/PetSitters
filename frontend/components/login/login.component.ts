@@ -38,11 +38,13 @@ async login() {
 
   this.userService.login(email, password).subscribe((user) => {
     let user1: User = user;
+    if(user1 == null){
+      alert('Invalid email or password');
+      return;
+    }
     localStorage.setItem('userId', user1.id!.toString());
-    console.log(localStorage.getItem('userId'));
     this.router.navigate(['home-page']);
   });
-
   }
 
 }

@@ -1,8 +1,7 @@
 import {HttpClient, HttpParams} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SitterOffer } from '../../models/sitter-offer-model';
-import { Observable, forkJoin, map, of, switchMap } from 'rxjs';
-import { User } from '../../models/user-model';
+import { Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -27,12 +26,11 @@ export class SitterOfferService {
   }
 
   getSitterOfferByUserId(userId: number): Observable<SitterOffer> {
+
     return this.http.get<SitterOffer>(`api/petSitterOffers/user/${userId}`);
   }
 
   createOffer(newSitterOffer: SitterOffer, pictures: File[]): Observable<SitterOffer> {
-    //return this.http.post<SitterOffer>(`api/petSitterOffers`, newSitterOffer);
-
     console.log("creating offer");
     const formData = new FormData();
 
@@ -45,5 +43,9 @@ export class SitterOfferService {
     }
     console.log(newSitterOffer);
     return this.http.post<SitterOffer>("api/petSitterOffers", formData);
+  }
+
+  deleteOffer(offerId: number) {
+    return this.http.delete<void>(`api/petSitterOffers/${offerId}`);
   }
 }

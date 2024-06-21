@@ -38,7 +38,19 @@ export class SitterDetailsComponent {
     this.sitterOfferservice.getOfferById(id).subscribe((data: SitterOffer | undefined) => {
       this.sitterOffer = data;
       console.log(this.sitterOffer);
+      if(this.sitterOffer?.picturePaths.length === 0){
+        this.sitterOffer.picturePaths.push('assets/no-photo-available.png');
+      }
     });
+  }
+
+  isMyOffer() {
+    return this.sitterOffer?.userId === Number(localStorage.getItem('userId'));
+  }
+
+  deleteOffer() {
+    this.sitterOfferservice.deleteOffer(this.sitterofferId).subscribe();
+    this.navigateToUserProfile();
   }
 
   navigateToUserProfile() {

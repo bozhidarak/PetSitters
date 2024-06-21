@@ -7,7 +7,7 @@
     <body>
         <nav-bar></nav-bar>
         <div class="sitter-info">
-            <div  *ngIf="sitterOffer != undefined" class="carousel">
+            <div class="carousel">
                 <c-carousel [animate]="false" [dark]="true" [interval]="99999999999">
                     <c-carousel-inner>
                       <c-carousel-item *ngFor="let picture of sitterOffer!.picturePaths">
@@ -27,7 +27,8 @@
             <div class="info">
                 <div class="name">{{sitterOffer?.userName}}</div>
                 <div class="price">Цена: {{sitterOffer?.pricePerDay}}<span>лв/час</span></div>
-                <button mat-raised-button href="#" color="accent" (click)="navigateToUserProfile()">Свържете се</button>
+                <button *ngIf="isMyOffer()" mat-raised-button href="#" color="accent" (click)="deleteOffer()">Изтрий</button>    
+                <button *ngIf="!isMyOffer()" mat-raised-button href="#" color="accent" (click)="navigateToUserProfile()">Свържете се</button>
                 <table>
                     <tr>
                         <td>Адрес:</td>
