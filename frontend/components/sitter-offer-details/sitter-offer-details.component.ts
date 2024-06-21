@@ -44,6 +44,15 @@ export class SitterDetailsComponent {
     });
   }
 
+  isMyOffer() {
+    return this.sitterOffer?.userId === Number(localStorage.getItem('userId'));
+  }
+
+  deleteOffer() {
+    this.sitterOfferservice.deleteOffer(this.sitterofferId).subscribe();
+    this.navigateToUserProfile();
+  }
+
   navigateToUserProfile() {
     this.router.navigate(['user-profile', this.sitterOffer?.userId])
   }

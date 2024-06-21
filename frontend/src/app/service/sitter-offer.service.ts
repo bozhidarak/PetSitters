@@ -24,8 +24,6 @@ export class SitterOfferService {
   }
 
   createOffer(newSitterOffer: SitterOffer, pictures: File[]): Observable<SitterOffer> {
-    //return this.http.post<SitterOffer>(`api/petSitterOffers`, newSitterOffer);
-
     console.log("creating offer");
     const formData = new FormData();
 
@@ -38,5 +36,9 @@ export class SitterOfferService {
     }
     console.log(newSitterOffer);
     return this.http.post<SitterOffer>("api/petSitterOffers", formData);
+  }
+
+  deleteOffer(offerId: number) {
+    return this.http.delete<void>(`api/petSitterOffers/${offerId}`);
   }
 }
