@@ -1,13 +1,37 @@
 <div>
     <h2>Филтри</h2>
-    <span>Tип животно:</span>
-    <mat-checkbox>Котки</mat-checkbox>
-    <mat-checkbox>Кучета</mat-checkbox>
-    <mat-checkbox>Птици</mat-checkbox>
-    <span>Големина: </span>
-    <mat-checkbox>Малки</mat-checkbox>
-    <mat-checkbox>Големи</mat-checkbox>
-    <span>Локация:</span>
-    <mat-checkbox>София</mat-checkbox>
-    <mat-checkbox>Пловдив</mat-checkbox>
+    <span class="pet-type">Tип животно:</span>
+    <mat-checkbox (change)="addPetToFilters('CAT')">Котки</mat-checkbox>
+    <mat-checkbox (change)="addPetToFilters('DOG')">Кучета</mat-checkbox>
+    <mat-checkbox (change)="addPetToFilters('BIRD')">Птици</mat-checkbox>
+    <mat-checkbox (change)="addPetToFilters('FISH')">Рибки</mat-checkbox>
+    <mat-checkbox (change)="addPetToFilters('OTHER')">Други</mat-checkbox>
+    <span>Започващи след: </span>
+    <form [formGroup]="filterForm">
+      <mat-form-field class="date-field">
+        <mat-label>Date</mat-label>
+        <input matInput formControlName="startDate" [matDatepicker]="datepicker" />
+        <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+        <mat-datepicker #datepicker>
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button matDatepickerApply>Apply</button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+      </mat-form-field>
+
+      <span>Свършващи преди: </span>
+      <mat-form-field class="date-field">
+        <mat-label>Date</mat-label>
+        <input matInput formControlName="endtDate" [matDatepicker]="datepicker" />
+        <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+        <mat-datepicker #datepicker>
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button matDatepickerApply>Apply</button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+      </mat-form-field>
+    </form>
+  <button mat-raised-button color="accent">Филтрирай</button>
 </div>
