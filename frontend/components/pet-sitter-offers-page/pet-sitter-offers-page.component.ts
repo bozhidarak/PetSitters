@@ -63,4 +63,8 @@ export class PetSittersPageComponent {
     this.currentPage = event.pageIndex;
     this.getOffers(this.currentPage, this.pageSize);
   }
+
+  onFiltersApplied(filters: {pets: string[], startDate: string | null, endDate: string | null}) {
+    console.log("FILTERS", filters);
+  }
 }

@@ -57,4 +57,8 @@ export class OwnerOffersPageComponent implements OnInit{
     this.currentPage = event.pageIndex;
     this.getOwnerOffers(this.currentPage, this.pageSize);
   }
+
+  onFiltersApplied(filters: {pets: string[], startDate: string | null, endDate: string | null}) {
+    console.log(filters);
+  }
 }
