@@ -24,6 +24,9 @@ export class OwnerOffersPageComponent implements OnInit{
   pageSize: number = 9;
   currentPage: number = 0;
   numOfItems: number = 10;
+  areFiltersApplied: boolean = false;
+  filters: {"pets": string[], "startDate": string | null, "endDate": string | null} =
+    {"pets": [], "startDate": null, "endDate": null};
 
   constructor(private ownerOfferService: OwnerOfferService, private router:Router) {}
 
@@ -33,19 +36,30 @@ export class OwnerOffersPageComponent implements OnInit{
 
   getOwnerOffers(currentPage: number, pageSize: number) {
     this.ownerOfferService.findAll(currentPage, pageSize).subscribe( (data) => {
-        this.petOwnerOffers = data;
-        if (this.petOwnerOffers.length < 9) {
-          this.numOfItems = this.petOwnerOffers.length;
-        } else{
-          this.numOfItems = 10;
-        }
-      })
+      this.petOwnerOffers = data;
+      if (this.petOwnerOffers.length < 9) {
+        this.numOfItems = this.petOwnerOffers.length;
+      } else{
+        this.numOfItems = 10;
+      }
+    })
+  }
+
+  getFilteredOffers(currentPage: number, pageSize: number) {
+    this.ownerOfferService.findFilteredOffers(this.filters, currentPage, pageSize).subscribe( (data) => {
+      this.petOwnerOffers = data;
+      if (this.petOwnerOffers.length < 9) {
+        this.numOfItems = this.petOwnerOffers.length;
+      } else{
+        this.numOfItems = 10;
+      }
+    })
   }
 
   navigateToDetails(petOwnerOffer: PetOwnerOffer){
     if(this.loggedIn){
-    const id = petOwnerOffer.id;
-    this.router.navigate(['owner-offer-details', id]);
+      const id = petOwnerOffer.id;
+      this.router.navigate(['owner-offer-details', id]);
     }
   }
 
@@ -55,10 +69,16 @@ export class OwnerOffersPageComponent implements OnInit{
 
   pageChanged(event: PageEvent) {
     this.currentPage = event.pageIndex;
-    this.getOwnerOffers(this.currentPage, this.pageSize);
+    if(!this.areFiltersApplied) {
+      this.getOwnerOffers(this.currentPage, this.pageSize);
+    } else {
+      this.getFilteredOffers(this.currentPage, this.pageSize);
+    }
   }
 
   onFiltersApplied(filters: {pets: string[], startDate: string | null, endDate: string | null}) {
-    console.log(filters);
+    this.currentPage = 0;
+    this.filters = filters;
+    this.getFilteredOffers(this.currentPage, this.pageSize)
   }
 }
