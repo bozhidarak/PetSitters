@@ -6,13 +6,14 @@
     <mat-checkbox (change)="addPetToFilters('BIRD')">Птици</mat-checkbox>
     <mat-checkbox (change)="addPetToFilters('FISH')">Рибки</mat-checkbox>
     <mat-checkbox (change)="addPetToFilters('OTHER')">Други</mat-checkbox>
-    <span>Започващи след: </span>
+    <span *ngIf="isSitterOffer">Свободни след: </span>
+    <span *ngIf="!isSitterOffer">Започващи след: </span>
     <form [formGroup]="filterForm">
       <mat-form-field class="date-field">
         <mat-label>Date</mat-label>
-        <input matInput formControlName="startDate" [matDatepicker]="datepicker" />
-        <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
-        <mat-datepicker #datepicker>
+        <input matInput formControlName="startDate" [matDatepicker]="startDatepicker" readonly/>
+        <mat-datepicker-toggle matIconSuffix [for]="startDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #startDatepicker>
           <mat-datepicker-actions>
             <button mat-button matDatepickerCancel>Cancel</button>
             <button mat-raised-button matDatepickerApply>Apply</button>
@@ -20,12 +21,13 @@
         </mat-datepicker>
       </mat-form-field>
 
-      <span>Свършващи преди: </span>
+      <span *ngIf="isSitterOffer">Свободни преди: </span>
+      <span *ngIf="!isSitterOffer">Свършващи преди: </span>
       <mat-form-field class="date-field">
         <mat-label>Date</mat-label>
-        <input matInput formControlName="endtDate" [matDatepicker]="datepicker" />
-        <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
-        <mat-datepicker #datepicker>
+        <input matInput formControlName="endDate" [matDatepicker]="endDatepicker" readonly/>
+        <mat-datepicker-toggle matIconSuffix [for]="endDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #endDatepicker>
           <mat-datepicker-actions>
             <button mat-button matDatepickerCancel>Cancel</button>
             <button mat-raised-button matDatepickerApply>Apply</button>
@@ -33,5 +35,5 @@
         </mat-datepicker>
       </mat-form-field>
     </form>
-  <button mat-raised-button color="accent">Филтрирай</button>
+  <button mat-raised-button color="accent" (click)="onFilterBtnPressed()">Филтрирай</button>
 </div>
