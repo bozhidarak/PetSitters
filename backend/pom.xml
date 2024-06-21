@@ -70,6 +70,10 @@
             <artifactId>aws-java-sdk</artifactId>
             <version>1.11.486</version>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

@@ -55,7 +55,7 @@ public class UserController {
         }
         catch (ResourceNotFoundException e){
             System.out.println(e.getMessage());
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.ok().build();
         }
     }
 
