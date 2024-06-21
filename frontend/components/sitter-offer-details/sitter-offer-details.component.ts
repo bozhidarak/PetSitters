@@ -38,6 +38,9 @@ export class SitterDetailsComponent {
     this.sitterOfferservice.getOfferById(id).subscribe((data: SitterOffer | undefined) => {
       this.sitterOffer = data;
       console.log(this.sitterOffer);
+      if(this.sitterOffer?.picturePaths.length === 0){
+        this.sitterOffer.picturePaths.push('assets/no-photo-available.png');
+      }
     });
   }
 
