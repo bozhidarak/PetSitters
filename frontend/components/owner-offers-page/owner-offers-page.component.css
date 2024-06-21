@@ -50,6 +50,15 @@ filters{
   max-width: 16%;
 }
 
+.paginator{
+  font-size: medium;
+}
+
+.paginator-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
 .mat-paginator-page-size-label,
 .mat-paginator-range-label {
   display: none;

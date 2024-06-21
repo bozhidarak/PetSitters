@@ -3,17 +3,12 @@ import { CommonModule } from '@angular/common';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import { getFirestore, collection, addDoc } from '@firebase/firestore';
 import { Router } from '@angular/router';
-import { User } from '../../src/models/new-user-model';
+import { User } from '../../src/models/user-model';
 import { UserService } from '../../src/app/service/user.service';
-// import { AngularFireAuth } from '@angular/fire/compat/auth';
-// import { getDoc } from '@angular/fire/firestore';
-// import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 
 
 @Component({
@@ -31,7 +26,7 @@ export class RegistrationComponent {
   hide1 = true;
   currentStep = 1;
   registerForm = new FormGroup({
-    
+
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
     confirmPassword: new FormControl('', [Validators.required]),

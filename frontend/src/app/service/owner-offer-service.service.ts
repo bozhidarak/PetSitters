@@ -42,4 +42,10 @@ export class OwnerOfferService {
     }
     return this.http.post<PetOwnerOffer>(this.apiUrl, formData);
   }
+
+  public deleteOffer(offerId: number) {
+    return this.http.delete<void>(this.apiUrl + '/' + offerId);
+  }
 }
+
+
