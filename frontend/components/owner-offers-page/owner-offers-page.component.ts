@@ -23,6 +23,7 @@ export class OwnerOffersPageComponent implements OnInit{
   loggedIn: boolean = !!localStorage.getItem('userId');
   pageSize: number = 9;
   currentPage: number = 0;
+  numOfItems: number = 10;
 
   constructor(private ownerOfferService: OwnerOfferService, private router:Router) {}
 
@@ -33,6 +34,11 @@ export class OwnerOffersPageComponent implements OnInit{
   getOwnerOffers(currentPage: number, pageSize: number) {
     this.ownerOfferService.findAll(currentPage, pageSize).subscribe( (data) => {
         this.petOwnerOffers = data;
+        if (this.petOwnerOffers.length < 9) {
+          this.numOfItems = this.petOwnerOffers.length;
+        } else{
+          this.numOfItems = 10;
+        }
       })
   }
 
@@ -50,5 +56,9 @@ export class OwnerOffersPageComponent implements OnInit{
   pageChanged(event: PageEvent) {
     this.currentPage = event.pageIndex;
     this.getOwnerOffers(this.currentPage, this.pageSize);
+  }
+
+  onFiltersApplied(filters: {pets: string[], startDate: string | null, endDate: string | null}) {
+    console.log(filters);
   }
 }

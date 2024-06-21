@@ -1,4 +1,4 @@
-div{
+div {
 	display: flex;
 	flex-direction: column;
 	align-content: flex-start;
@@ -7,12 +7,21 @@ div{
 	flex-wrap: wrap;
 }
 
-span{
-font-size: larger;
-margin-top: 10%;
+span {
+  font-size: large;
+  margin-top: 10%;
 }
 
-h2{
+h2 {
     margin-bottom:5%;
     font-weight: 600;
+}
+
+.pet-type {
+  margin-bottom: 8px;
+}
+
+.date-field {
+  max-width: 9.5rem;
+  margin-top: 1rem;
 }

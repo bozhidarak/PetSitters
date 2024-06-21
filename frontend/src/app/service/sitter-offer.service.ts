@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SitterOffer } from '../../models/sitter-offer-model';
 import { Observable} from 'rxjs';
@@ -10,8 +10,15 @@ export class SitterOfferService {
 
   constructor(private http: HttpClient) {}
 
-  getSitterOffers(): Observable<SitterOffer[]> {
-    return this.http.get<SitterOffer[]>(`api/petSitterOffers`);
+  getSitterOffers(currentPage: number, pageSize: number): Observable<SitterOffer[]> {
+    let params = new HttpParams();
+    if(currentPage !== undefined && currentPage !== null && currentPage >= 0) {
+      params = params.set('page', currentPage.toString());
+    }
+    if(pageSize !== undefined && pageSize !== null && pageSize >= 0) {
+      params = params.set('limit', pageSize.toString());
+    }
+    return this.http.get<SitterOffer[]>(`api/petSitterOffers`, { params });
   }
 
   getOfferById(id: number): Observable<SitterOffer> {

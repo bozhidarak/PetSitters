@@ -47,7 +47,7 @@ mat-grid-list{
 }
 
 filters{
-  max-width: 16%;
+  max-width: 20%;
 }
 
 .paginator{
@@ -57,10 +57,22 @@ filters{
 .paginator-wrapper {
   display: flex;
   justify-content: center;
+  position: relative;
 }
 
-.mat-paginator-page-size-label,
-.mat-paginator-range-label {
-  display: none;
-}/* Hide the length display */
+.paginator {
+  position: absolute;
+  right: 2rem;
+  top: -5rem;
+  color: white;
+}
 
+.page-number {
+  position: absolute;
+  right: 9rem;
+  top: -4.9rem;
+}
+
+.page-size {
+  margin-right: 30px;
+}
