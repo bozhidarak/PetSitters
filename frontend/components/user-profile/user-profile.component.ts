@@ -73,6 +73,7 @@ export class UserProfileComponent implements OnInit{
       data => {
         this.ownerOffers = data;
       });
+      console.log(this.ownerOffers)
   }
 
   createReview(){
@@ -80,6 +81,12 @@ export class UserProfileComponent implements OnInit{
   }
 
   logout(){
+    localStorage.clear();
+    this.router.navigate(['home-page']);
+  }
+
+  deleteAccount(){
+    this.userService.deleteUser(this.userId).subscribe();
     localStorage.clear();
     this.router.navigate(['home-page']);
   }

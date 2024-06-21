@@ -30,4 +30,8 @@ export class UserService {
     return this.http.post<User>(`api/users/register`, formData);
   }
 
+  deleteUser(id: number): Observable<any>{
+    return this.http.delete(`api/users/${id}`);
+  }
+
 }
