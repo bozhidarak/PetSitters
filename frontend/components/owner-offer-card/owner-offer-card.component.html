@@ -1,5 +1,5 @@
 <mat-card class="owner-offer-card">
-  <mat-card-header>
+  <mat-card-header (click)="navigateToUser()">
     <img class="profile-picture" mat-card-avatar [src]="ownerOffer.userProfilePic ? ownerOffer.userProfilePic : 'assets/profile-pic1.jpg'">
     <mat-card-title>{{ownerOffer.userName}}</mat-card-title>
   </mat-card-header>
