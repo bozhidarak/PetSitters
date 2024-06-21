@@ -1,20 +1,12 @@
-Божидара Каличкова
 .owner-offer-card {
   width: 260px;
-  /* padding-bottom: 50px; */
   min-height: 350px;
-  /*height: auto;*/
 }
 
 mat-card-title {
   font-size: 16px;
   margin-top: 10px;
 }
-/*
-mat-card-content {
-  margin-top: 15px;
-  margin-bottom: 80px;
-} */
 
 .fontawesomesvg {
   max-width: 1.5vw;
@@ -30,11 +22,6 @@ mat-card-content {
   font-size: 1vw;
 }
 
-/* .owner-offer-card {
-  max-width: 400px;
-  max-height: 300px;
-} */
-
 .example-header-image {
   background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
   background-size: cover;
@@ -45,6 +32,8 @@ mat-card-content {
 }
 
 .offer-picture {
+  min-width: 15rem;
+  max-width: 16rem;
   height: 40vh;
   width: 100%;
   object-fit: cover;
