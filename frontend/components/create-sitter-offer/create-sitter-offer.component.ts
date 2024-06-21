@@ -11,6 +11,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'create-sitter-offer',
@@ -32,7 +33,7 @@ export class CreateSitterOfferComponent {
   petTypes: string[] = [] as string[];
   isSubmitPressed: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private sitterOfferService: SitterOfferService) {
+  constructor(private formBuilder: FormBuilder, private sitterOfferService: SitterOfferService, private router:Router) {
   }
 
   handleOfferCreation() {
@@ -45,6 +46,7 @@ export class CreateSitterOfferComponent {
                                                         this.sitterOfferForm.value.availableFrom, this.sitterOfferForm.value.availableUntil, userId, pets);
 
     this.sitterOfferService.createOffer(petSitterOffer, this.pictures).subscribe();
+    this.router.navigate(['user-profile', userId]);
   }
 
   onFileChange(event: any) {

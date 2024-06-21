@@ -6,7 +6,7 @@
     </head>
     <body>
             <nav-bar></nav-bar>
-            <div class="user-info">
+            <div class="user-info" *ngIf="user != undefined">
                 <mat-grid-list cols="3" rowHeight="2:1">
                     <mat-grid-tile>
                         <img [src]="user!.profilePic ? user!.profilePic : 'assets/no-image.jpg'"  class="profile-picture">

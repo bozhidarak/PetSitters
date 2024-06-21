@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SitterOffer } from '../../models/sitter-offer-model';
-import { Observable, forkJoin, map, of, switchMap } from 'rxjs';
-import { User } from '../../models/user-model';
+import { Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +19,7 @@ export class SitterOfferService {
   }
 
   getSitterOfferByUserId(userId: number): Observable<SitterOffer> {
+
     return this.http.get<SitterOffer>(`api/petSitterOffers/user/${userId}`);
   }
 

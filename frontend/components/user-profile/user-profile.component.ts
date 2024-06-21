@@ -66,14 +66,13 @@ export class UserProfileComponent implements OnInit{
       (data: SitterOffer | undefined) => {
         this.sitterOffer = data;
       });
-  }
+    }
 
   getOwnerOffers(){
     this.ownerOfferService.findOffersByUserId(this.userId).subscribe(
       data => {
         this.ownerOffers = data;
       });
-      console.log(this.ownerOffers)
   }
 
   createReview(){

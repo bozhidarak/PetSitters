@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 })
 export class HomePageComponent {
 
+  loggedIn: boolean = !!localStorage.getItem('userId');
+
   constructor(private router:Router){}
 
 register(){
