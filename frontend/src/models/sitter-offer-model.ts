@@ -2,8 +2,8 @@ export class SitterOffer{
     offerId?: number;
     description: string;
     pricePerDay: number;
-    availableFrom:Date;
-    availableUntil:Date;
+    availableFrom:string;
+    availableUntil:string;
     userId: number;
     picturePaths: string[] =[];
     pets: Pet[];
@@ -13,7 +13,7 @@ export class SitterOffer{
     userLocation?: string;
     userProfilePic?: string;
 
-    constructor(description: string, pricePerDay: number, availableFrom: Date, availableUntil: Date, userId: number, pets: Pet[]){
+    constructor(description: string, pricePerDay: number, availableFrom: string, availableUntil: string, userId: number, pets: Pet[]){
         this.description = description;
         this.pricePerDay = pricePerDay;
         this.availableFrom = availableFrom;

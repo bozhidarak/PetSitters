@@ -41,13 +41,27 @@ export class CreateSitterOfferComponent {
     if(this.petTypes.length === 0) { return }
     const pets= this.createPets();
     const userId = Number(localStorage.getItem("userId"));
+    const availableFrom = this.formatDateToString(this.sitterOfferForm.value.availableFrom);
+    const availableUntil = this.formatDateToString(this.sitterOfferForm.value.availableUntil  );
+
     let petSitterOffer = new SitterOffer(this.sitterOfferForm.value.description,
                                                         this.sitterOfferForm.value.pricePerDay,
-                                                        this.sitterOfferForm.value.availableFrom, this.sitterOfferForm.value.availableUntil, userId, pets);
-
+                                                        availableFrom, availableUntil, userId, pets);
+      console.log(petSitterOffer);
     this.sitterOfferService.createOffer(petSitterOffer, this.pictures).subscribe();
     this.router.navigate(['user-profile', userId]);
   }
+
+  formatDateToString(date: Date) {
+    console.log(date);
+    date.setDate(date.getDate() + 1);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    console.log(`${day}-${month}-${year}`);
+    return `${day}-${month}-${year}`;
+  }
+
 
   onFileChange(event: any) {
     this.pictures = event.target.files;
