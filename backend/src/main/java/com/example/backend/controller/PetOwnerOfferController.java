@@ -1,5 +1,6 @@
 package com.example.backend.controller;
 
+import com.example.backend.dto.FilterRequestDTO;
 import com.example.backend.dto.PetOwnerOfferDTO;
 import com.example.backend.enums.PetType;
 import com.example.backend.service.PetOwnerOfferService;
@@ -26,8 +27,8 @@ public class    PetOwnerOfferController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PetOwnerOfferDTO>> getAllOffers(@RequestParam(required = false) Integer page,
-                                                               @RequestParam(required = false) Integer limit){
+    public ResponseEntity<List<PetOwnerOfferDTO>> getAllOffers(@RequestParam(required = false, defaultValue = "0") Integer page,
+                                                               @RequestParam(required = false, defaultValue = "9") Integer limit){
         return new ResponseEntity<>(petOwnerOfferService.getAllOffers(page, limit), HttpStatus.OK );
     }
     @GetMapping("/{id}")
@@ -47,31 +48,18 @@ public class    PetOwnerOfferController {
         return new ResponseEntity<>(petOwnerOfferService.getOffersByUserId(userId), HttpStatus.OK);
     }
 
-    @GetMapping("/pet")
-    public ResponseEntity<List<PetOwnerOfferDTO>> getOffersByPetType(@RequestParam List<PetType> petTypes,
-                                                                     @RequestParam(required = false) Integer page,
-                                                                     @RequestParam(required = false) Integer limit) {
-        List<PetOwnerOfferDTO> petOwnerOffers = petOwnerOfferService.getOffersByPetType(petTypes, page, limit);
-        return new ResponseEntity<>(petOwnerOffers, HttpStatus.OK);
+    @PostMapping("/filter" )
+    public ResponseEntity<List<PetOwnerOfferDTO>> filterOffers(@RequestBody FilterRequestDTO filterRequest,
+                                                               @RequestParam(required = false, defaultValue = "0") Integer page,
+                                                               @RequestParam(required = false, defaultValue = "9") Integer limit) {
+        List<String> pets = filterRequest.getPets();
+        LocalDate startDate = filterRequest.getStartDate();
+        LocalDate endDate = filterRequest.getEndDate();
+
+        List<PetOwnerOfferDTO> filteredOffers = petOwnerOfferService.findFilteredOffers(pets, startDate, endDate, page, limit);
+        return ResponseEntity.ok(filteredOffers);
     }
 
-    @GetMapping("/datesAfter/{startDate}")
-    public ResponseEntity<List<PetOwnerOfferDTO>> getOffersAfter(@PathVariable LocalDate startDate,
-                                                                 @RequestParam(required = false) Integer page,
-                                                                 @RequestParam(required = false) Integer limit)
-    {
-        List<PetOwnerOfferDTO> offers = petOwnerOfferService.getOffersAfter(startDate, page, limit);
-        return new ResponseEntity<>(offers, HttpStatus.OK);
-    }
-
-    @GetMapping("/datesBefore/{endDate}")
-    public ResponseEntity<List<PetOwnerOfferDTO>> getOffersBefore(@PathVariable LocalDate endDate,
-                                                                  @RequestParam(required = false) Integer page,
-                                                                  @RequestParam(required = false) Integer limit)
-    {
-        List<PetOwnerOfferDTO> offers = petOwnerOfferService.getOffersBefore(endDate, page, limit);
-        return new ResponseEntity<>(offers, HttpStatus.OK);
-    }
 
     @PostMapping
     public ResponseEntity<PetOwnerOfferDTO> createOffer(@RequestPart(required = false) List<MultipartFile> pictures,
