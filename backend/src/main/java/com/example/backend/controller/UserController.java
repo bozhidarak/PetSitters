@@ -1,7 +1,6 @@
 package com.example.backend.controller;
 
 import com.amazonaws.services.iot.model.ResourceAlreadyExistsException;
-import com.example.backend.dto.PetOwnerOfferDTO;
 import com.example.backend.dto.UserDTO;
 import com.example.backend.service.UserService;
 import jakarta.validation.Valid;
@@ -10,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -75,7 +73,7 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@PathVariable Long id){ // ? - wildcard
         try{
         userService.deleteUser(id);
-        return ResponseEntity.ok().body("User deleted");
+        return ResponseEntity.ok().build();
         }
         catch (ResourceNotFoundException e){
             System.out.println(e.getMessage());
