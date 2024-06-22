@@ -31,6 +31,14 @@ public class PetService {
         return petRepository.save(pet);
     }
 
+    public void updatePetById(Long petId, Integer newNumberOfPets) {
+        Pet pet = petRepository.findById(petId).orElse(null);
+        if(pet != null){
+            pet.setNumberOfPets(newNumberOfPets);
+            petRepository.save(pet);
+        }
+    }
+
     public void deletePetsFromOffer(Long offerId, boolean isSitter){
         if(isSitter){
             petRepository.deleteByPetSitterOfferId(offerId);
