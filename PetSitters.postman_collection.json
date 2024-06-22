@@ -3,43 +3,26 @@
 		"_postman_id": "bca518ad-8a29-41b6-ac3b-1f84f87fa647",
 		"name": "PetSitters",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "34072209",
-		"_collection_link": "https://speeding-astronaut-365946.postman.co/workspace/My-Workspace~b2dac478-fc94-4e0b-8ad7-5464187b988a/collection/34072209-bca518ad-8a29-41b6-ac3b-1f84f87fa647?action=share&source=collection_link&creator=34072209"
+		"_exporter_id": "34072617",
+		"_collection_link": "https://speeding-astronaut-365946.postman.co/workspace/My-Workspace~b2dac478-fc94-4e0b-8ad7-5464187b988a/collection/34072209-bca518ad-8a29-41b6-ac3b-1f84f87fa647?action=share&source=collection_link&creator=34072617"
 	},
 	"item": [
 		{
 			"name": "users",
 			"item": [
 				{
-					"name": "get all",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/users",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"users"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "get by ID",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/users/123",
+							"raw": "{{baseUrl}}/users/1",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"users",
-								"123"
+								"1"
 							]
 						}
 					},
@@ -52,7 +35,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"user1\",\r\n    \"password\": \"1234\"\r\n}",
+							"raw": "{\r\n    \"email\": \"user4@gmail.com\",\r\n    \"password\": \"1234\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -60,13 +43,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/users/login ",
+							"raw": "{{baseUrl}}/users/login",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"users",
-								"login "
+								"login"
 							]
 						}
 					},
@@ -78,13 +61,21 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"user1\",\r\n    \"password\": \"1234\",\r\n    \"email\": \"user1@gmail.com\",\r\n    \"location\": \"Sofia\",\r\n    \"birthDate\": \"01.01.2000\",\r\n    \"gender\": \"1\",\r\n    \"profilePic\": \"asd123\",\r\n    \"name\": \"Petar Ivanov\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "profilePic",
+									"contentType": "image/jpg",
+									"type": "file",
+									"src": "/C:/Users/Lenovo/Pictures/pet sitters/smiling-happy-woman-looking-at-the-camera-positive-mindset.jpg"
+								},
+								{
+									"key": "userDTO",
+									"value": "{\n    \"password\": \"12345\",\n    \"email\": \"user10@gmail.com\",\n    \"location\": \"Sofia\",\n    \"name\": \"Ivana Ivanova\"\n}",
+									"contentType": "application/json",
+									"type": "text"
 								}
-							}
+							]
 						},
 						"url": {
 							"raw": "{{baseUrl}}/users/register",
@@ -106,7 +97,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"user1.1\",\r\n    \"password\": \"1235\",\r\n    \"email\": \"user1@gmail.com\",\r\n    \"location\": \"Plovdiv\",\r\n    \"birthDate\": \"01.01.2000\",\r\n    \"gender\": \"1\",\r\n    \"profilePic\": \"asd123\",\r\n    \"name\": \"Petar Ivanov\"\r\n}",
+							"raw": "{\r\n    \"password\": \"password12\",\r\n    \"email\": \"user1@example.com\",\r\n    \"location\": \"Location1\",\r\n    \"profilePic\": \"https://pet-sitters-storage.s3.eu-central-1.amazonaws.com/animal-daylight-dog-1498925-1.jpg\",\r\n    \"name\": \"User One One\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -114,13 +105,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/users/123",
+							"raw": "{{baseUrl}}/users/1",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"users",
-								"123"
+								"1"
 							]
 						}
 					},
@@ -141,13 +132,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/users/123",
+							"raw": "{{baseUrl}}/users/5",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"users",
-								"123"
+								"5"
 							]
 						}
 					},
@@ -164,22 +155,17 @@
 						"method": "DELETE",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							"mode": "formdata",
+							"formdata": []
 						},
 						"url": {
-							"raw": "{{baseUrl}}/petOwnerOffers/145",
+							"raw": "{{baseUrl}}/petOwnerOffers/3",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"petOwnerOffers",
-								"145"
+								"3"
 							]
 						}
 					},
@@ -191,20 +177,29 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"description\": \"My dog needs someone\",\r\n    \"location\": \"Sofia\",\r\n    \"startDate\": \"2024-04-01\",\r\n    \"endDate\": \"2024-04-07\",\r\n    \"userId\": \"1234\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "pictures",
+									"contentType": "image/jpeg",
+									"type": "file",
+									"src": "/C:/Users/Lenovo/Pictures/pet sitters/Dog_Breeds.jpg"
+								},
+								{
+									"key": "newOfferDto",
+									"value": "{\n\"description\": \"I am looking for someone to take care of my pets\",\n\"location\": \"Sofia\",\n\"startDate\": \"2024-11-01\",\n\"endDate\": \"2024-11-11\",\n\"userId\": 12,\n\"picturePaths\": [],\n\"pets\": [\n{\n    \"petType\": \"CAT\",\n    \"numberOfPets\": 1\n}\n]\n}",
+									"contentType": "application/json",
+									"type": "text"
 								}
-							}
+							]
 						},
 						"url": {
-							"raw": "{{baseUrl}}/petOwnerOffers",
+							"raw": "{{baseUrl}}/api/petOwnerOffers",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"api",
 								"petOwnerOffers"
 							]
 						}
@@ -218,7 +213,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"description\": \"My cat needs someone\",\r\n    \"location\": \"Sofia\",\r\n    \"startDate\": \"2024-05-01\",\r\n    \"endDate\": \"2024-05-07\",\r\n    \"userId\": \"1234\"\r\n}",
+							"raw": "{\r\n    \"description\": \"I have 2 lovely cats, 3 birds and a baby golden retriever that need your help\",\r\n    \"location\": \"Sofia\",\r\n    \"startDate\": \"26-05-2024\",\r\n    \"endDate\": \"26-06-2024\",\r\n    \"userId\": 3,\r\n    \"picturePaths\": [\r\n        \"https://pet-sitters-storage.s3.amazonaws.com/1718440685219two-different-breeds-of-cats-side-by-side-outdoors-in-the-garden.webp\",\r\n        \"https://pet-sitters-storage.s3.amazonaws.com/1718440708687Dog_Breeds.jpg\"\r\n    ],\r\n    \"pets\": [\r\n        {\r\n            \"petType\": \"CAT\",\r\n            \"numberOfPets\": 2\r\n        },\r\n        {\r\n            \"petType\": \"DOG\",\r\n            \"numberOfPets\": 1\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -226,13 +221,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/petOwnerOffers/456",
+							"raw": "{{baseUrl}}/petOwnerOffers/49",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"petOwnerOffers",
-								"456"
+								"49"
 							]
 						}
 					},
@@ -240,9 +235,21 @@
 				},
 				{
 					"name": "get all",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{baseUrl}}/petOwnerOffers?page=0&limit=9",
 							"host": [
@@ -271,36 +278,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/petOwnerOffers/145",
+							"raw": "{{baseUrl}}/petOwnerOffers/2",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"petOwnerOffers",
-								"145"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get by petType",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/petOwnerOffers?petType=dog",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"petOwnerOffers"
-							],
-							"query": [
-								{
-									"key": "petType",
-									"value": "dog"
-								}
+								"2"
 							]
 						}
 					},
@@ -312,14 +296,51 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/petOwnerOffers/user/1234",
+							"raw": "{{baseUrl}}/petOwnerOffers/user/2",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"petOwnerOffers",
 								"user",
-								"1234"
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filter offers",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pets\": [\"DOG\", \"BIRD\"],\r\n    \"startDate\": \"12-06-2024\",\r\n    \"endDate\": \"19-12-2024\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/petOwnerOffers/filter?page=0&limit=9",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"petOwnerOffers",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "9"
+								}
 							]
 						}
 					},
@@ -330,6 +351,40 @@
 		{
 			"name": "petSitterOffers",
 			"item": [
+				{
+					"name": "create sitter offer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "pictures",
+									"contentType": "image/png",
+									"type": "file",
+									"src": "/C:/Users/Lenovo/Pictures/pet sitters/about-guinea-pigs-1238899-01-0c34f75bc473402db881f3e5270deee6.jpg"
+								},
+								{
+									"key": "offerDto",
+									"value": "{\n    \"description\": \"I am the best sitter!\",\n    \"pricePerDay\": 20,\n    \"availableFrom\": \"19-05-2024\",\n    \"availableUntil\": \"29-10-2024\",\n    \"location\": \"Varna\",\n    \"userId\": 3,\n    \"pets\": [\n        {\"petType\": \"OTHER\"},\n        {\"petType\": \"BIRD\"}\n    ]\n}",
+									"contentType": "application/json",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/petSitterOffers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"petSitterOffers"
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "get all",
 					"request": {
@@ -363,13 +418,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/petSitterOffers/1234",
+							"raw": "{{baseUrl}}/petSitterOffers/1",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"petSitterOffers",
-								"1234"
+								"1"
 							]
 						}
 					},
@@ -399,39 +454,13 @@
 					"response": []
 				},
 				{
-					"name": "create sitter offer",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"description\": \"I have been taking care of snakes my whole life...\",\r\n    \"pricePerDay\": 15,\r\n    \"availableFrom\": \"2024-06-15\",\r\n    \"availableUntil\": \"2024-12-23\",\r\n    \"userId\": 1234\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/petSitterOffers",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"petSitterOffers"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "edit sitter offer",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"description\": \"I have been taking care of snakes my whole life...\",\r\n    \"pricePerDay\": 15,\r\n    \"availableFrom\": \"2025-06-15\",\r\n    \"availableUntil\": \"2025-12-23\",\r\n    \"userId\": 1234\r\n}",
+							"raw": "{\r\n    \"offerId\": 25,\r\n    \"description\": \"I want to look after your dog\",\r\n    \"pricePerDay\": 20.0,\r\n    \"availableFrom\": \"10-05-2024\",\r\n    \"availableUntil\": \"2024-12-22T22:00:00.000+00:00\",\r\n    \"userId\": 8,\r\n    \"picturePaths\": [\r\n        \"https://pet-sitters-storage.s3.amazonaws.com/1718463996814dog.jpg\"\r\n    ],\r\n    \"pets\": [\r\n        {\r\n            \"id\": 214,\r\n            \"petType\": \"DOG\",\r\n            \"numberOfPets\": 1,\r\n            \"sitterOfferId\": 25,\r\n            \"ownerOfferId\": null\r\n        }\r\n    ],\r\n    \"userName\": \"John Ivanov\",\r\n    \"userEmail\": \"john@gmail.com\",\r\n    \"userLocation\": \"Sofia\",\r\n    \"userProfilePic\": \"https://pet-sitters-storage.s3.amazonaws.com/1718463501899man.jpg\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -439,13 +468,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/petSitterOffers/333",
+							"raw": "{{baseUrl}}/petSitterOffers/25",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"petSitterOffers",
-								"333"
+								"25"
 							]
 						}
 					},
@@ -457,13 +486,45 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/petSitterOffers/333",
+							"raw": "{{baseUrl}}/petSitterOffers/3",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"petSitterOffers",
-								"333"
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Filter",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "2022-01-01/api/petSitterOffers?petTypes=\"DOG,CAT\"&startDate=\"2024-01-01\"&endDate=\"2024-12-01\"",
+							"host": [
+								"2022-01-01"
+							],
+							"path": [
+								"api",
+								"petSitterOffers"
+							],
+							"query": [
+								{
+									"key": "petTypes",
+									"value": "\"DOG,CAT\""
+								},
+								{
+									"key": "startDate",
+									"value": "\"2024-01-01\""
+								},
+								{
+									"key": "endDate",
+									"value": "\"2024-12-01\""
+								}
 							]
 						}
 					},
@@ -475,31 +536,31 @@
 			"name": "reviews",
 			"item": [
 				{
-					"name": "get all by user",
+					"name": "get all for reviewed user",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/reviews/user/1234",
+							"raw": "{{baseUrl}}/reviews/user/2",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"reviews",
 								"user",
-								"1234"
+								"2"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "get by number of stars",
+					"name": "get all for user by stars",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/reviews?stars=5",
+							"raw": "{{baseUrl}}/reviews?userId=2&stars=5",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -507,6 +568,10 @@
 								"reviews"
 							],
 							"query": [
+								{
+									"key": "userId",
+									"value": "2"
+								},
 								{
 									"key": "stars",
 									"value": "5"
@@ -523,7 +588,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"stars\": 5,\r\n    \"description\": \"John was taking such a good care of our parrot\",\r\n    \"userId\": 1234\r\n}",
+							"raw": "{\r\n    \"stars\": 1,\r\n    \"description\": \"User Two was awful\",\r\n    \"reviewedUserId\": 2,\r\n    \"authorId\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -549,7 +614,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"stars\": 3,\r\n    \"description\": \"John was not taking such a good care of our parrotS\",\r\n    \"userId\": 1234\r\n}",
+							"raw": "{\r\n    \"stars\": 3,\r\n    \"description\": \"User Two was not bad\",\r\n    \"reviewedUserId\": 2,\r\n    \"authorId\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -557,13 +622,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/reviews/1212",
+							"raw": "{{baseUrl}}/reviews/2",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"reviews",
-								"1212"
+								"2"
 							]
 						}
 					},
@@ -575,19 +640,41 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/reviews/1212",
+							"raw": "{{baseUrl}}/reviews/6",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"reviews",
-								"1212"
+								"6"
 							]
 						}
 					},
 					"response": []
 				}
 			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"variable": [
