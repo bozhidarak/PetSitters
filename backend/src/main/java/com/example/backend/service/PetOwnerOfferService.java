@@ -6,6 +6,7 @@ import com.example.backend.entity.Pet;
 import com.example.backend.entity.PetOwnerOffer;
 import com.example.backend.entity.Picture;
 import com.example.backend.entity.User;
+import com.example.backend.enums.PetType;
 import com.example.backend.mapper.PetOwnerOfferMapper;
 import com.example.backend.repository.PetOwnerOfferRepository;
 import com.example.backend.repository.UserRepository;
@@ -112,7 +113,7 @@ public class PetOwnerOfferService {
         }
 
         if (offerDto.getId() != null &&
-            !offerDto.getId().equals(offerId)) {
+                !offerDto.getId().equals(offerId)) {
             throw new InvalidParameterException("Owner offer id in body does not match id in request url");
         }
         if (offerDto.getUserId() != null &&
@@ -122,11 +123,14 @@ public class PetOwnerOfferService {
         offerDto.setId(offerId);
 
         PetOwnerOffer updated = petOwnerOfferMapper.mapToEntity(offerDto);
-        updated.setPictures(currentOffer.getPictures()); // not updating the pictures
+
+        updated.setUser(currentOffer.getUser());
+        updated.setPictures(currentOffer.getPictures());
+        updated.setPets(currentOffer.getPets());
+
+        updatePets(currentOffer, offerDto.getPets());
 
         petOwnerOfferRepository.save(updated);
-
-        updatePets(updated, offerDto.getPets());
         return petOwnerOfferMapper.mapToDto(updated);
     }
 
@@ -162,21 +166,23 @@ public class PetOwnerOfferService {
         }
     }
 
-    private void addPetToOffer(PetOwnerOffer ownerOffer, PetDTO petDTO) {
-
-        Pet pet = petService.createPetOwner(petDTO, ownerOffer);
-        ownerOffer.getPets().add(pet);
-    }
-
     private void updatePets(PetOwnerOffer offerToUpdate, List<PetDTO> petDTOs) {
         List<Pet> currentPets = offerToUpdate.getPets();
-
-        petService.deletePetsFromOffer(offerToUpdate.getId(), false);
-        List<Pet> petsToSave = new ArrayList<>();
-        for(PetDTO petDTO: petDTOs){
-            Pet pet = petService.createPetOwner(petDTO, offerToUpdate);
-            petsToSave.add(pet);
+        Map<PetType, Pet> currentPetsMap = currentPets.stream()
+                .collect(Collectors.toMap(Pet::getPetType, pet -> pet));
+        for (PetDTO petDTO : petDTOs) {
+            PetType petType = petDTO.getPetType();
+            if (!currentPetsMap.containsKey(petType)) {
+                Pet pet = petService.createPetOwner(petDTO, offerToUpdate);
+                offerToUpdate.getPets().add(pet);
+            } else {
+                Pet petForUpdate = currentPetsMap.get(petType);
+                if (!petForUpdate.getNumberOfPets().equals(petDTO.getNumberOfPets())){
+                    petService.updatePetById(petForUpdate.getId(), petDTO.getNumberOfPets());
+                }
+                currentPetsMap.remove(petType);
+            }
         }
-        offerToUpdate.setPets(petsToSave);
+        currentPets.removeIf(pet -> currentPetsMap.containsKey(pet.getPetType()));
     }
 }

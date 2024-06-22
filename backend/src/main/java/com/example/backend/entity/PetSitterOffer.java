@@ -27,7 +27,7 @@ public class PetSitterOffer {
     private User user;
     @OneToMany(mappedBy = "petSitterOffer", orphanRemoval = true)
     private List<Picture> pictures = new ArrayList<>(); // if getPets is called the list needs to be at least initialized
-    @OneToMany(mappedBy = "petSitterOffer", orphanRemoval = true)
+    @OneToMany(mappedBy = "petSitterOffer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pet> pets = new ArrayList<>();
 
     public PetSitterOffer() {

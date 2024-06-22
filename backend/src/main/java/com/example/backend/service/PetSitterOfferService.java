@@ -5,6 +5,7 @@ import com.example.backend.dto.PetSitterOfferDTO;
 import com.example.backend.entity.Pet;
 import com.example.backend.entity.PetSitterOffer;
 import com.example.backend.entity.User;
+import com.example.backend.enums.PetType;
 import com.example.backend.mapper.PetSitterOfferMapper;
 import com.example.backend.repository.PetSitterOfferRepository;
 import com.example.backend.repository.UserRepository;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.security.InvalidParameterException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PetSitterOfferService {
@@ -60,8 +62,8 @@ public class PetSitterOfferService {
     public List<PetSitterOfferDTO> getFilteredOffers(List<String> petTypes, Date availableFrom, Date availableUntil, Integer page, Integer limit) {
 
         Specification<PetSitterOffer> spec = Specification.where(PetSitterOfferSpecification.AvailableFrom(availableFrom))
-                                                            .and(PetSitterOfferSpecification.availableUntil(availableUntil))
-                                                            .and(PetSitterOfferSpecification.petsWithTypes(petTypes));
+                .and(PetSitterOfferSpecification.availableUntil(availableUntil))
+                .and(PetSitterOfferSpecification.petsWithTypes(petTypes));
         Pageable pageable;
         if (page == null || limit == null) {
             pageable = PageRequest.of(0, 9);
@@ -127,13 +129,14 @@ public class PetSitterOfferService {
         toSave.setOfferId(id);
 
         toSave.setPictures(savedOffer.getPictures()); // not updating the pictures
+        toSave.setPets(savedOffer.getPets());
+        updatePets(toSave, offerDTO.getPets());
 
         offerRepository.save(toSave);
 
-       updatePets(toSave, offerDTO.getPets());
         PetSitterOfferDTO offerDTOtoSave = offerMapper.toDTO(toSave);
         setUser(offerDTOtoSave);
-       return offerDTOtoSave;
+        return offerDTOtoSave;
     }
 
     public void deleteOffer(Long id){
@@ -143,14 +146,22 @@ public class PetSitterOfferService {
         offerRepository.deleteById(id);
     }
 
-    public void updatePets(PetSitterOffer toSave, List<PetDTO> petDTOs){
-        petService.deletePetsFromOffer(toSave.getOfferId(), true);
-        List<Pet> petsToSave = new ArrayList<>();
-        for(PetDTO petDTO: petDTOs){
-            Pet pet = petService.createPetSitter(petDTO, toSave);
-            petsToSave.add(pet);
+    private void updatePets(PetSitterOffer offerToUpdate, List<PetDTO> petDTOs) {
+        List<Pet> currentPets = offerToUpdate.getPets();
+        Map<PetType, Pet> currentPetsMap = currentPets.stream()
+                .collect(Collectors.toMap(Pet::getPetType, pet -> pet));
+
+        for (PetDTO petDTO : petDTOs) {
+            PetType petType = petDTO.getPetType();
+            if (!currentPetsMap.containsKey(petType)) {
+                Pet pet = petService.createPetSitter(petDTO, offerToUpdate);
+                offerToUpdate.getPets().add(pet);
+            }
+            else {
+                currentPetsMap.remove(petType);
+            }
         }
-        toSave.setPets(petsToSave);
+        currentPets.removeIf(pet -> currentPetsMap.containsKey(pet.getPetType()));
     }
 
     public void setUser(PetSitterOfferDTO offer){
@@ -168,11 +179,11 @@ public class PetSitterOfferService {
     }
 
     public PetSitterOfferDTO getByUserId(Long userId){
-       PetSitterOffer offer = offerRepository.getByUserId(userId).orElseThrow(
-               () -> new ResourceNotFoundException("offer with this user id not found")
-       );
-       PetSitterOfferDTO offerDTO = offerMapper.toDTO(offer);
-       setUser(offerDTO);
-       return offerDTO;
+        PetSitterOffer offer = offerRepository.getByUserId(userId).orElseThrow(
+                () -> new ResourceNotFoundException("offer with this user id not found")
+        );
+        PetSitterOfferDTO offerDTO = offerMapper.toDTO(offer);
+        setUser(offerDTO);
+        return offerDTO;
     }
 }
