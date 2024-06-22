@@ -6,7 +6,7 @@
     </head>
     <body>
             <nav-bar></nav-bar>
-            <div class="user-info">
+            <div class="user-info" *ngIf="user != undefined">
                 <mat-grid-list cols="3" rowHeight="2:1">
                     <mat-grid-tile>
                         <img [src]="user!.profilePic ? user!.profilePic : 'assets/no-image.jpg'"  class="profile-picture">
@@ -38,11 +38,14 @@
                 <sitter-card [sitter]="sitterOffer" (click)="navigateToDetails(sitterOffer)"></sitter-card>
                 </div>
                 <div class="title-offers">Ревюта за {{user!.name}}:</div>
+                <div class="reviews-section">
+                    <button class="show-reviews-btn" mat-raised-button href="#" color="primary" (click)="handleShowReviews()">Виж ревюта</button>
+                    <reviews-list *ngIf="showReviews"></reviews-list>
+                  </div>
+                <div class="buttons">
                 <button *ngIf="isMyProfile" class = "logout" mat-raised-button href="#" color="primary" (click)="logout()">Изход</button>
-        </div>
-        <div class="reviews-section">
-          <button class="show-reviews-btn" mat-raised-button href="#" color="primary" (click)="handleShowReviews()">Виж ревюта</button>
-          <reviews-list *ngIf="showReviews"></reviews-list>
-        </div>
+                <button *ngIf="isMyProfile" class = "delete-account" mat-raised-button href="#" color="primary" (click)="deleteAccount()">Изтрий акаунт</button>
+                </div>
+            </div>
     </body>
 </html>

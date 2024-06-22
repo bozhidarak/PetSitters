@@ -1,13 +1,39 @@
 <div>
     <h2>Филтри</h2>
-    <span>Tип животно:</span>
-    <mat-checkbox>Котки</mat-checkbox>
-    <mat-checkbox>Кучета</mat-checkbox>
-    <mat-checkbox>Птици</mat-checkbox>
-    <span>Големина: </span>
-    <mat-checkbox>Малки</mat-checkbox>
-    <mat-checkbox>Големи</mat-checkbox>
-    <span>Локация:</span>
-    <mat-checkbox>София</mat-checkbox>
-    <mat-checkbox>Пловдив</mat-checkbox>
+    <span class="pet-type">Tип животно:</span>
+    <mat-checkbox (change)="addPetToFilters('CAT')">Котки</mat-checkbox>
+    <mat-checkbox (change)="addPetToFilters('DOG')">Кучета</mat-checkbox>
+    <mat-checkbox (change)="addPetToFilters('BIRD')">Птици</mat-checkbox>
+    <mat-checkbox (change)="addPetToFilters('FISH')">Рибки</mat-checkbox>
+    <mat-checkbox (change)="addPetToFilters('OTHER')">Други</mat-checkbox>
+    <span *ngIf="isSitterOffer">Свободни след: </span>
+    <span *ngIf="!isSitterOffer">Започващи след: </span>
+    <form [formGroup]="filterForm">
+      <mat-form-field class="date-field">
+        <mat-label>Date</mat-label>
+        <input matInput formControlName="startDate" [matDatepicker]="startDatepicker" readonly/>
+        <mat-datepicker-toggle matIconSuffix [for]="startDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #startDatepicker>
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button matDatepickerApply>Apply</button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+      </mat-form-field>
+
+      <span *ngIf="isSitterOffer">Свободни преди: </span>
+      <span *ngIf="!isSitterOffer">Свършващи преди: </span>
+      <mat-form-field class="date-field">
+        <mat-label>Date</mat-label>
+        <input matInput formControlName="endDate" [matDatepicker]="endDatepicker" readonly/>
+        <mat-datepicker-toggle matIconSuffix [for]="endDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #endDatepicker>
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button matDatepickerApply>Apply</button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+      </mat-form-field>
+    </form>
+  <button mat-raised-button color="accent" (click)="onFilterBtnPressed()">Филтрирай</button>
 </div>

@@ -1,7 +1,6 @@
 package com.example.backend.controller;
 
 import com.example.backend.dto.PetSitterOfferDTO;
-import com.example.backend.entity.PetSitterOffer;
 import com.example.backend.service.PetSitterOfferService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
@@ -63,8 +62,8 @@ public class PetSitterOfferController {
     @GetMapping("/filters")
     public List<PetSitterOfferDTO> getOffers(
             @RequestParam(required = false) List<String> petTypes,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date availableFrom,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date availableUntil,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "dd-MM-yyyy") Date availableFrom,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "dd-MM-yyyy") Date availableUntil,
             @RequestParam(required = false, defaultValue = "0") Integer page,
             @RequestParam(required = false, defaultValue = "9") Integer limit) {
         return offerService.getFilteredOffers(petTypes, availableFrom, availableUntil, page, limit);
@@ -108,7 +107,7 @@ public class PetSitterOfferController {
     public ResponseEntity<?> deleteOffer(@PathVariable Long id){
         try {
             offerService.deleteOffer(id);
-            return ResponseEntity.ok().body("Sitter offer deleted");
+            return ResponseEntity.ok().build();
         }
         catch (ResourceNotFoundException e){
             System.out.println(e.getMessage());

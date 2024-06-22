@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../../models/new-user-model';
+import { User } from '../../models/user-model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,10 +24,14 @@ export class UserService {
 
     formData.append('userDTO', new Blob([JSON.stringify(user)], {type: 'application/json'}));
     formData.append('profilePic', profilePic, profilePic.name);
-    
+
     formData.forEach((value, key) => {console.log(key + ' ' + value)});
 
     return this.http.post<User>(`api/users/register`, formData);
+  }
+
+  deleteUser(id: number): Observable<any>{
+    return this.http.delete(`api/users/${id}`);
   }
 
 }

@@ -5,11 +5,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-// import { AngularFireAuth } from '@angular/fire/compat/auth';
-// import { GoogleAuthProvider } from '@angular/fire/auth';
+
 import { Router } from '@angular/router';
 import { UserService } from '../../src/app/service/user.service';
-import { User } from '../../src/models/new-user-model';
+import { User } from '../../src/models/user-model';
 
 
 @Component({
@@ -21,7 +20,7 @@ import { User } from '../../src/models/new-user-model';
   // providers: [AngularFireAuth]
 })
 export class LoginComponent {
-  
+
   hide = true;
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required]);
@@ -39,11 +38,13 @@ async login() {
 
   this.userService.login(email, password).subscribe((user) => {
     let user1: User = user;
+    if(user1 == null){
+      alert('Invalid email or password');
+      return;
+    }
     localStorage.setItem('userId', user1.id!.toString());
-    console.log(localStorage.getItem('userId'));  
     this.router.navigate(['home-page']);
   });
-
   }
 
 }

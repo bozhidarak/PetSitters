@@ -3,12 +3,8 @@ import { CommonModule } from '@angular/common';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import { Router } from '@angular/router';
-import { PetSittersPageComponent } from '../pet-sitter-offers-page/pet-sitter-offers-page.component';
-// import { getAuth, onAuthStateChanged } from '@angular/fire/auth';
-// import { getFirestore, collection, where, getDocs, query } from '@angular/fire/firestore';
-import { Owner } from '../../src/models/user-model';
 import { UserService } from '../../src/app/service/user.service';
-import { User } from '../../src/models/new-user-model';
+import { User } from '../../src/models/user-model';
 
 
 @Component({
@@ -40,7 +36,7 @@ getUserName(){
         });
       }
     }
-  
+
   }
 
   NavigateToSitters(){

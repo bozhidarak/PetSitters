@@ -7,7 +7,7 @@
 form {
   font-family: Roboto, Arial, serif;
   padding: 1rem;
-  color: crimson;
+  color: #d80075;
 }
 
 .stars-section {
@@ -25,7 +25,7 @@ form {
     &.rated,
     &:hover,
     &:hover ~ .star-icon {
-      fill: crimson;
+      fill: #d80075;
     }
 
     transition: fill 0.2s ease-in-out;
@@ -47,5 +47,5 @@ mat-form-field {
 }
 
 .error-message {
-  color: red;
+  color: #d80075;
 }

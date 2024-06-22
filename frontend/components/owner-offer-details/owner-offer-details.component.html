@@ -18,7 +18,8 @@
     <div class="approved"><p class="auth">100% Проверена самоличност</p></div>
   </div>
   <div class="more-info">
-    <button mat-raised-button href="#" color="accent" (click)="navigateToUserProfile()">Свържете се</button>
+    <button *ngIf="!isMyOffer()" mat-raised-button href="#" color="accent" (click)="navigateToUserProfile()">Свържете се</button>
+    <button *ngIf="isMyOffer()" mat-raised-button href="#" color="accent" (click)="deleteOffer()">Изтрий</button>
     <table>
       <tr class="info-row">
         <td>Локация</td>

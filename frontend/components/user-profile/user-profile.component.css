@@ -54,9 +54,12 @@
     margin-left:2%;
 }
 
-.logout{
+.buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     margin-top: 5%;
-    margin-left: 45%;
+
 }
 
 .sitter-card{

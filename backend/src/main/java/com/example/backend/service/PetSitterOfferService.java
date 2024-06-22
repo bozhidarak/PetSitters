@@ -88,7 +88,7 @@ public class PetSitterOfferService {
         return offer;
     }
 
-    @Transactional //?? not sure if needed
+    @Transactional //needed because of S3
     public PetSitterOfferDTO createOffer(PetSitterOfferDTO offerDTO, List<MultipartFile> pictures){
         PetSitterOffer offerEntity = offerMapper.toEntity(offerDTO);
         Long userId = offerDTO.getUserId();

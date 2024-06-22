@@ -1,9 +1,9 @@
 <mat-card class="owner-offer-card">
-  <mat-card-header>
+  <mat-card-header (click)="navigateToUser()">
     <img class="profile-picture" mat-card-avatar [src]="ownerOffer.userProfilePic ? ownerOffer.userProfilePic : 'assets/profile-pic1.jpg'">
     <mat-card-title>{{ownerOffer.userName}}</mat-card-title>
   </mat-card-header>
-  <img mat-card-image class="offer-picture" [src]="ownerOffer.picturePaths && ownerOffer.picturePaths.length > 0 ? ownerOffer.picturePaths[0] : 'assets/no-image-available.jpg'">
+  <img mat-card-image class="offer-picture" [src]="ownerOffer.picturePaths && ownerOffer.picturePaths.length > 0 ? ownerOffer.picturePaths[0] : 'assets/no-photo-available.png'">
   <mat-card-content>
     <div class="details">
       <span *ngFor="let pet of ownerOffer?.pets" class="pet">

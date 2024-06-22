@@ -8,7 +8,6 @@ import { Router } from '@angular/router';
 import { PetOwnerOffer } from '../../src/models/owner-offer-model';
 import { OwnerOfferCardComponent } from "../owner-offer-card/owner-offer-card.component";
 import { OwnerOfferService } from '../../src/app/service/owner-offer-service.service'
-import { SharingOwnerOfferService } from '../../src/app/service/sharing-owner-offer.service';
 import {MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 
 @Component({
@@ -24,24 +23,12 @@ export class OwnerOffersPageComponent implements OnInit{
   loggedIn: boolean = !!localStorage.getItem('userId');
   pageSize: number = 9;
   currentPage: number = 0;
+  numOfItems: number = 10;
+  areFiltersApplied: boolean = false;
+  filters: {"pets": string[], "startDate": string | null, "endDate": string | null} =
+    {"pets": [], "startDate": null, "endDate": null};
 
-  constructor(private ownerOfferService: OwnerOfferService,
-              private sharingOfferService: SharingOwnerOfferService,
-              private router:Router)
-  {
-    // this.getOwners();
-    // const auth = getAuth();
-
-    // onAuthStateChanged(auth, (user) => {
-    //   if (user) {
-    //     this.loggedIn = true;
-    //   } else {
-    //     // User is signed out
-    //     this.loggedIn = false;
-    //   }
-    // });
-
-  }
+  constructor(private ownerOfferService: OwnerOfferService, private router:Router) {}
 
   ngOnInit() {
     this.getOwnerOffers(this.currentPage, this.pageSize);
@@ -49,15 +36,30 @@ export class OwnerOffersPageComponent implements OnInit{
 
   getOwnerOffers(currentPage: number, pageSize: number) {
     this.ownerOfferService.findAll(currentPage, pageSize).subscribe( (data) => {
-        this.petOwnerOffers = data;
-      })
+      this.petOwnerOffers = data;
+      if (this.petOwnerOffers.length < 9) {
+        this.numOfItems = this.petOwnerOffers.length;
+      } else{
+        this.numOfItems = 10;
+      }
+    })
+  }
+
+  getFilteredOffers(currentPage: number, pageSize: number) {
+    this.ownerOfferService.findFilteredOffers(this.filters, currentPage, pageSize).subscribe( (data) => {
+      this.petOwnerOffers = data;
+      if (this.petOwnerOffers.length < 9) {
+        this.numOfItems = this.petOwnerOffers.length;
+      } else{
+        this.numOfItems = 10;
+      }
+    })
   }
 
   navigateToDetails(petOwnerOffer: PetOwnerOffer){
     if(this.loggedIn){
-    this.sharingOfferService.setPetOwnerOffer(petOwnerOffer);
-    const id = petOwnerOffer.id;
-    this.router.navigate(['owner-offer-details', id]);
+      const id = petOwnerOffer.id;
+      this.router.navigate(['owner-offer-details', id]);
     }
   }
 
@@ -67,6 +69,16 @@ export class OwnerOffersPageComponent implements OnInit{
 
   pageChanged(event: PageEvent) {
     this.currentPage = event.pageIndex;
-    this.getOwnerOffers(this.currentPage, this.pageSize);
+    if(!this.areFiltersApplied) {
+      this.getOwnerOffers(this.currentPage, this.pageSize);
+    } else {
+      this.getFilteredOffers(this.currentPage, this.pageSize);
+    }
+  }
+
+  onFiltersApplied(filters: {pets: string[], startDate: string | null, endDate: string | null}) {
+    this.currentPage = 0;
+    this.filters = filters;
+    this.getFilteredOffers(this.currentPage, this.pageSize)
   }
 }
