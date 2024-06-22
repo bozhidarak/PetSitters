@@ -71,11 +71,13 @@ public class PetSitterOfferService {
             pageable = PageRequest.of(page, limit);
         }
 
-
-        return offerRepository.findAll(spec, pageable)
+        List<PetSitterOfferDTO> offers = offerRepository.findAll(spec, pageable)
                 .stream()
                 .map(offerMapper::toDTO)
                 .toList();
+
+        offers.forEach(this::setUser);
+        return offers;
     }
 
     public PetSitterOfferDTO getOfferById(Long id){
